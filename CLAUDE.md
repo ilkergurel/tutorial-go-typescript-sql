@@ -86,8 +86,10 @@ update this file in the same change.
     internal-network ports (no Docker tests, owner's instruction).
   - TraceLite's CSV export guards formula-like cells with a tab (owner's decision,
     2026-11-14; docs/TRACELITE-CONVENTIONS.md, step 8's Design notes).
-  - Work on 2026-11-14 after the first commit is on branch `fix/runner-gaps-csv-guard`;
-    the owner merges it into `main` later.
+  - Git: the repo has a `.gitattributes` that keeps LF in the working tree whatever
+    `core.autocrlf` says (the owner's machine has it `true`) and lesson fixtures
+    byte-exact. Work happens on a branch, one Conventional Commit per step, merged into
+    `main` after the full check; pushing to GitHub only when the owner asks.
 - Next: backlog items the owner picks. No PostgreSQL 19 bump (owner's decision,
   2026-11-14). No pending phases, no unwritten lessons.
 

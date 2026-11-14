@@ -1,0 +1,19 @@
+# Keep LF line endings in the working tree on every OS, whatever core.autocrlf
+# says. gofmt, lesson examples that print text with %q, and the expected outputs
+# were all verified with LF; a CRLF checkout would change them.
+* text=auto eol=lf
+
+# Lesson fixtures are byte-exact inputs (BOMs, windows-1254, CRLF on purpose):
+# store and check out exactly the bytes that were committed.
+content/**/fixtures/** -text
+
+# Binary files git must never touch.
+*.png binary
+*.jpg binary
+*.ico binary
+*.wasm binary
+*.woff binary
+*.woff2 binary
+*.zip binary
+*.gz binary
+*.exe binary
