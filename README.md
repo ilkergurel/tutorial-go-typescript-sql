@@ -50,6 +50,14 @@ libraries that browser lessons import. PostgreSQL keeps running as the Windows s
 `postgresql-x64-18`; set it to *Manual* in `services.msc` if you prefer to start it
 yourself.
 
+One click instead: run
+`powershell -NoProfile -ExecutionPolicy Bypass -File scripts\create-desktop-shortcut.ps1`
+once. It puts a **StackLab** shortcut on the desktop that runs
+`scripts/start-stacklab.ps1`: it checks PostgreSQL, Node and Go, starts `npm start` in a
+window of its own and opens the browser when the app answers. Close that window to stop
+StackLab; clicking the shortcut while it runs just opens the page again. Run the script
+again if you move the repo.
+
 Lesson code runs as normal processes on your PC: timeouts, output caps and
 process-tree kills apply, but there are no memory, process-count or network limits
 (ADR-0008). SQL lessons run as the non-superuser `playground` role in throwaway schemas.
