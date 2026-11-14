@@ -88,10 +88,14 @@ sequenceDiagram
 
 - **gorun** gives each run a fresh work directory. A Go build gets 20 s; a `go` or
   `ts-node` program runs 5 s by default and up to 15 s (`timeoutS`), a `ts-test` run
-  15 s at most (`timeoutS` lowers it), a `go-test` run 35 s. Each output stream is
-  capped at 64 KB with a visible marker, cut on a UTF-8 character boundary. When a run
-  ends, however it ends, the whole process tree is killed: a process group on Unix, a
-  Job Object on Windows (`proc_unix.go`, `proc_windows.go`).
+  15 s at most (`timeoutS` lowers it). A `go-test` run gets the 20 s build allowance plus
+  its test budget (`timeoutS`, 15 s by default), passed as `go test -timeout` so a hung
+  test ends in Go's own panic; the outer kill comes 3 s after both. Each output stream is
+  capped at 64 KB with a visible marker, cut on a UTF-8 character boundary. When a run or
+  a build step ends, however it ends, the whole process tree is killed: a process group
+  on Unix, a Job Object on Windows (`proc_unix.go`, `proc_windows.go`). The Windows job is
+  kill-on-close, so a backend crash ends the lesson's processes too; on Linux `Pdeathsig`
+  covers the direct child only (`proc_linux.go`), and macOS has no equivalent.
 - **sqlrun** runs statements one at a time on pgx's simple protocol, as psql does, and
   renders results as text (ADR-0009). Its splitter keeps SQL-standard `BEGIN ATOMIC …
   END` routine bodies whole, following psql's rule. Every statement is bounded by `statement_timeout`
@@ -101,8 +105,12 @@ sequenceDiagram
   `sql-multisession`, pgx lessons) first drop any `run_` schema older than 10 minutes
   that a crashed run left behind.
 - **ts-browser** never reaches the backend. The iframe has an opaque origin and a CSP
-  with no network access; console output comes back by `postMessage`, and the run ends
-  when the module has finished and no timer is pending. Lessons that import react,
+  with no network access; console output comes back by `postMessage`. All its scripts sit
+  in `<head>` (the body starts empty): the shim, the lesson as a `data:` URL module, and a
+  second module that `import()`s the same URL to learn when the lesson's module has
+  finished or thrown. The run ends then, once no timer is pending; an uncaught error in a
+  timer callback, a listener or an unhandled rejection is reported with exit 1 but doesn't
+  end the run (`runner/browserTs.ts`, tested in `browserTs.test.ts`). Lessons that import react,
   react-dom, react-router-dom, @tanstack/react-query or zod get them from
   `public/lesson-libs` (`scripts/build-lesson-libs.mjs`) as `data:` URLs in an import
   map.

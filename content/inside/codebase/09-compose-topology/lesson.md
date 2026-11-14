@@ -79,8 +79,9 @@ examples:
       - lines: "24-25"
         note: >
           No 'unsafe-eval' in script-src, so eval and new Function throw. That is
-          why the runner hands the iframe the transpiled module as an inline
-          script and the libraries as data: URLs.
+          why the runner loads all code the way the CSP allows: its shim as an
+          inline script, the transpiled lesson as a module with a data: URL, and
+          the libraries as data: URLs in an import map.
       - lines: "27-28"
         note: >
           The only way out. BrowserTsRunner accepts a message only when
@@ -247,10 +248,9 @@ nothing tests it. One thing to fix before relying on it: the final stage of
 `runner/Dockerfile` is the Node image plus the runner binary, `ca-certificates` and
 `curl`. No step installs the Go toolchain the runner invokes as `go`, although the
 stage's comment says one does. This is read from the Dockerfile and `gorun.go`, not run.
-What a Go lesson would get follows from the code: `goBuild` reports only the build's
-captured output, and a `go` that can't be started prints nothing, so a `go` or
-`go-server` lesson would fail with exit code 1 and an empty stderr. `go-test` starts
-`go` through `runProcess`, which appends the start error:
+What a Go lesson would get follows from the code: `goBuild` and `go-test` both start
+`go` through `runProcess`, which appends the start error, so a `go` or `go-server`
+lesson would fail with exit code 1 (a `go-test` one with -1) and the stderr line
 `gorun: exec: "go": executable file not found in $PATH`.
 
 In local mode the network is not the boundary, and pretending otherwise would be

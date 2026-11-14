@@ -55,17 +55,18 @@ update this file in the same change.
     there, the runner sits on backend-net, the runner image lacks the Go toolchain,
     runclient's 45 s timeout and cmd/runner's 45 s WriteTimeout don't count the 10 s
     queue wait, and pgx/ts-test lessons are local-only by design.
-  - Runners: go-test ignores `timeout_s` (fixed 35 s); goBuild/goVet kill only the `go`
-    command on timeout; the Windows job has no kill-on-close flag, so a backend crash
-    leaves lesson processes running; the go runtime builds without `-ldflags` (versions
-    print `dev`); goBuild and goVet return only the captured output and drop the exec
-    error, so a missing `go` gives exit 1 with empty stderr (runner/Dockerfile's comment
-    also claims a Go toolchain the image doesn't have); sqlrun's splitter still splits at a `;` inside parentheses (psql
-    doesn't); under Playwright `page.route`, Edge doesn't intercept `<a download>`
-    downloads (step 14 uses a real `node:http` server).
-  - ts-browser runner: an error thrown in a timer callback or event listener ends the
-    program, so output after a non-timer await can be cut; the shim's script sits in
-    `<body>`, so `document.body.textContent` includes it.
+  - Runners (fixed later on 2026-11-14: go-test honours `timeout_s` via `go test
+    -timeout`; build and vet steps report a missing `go` and get the tree kill; the
+    Windows job is kill-on-close; Linux sets Pdeathsig; ts-browser keeps running after
+    an uncaught error in a timer or listener, and its scripts moved to `<head>`). Still
+    open: on Linux a backend crash kills only the lesson's direct child, on macOS
+    nothing, and windows/386 gets no kill-on-close; the go runtime builds without
+    `-ldflags` (versions print `dev`); runner/Dockerfile's comment claims a Go toolchain
+    the image doesn't have; sqlrun's splitter still splits at a `;` inside parentheses
+    (psql doesn't); under Playwright `page.route`, Edge doesn't intercept `<a download>`
+    downloads (step 14 uses a real `node:http` server); verify:lessons once aborted its
+    browser batch with "Inspected target navigated or closed" (cause not found; reruns
+    passed).
   - Small: `vite build` emits Monaco's css/html/json workers that are never loaded
     (~2.2 MB of dist); no screen reads the run history; gorun.go's discriminated-union
     comment and the never-called `runapi.Decode` (inside.codebase.contract cites both);
@@ -83,8 +84,10 @@ update this file in the same change.
     collection). Two warnings remain: step 15's REG_MULTI_SZ `Environment` value (no
     Microsoft source; testing needs admin) and inside.codebase.compose-topology's Docker
     internal-network ports (no Docker tests, owner's instruction).
-  - Owner's option: a tab-prefix guard against CSV formula injection in TraceLite's
-    export (step 8; step 7's import already trims it). A TraceLite convention change.
+  - TraceLite's CSV export guards formula-like cells with a tab (owner's decision,
+    2026-11-14; docs/TRACELITE-CONVENTIONS.md, step 8's Design notes).
+  - Work on 2026-11-14 after the first commit is on branch `fix/runner-gaps-csv-guard`;
+    the owner merges it into `main` later.
 - Next: backlog items the owner picks. No PostgreSQL 19 bump (owner's decision,
   2026-11-14). No pending phases, no unwritten lessons.
 
