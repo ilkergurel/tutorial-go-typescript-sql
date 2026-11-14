@@ -65,7 +65,9 @@ examples:
           One row in memory at a time: scan it, hand it to csv.Writer, forget
           it. csv.Writer and the ResponseWriter each buffer a few KiB and pass
           the bytes on whenever a buffer fills, so the download runs while the
-          query is still reading, without any explicit Flush.
+          query is still reading, without any explicit Flush. TraceLite's
+          handler also passes title and description through excelText (Design
+          notes); this example leaves it out to stay within one screen.
       - lines: "49-53"
         note: >
           After the first byte the status is already 200. The only honest move
@@ -439,13 +441,32 @@ shows `#NAME?`. For files meant for reading, OWASP's
 [CSV Injection](https://owasp.org/www-community/attacks/CSV_Injection) page recommends,
 for Excel, a tab at the start of such a quoted field. A `'` prefix, the older advice, shows
 in the cell, and OWASP calls it "not reliable in Microsoft Excel after saving and
-re-opening the CSV file". Either prefix becomes part of the value. TraceLite's export adds
-none, so the file holds each title exactly as stored. The trade-off: a title that Excel
-reads as a formula doesn't survive an edit in Excel, because saving as CSV writes the
-formula's result, so `-1+1` comes back as `0`. With a tab prefix the title would survive
-that round trip: Excel keeps the cell as text and writes the tab back, and the step 7
-import trims it with the other whitespace. A `'` prefix would come back as part of the
-title.
+re-opening the CSV file". Either prefix becomes part of the value. TraceLite's export uses
+the tab, for the two free-text columns (codes, parents and statuses can't start with these
+characters: their CHECKs and the import's rules allow letters first):
+
+```go
+// excelText is OWASP's advice for Excel: a tab before a leading =, +, - or @ keeps
+// the cell text. Step 7's import trims it again with the other whitespace.
+func excelText(s string) string {
+	if strings.IndexAny(s, "=+-@") == 0 {
+		return "\t" + s
+	}
+	return s
+}
+
+err = out.Write([]string{code, excelText(title), parent, status, excelText(description)})
+```
+
+csv.Writer quotes a field that starts with whitespace, so the tab lands inside the quoted
+field as OWASP describes: `- madde` goes out as `"\t- madde"`. The trade-off: the file no
+longer holds such a title byte for byte, and a program other than step 7's import has to
+trim the tab. In return a title survives an edit in Excel. Without the tab, Excel reads
+`-1+1` as a formula and saving as CSV writes its result, `0`; with it, Excel keeps the
+cell as text and writes the tab back, and step 7's `strings.TrimSpace` restores the title.
+A `'` prefix would come back as part of the title. Checked with Go 1.27.4 on 2026-11-14:
+`=HYPERLINK(...)`, `- madde`, `+90 …` and `@ali` gained the tab, `a=b` and ordinary titles
+didn't, and every title came back unchanged after `TrimSpace`.
 
 Observed on 2026-11-14 by opening a CSV in Excel for Microsoft 365 (build
 16.0.20527.20196): `=1+1`, `+1+1`, `-1+1` and `@SUM(1,1)` became formulas, also inside

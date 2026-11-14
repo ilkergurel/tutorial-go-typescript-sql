@@ -215,6 +215,11 @@ Steps 6-10 were written and verified on 2026-11-13. Later steps follow these as 
   reports `line` as `csv.Reader.FieldPos(0)` (header = line 1), counts title characters
   after decoding, and is all or nothing: one transaction, the project row locked `FOR
   UPDATE`, every row staged, Go-side and SQL-side problems merged by line.
+- The CSV export guards against formula injection (owner's decision, 2026-11-14):
+  `excelText` puts a tab before a `title` or `description` that starts with `=`, `+`,
+  `-` or `@` (OWASP's advice for Excel); csv.Writer quotes the field, and the import's
+  `strings.TrimSpace` removes the tab, so export → Excel edit → import round-trips.
+  Step 8's example 1 leaves the guard out for length; its Design notes show it.
 - The browser labels the charset itself: a strict `TextDecoder("utf-8", {fatal: true})`
   over the first 64 KiB with `{stream: true}`; failure means `windows-1254`. The file is
   the request body, not multipart.

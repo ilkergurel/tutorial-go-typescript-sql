@@ -99,7 +99,9 @@ examples:
         note: >
           Fields are looked up by header name, so the columns may come in any
           order. The real reader also refuses an unknown header such as
-          "titel" before reading any row.
+          "titel" before reading any row. TrimSpace also removes the tab that
+          step 8's export puts before a title starting with =, +, - or @, so an
+          exported file comes back unchanged.
       - lines: "47-48"
         note: >
           Invalid UTF-8 means the label was wrong: windows-1254 bytes sent as
