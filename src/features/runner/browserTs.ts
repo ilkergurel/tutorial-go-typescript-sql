@@ -9,10 +9,13 @@
  * that destroys the iframe (an infinite loop dies with it).
  *
  * When is a run over? A browser has no "event loop idle" signal, so the shim
- * tracks it: the module ran to its end (after any top-level await) and no
- * timer is pending. Promise chains driven by timers, the usual async-lesson
- * pattern, therefore finish completely. Rejected alternative: finishing a
- * fixed delay after the iframe loads, which cut off any output logged later.
+ * tracks it: the module ran to its end (after any top-level await), or threw,
+ * and no timer is pending. Promise chains driven by timers, the usual
+ * async-lesson pattern, therefore finish completely. An uncaught error
+ * anywhere else (a timer callback, a listener) is reported with exit 1 but
+ * doesn't end the run, as it doesn't stop a page. Rejected alternative:
+ * finishing a fixed delay after the iframe loads, which cut off any output
+ * logged later.
  *
  * Why not eval in-page: the iframe's opaque origin is the actual security
  * boundary for DOM access; the worker only transpiles.
@@ -38,8 +41,9 @@ type ShimMessage = {
 /**
  * The script that runs inside the sandboxed iframe, before the lesson module:
  * console capture, uncaught-error capture, and pending-timer tracking.
+ * Exported for the tests, which run it in jsdom.
  */
-const IFRAME_SHIM = `
+export const IFRAME_SHIM = `
 (function () {
   var post = function (type, args) {
     parent.postMessage({ __stacklab_run: true, type: type, args: args }, '*');
@@ -116,19 +120,17 @@ const IFRAME_SHIM = `
     try { return realDispatch.call(this, event); } finally { reactReplays--; }
   };
 
-  // A throw at the module's top level ends the module before its done marker,
-  // so an uncaught error counts as the end of the main part (a rejected
-  // top-level await arrives here too). An error thrown in a timer callback or
-  // a listener can't be told apart from it, so it ends the main part as well;
-  // pending timers still keep the run going.
-  function uncaught(text) { post('uncaught', [text]); mainDone = true; check(); }
+  // An uncaught error or unhandled rejection is reported, and the run goes
+  // on: an error in a timer callback or a listener doesn't stop a page, nor
+  // a module that is awaiting something else meanwhile. Only the module's own
+  // end, finished or thrown, ends the main part; the page reports it through
+  // __stacklabMainDone (see iframeDoc). Ending the main part on any error, as
+  // the shim once did, cut off the output of a module still awaiting a fetch
+  // mock or a MessageChannel.
   window.addEventListener('error', function (e) {
     if (reactReplays > 0) return;
-    uncaught('Uncaught ' + (e.error ? fmt(e.error) : e.message));
+    post('uncaught', ['Uncaught ' + (e.error ? fmt(e.error) : e.message)]);
   });
-  // An unhandled rejection doesn't stop the module: it is reported, and the
-  // run goes on until the module finishes. Marking the main part done here
-  // cut off everything the module printed afterwards.
   window.addEventListener('unhandledrejection', function (e) {
     post('uncaught', ['Uncaught (in promise) ' + fmt(e.reason)]);
   });
@@ -138,29 +140,53 @@ const IFRAME_SHIM = `
 
 /**
  * No network and no other origins: lessons stay deterministic and can't call
- * home. Inline scripts are allowed because the lesson itself is one; data:
- * scripts are the libraries from the import map (below); blob: workers and
- * data:/blob: images cover the DOM lessons that create them.
+ * home. Inline scripts are the shim and the end-of-module watcher; data:
+ * scripts are the lesson and the libraries from the import map (below);
+ * blob: workers and data:/blob: images cover the DOM lessons that create them.
  */
 const IFRAME_CSP =
   "default-src 'none'; script-src 'unsafe-inline' data:; worker-src blob:; img-src data: blob:; style-src 'unsafe-inline'";
 
+const dataUrl = (source: string) => 'data:text/javascript;charset=utf-8,' + encodeURIComponent(source);
+
 /**
  * The iframe document: CSP, the import map when the lesson imports libraries,
- * the shim, then the lesson module with a done marker.
+ * the shim, the lesson module, and a module that reports the lesson's end.
+ *
+ * All of it sits in <head>, so <body> holds only what the lesson puts there:
+ * with the scripts in <body>, document.body.textContent began with the
+ * shim's source. The order still holds: the classic shim runs while the head
+ * is parsed, the modules after parsing (deferred, as on any page), so the
+ * lesson finds document.body and runs before DOMContentLoaded.
+ *
+ * The lesson is a data: URL module rather than an inline one so that the
+ * last script can import() the same URL. The module map hands it the same
+ * module, already running, and the promise settles once the lesson has
+ * finished (after every top-level await) or failed, which marks the end of
+ * the main part either way; the browser still reports the lesson's own error
+ * to window.onerror. Rejected: a done marker appended to an inline module. A
+ * throw skips the marker, and the error event that remains can't be told
+ * apart from one thrown in a timer callback or a listener, which must not end
+ * the run. The sourceURL comment names the module after the lesson's file in
+ * stack traces and error events, which would otherwise quote the whole data:
+ * URL. Exported for the tests.
  */
-function iframeDoc(js: string, importMap: string | null): string {
+export function iframeDoc(js: string, importMap: string | null, fileName: string): string {
   const close = `</scr${''}ipt>`;
+  // encodeURIComponent leaves no double quote, < or &: safe in the attribute
+  // and, JSON-quoted, in the script. The name is kept to one harmless line.
+  const lesson = dataUrl(`${js}\n//# sourceURL=${fileName.replace(/[^\w.-]/g, '_')}`);
   return (
     `<!doctype html><html><head><meta charset="utf-8">` +
     `<meta http-equiv="Content-Security-Policy" content="${IFRAME_CSP}">` +
     (importMap ? `<script type="importmap">${importMap}${close}` : '') +
-    `</head><body>` +
     `<script>${IFRAME_SHIM}${close}` +
-    // The marker runs after the module's last statement, i.e. after every
-    // top-level await; a throw skips it and the shim's error handler steps in.
-    `<script type="module">${js}\n;window.__stacklabMainDone();${close}` +
-    `</body></html>`
+    `<script type="module" src="${lesson}">${close}` +
+    // Both outcomes end the main part; handling the rejection also keeps it
+    // from being reported a second time as an unhandled one.
+    `<script type="module">import(${JSON.stringify(lesson)})` +
+    `.then(function () { window.__stacklabMainDone(); }, function () { window.__stacklabMainDone(); });${close}` +
+    `</head><body></body></html>`
   );
 }
 
@@ -177,8 +203,6 @@ function bareImports(js: string): string[] {
   for (const m of js.matchAll(/(?:\bfrom\s*|\bimport\s*\(?\s*)["']([^"'./][^"']*)["']/g)) found.add(m[1]);
   return [...found];
 }
-
-const dataUrl = (source: string) => 'data:text/javascript;charset=utf-8,' + encodeURIComponent(source);
 
 export class BrowserTsRunner implements CodeRunner {
   private worker: Worker | null = null;
@@ -349,7 +373,7 @@ export class BrowserTsRunner implements CodeRunner {
         finish();
       }, timeoutMs);
 
-      iframe.srcdoc = iframeDoc(js, importMap);
+      iframe.srcdoc = iframeDoc(js, importMap, fileName);
       document.body.appendChild(iframe);
     });
   }

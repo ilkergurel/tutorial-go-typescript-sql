@@ -68,10 +68,11 @@ examples:
           clearInterval.
       - lines: "46-47"
         note: >
-          The real marker is a line appended after the lesson module's last
-          statement, window.__stacklabMainDone(), so it runs after every
-          top-level await. A throw skips it and the error handler marks the main
-          part done instead.
+          In the real frame, the lesson is a module with a data: URL, and a
+          second module import()s the same URL. That promise settles after
+          every top-level await, whether the lesson finished or threw, and its
+          handler calls window.__stacklabMainDone(). An error thrown in a timer
+          callback or a listener is reported but doesn't end the main part.
       - lines: "49-51"
         note: >
           The rule the runner used before: finish a fixed delay after the frame
@@ -103,6 +104,8 @@ pitfalls:
     detail: "If a runner threw on a compile error or an uncaught exception, RunPanel would show a red 'failed' banner instead of the output and the exit code. Only machinery failures reject; everything the lesson did is a RunResult."
   - title: "Expecting ts-browser and ts-node to print the same thing"
     detail: "The browser shim formats values itself: strings as-is, Map, Set and Error readably, everything else as JSON. Node uses util.inspect. console.log({ a: 1 }) prints {\"a\":1} in one and { a: 1 } in the other, so an expected file recorded under one runtime fails under the other."
+  - title: "Expecting an uncaught error to end a ts-browser run"
+    detail: "In Node, an exception thrown in a timer callback ends the process with exit 1. A page goes on, and so does BrowserTsRunner: it prints the Uncaught line to stderr, sets exit 1, and keeps collecting the module's output until the module has ended and no timer is pending. The example still fails its expected check, because the exit code isn't 0."
   - title: "Hiding the iframe with display: none"
     detail: "The runner keeps the frame rendered, 1x1 and transparent, because Edge throttles a hidden cross-origin frame: requestAnimationFrame stops (Microsoft documents this), and in Edge 157 its timers woke up only about once a second. Async lessons would get slow and their timing claims wrong."
 quiz:
@@ -197,9 +200,11 @@ What `BrowserTsRunner.run` does for one ts-browser example:
 2. **Resolve libraries.** If the module imports `react`, `zod` or another library from
    ADR-0010, the runner fetches `/lesson-libs/manifest.json` and `bundle.js` once and
    builds an import map of `data:` URLs. The iframe can't fetch them itself (next step).
-3. **Build the frame.** `<iframe sandbox="allow-scripts">` with a `srcdoc` holding a CSP
-   `<meta>` (`default-src 'none'`, scripts only inline or `data:`), the import map, the
-   shim and the module, followed by `window.__stacklabMainDone()`. Without
+3. **Build the frame.** `<iframe sandbox="allow-scripts">` with a `srcdoc` whose
+   `<head>` holds a CSP `<meta>` (`default-src 'none'`, scripts only inline or `data:`),
+   the import map, the shim, the lesson as a module script with a `data:` URL, and a
+   one-line module that `import()`s the same URL to learn when the lesson has ended.
+   `<body>` stays empty, so `document.body` holds only what the lesson puts there. Without
    `allow-same-origin` the frame's origin is opaque: no access to the app's DOM,
    `localStorage` or cookies, and with the CSP no network at all.
 4. **Keep it running at full speed.** The frame is 1x1 px, transparent and fixed in the
@@ -222,10 +227,15 @@ What `BrowserTsRunner.run` does for one ts-browser example:
    ones no boundary caught, and those count. The parent drops any message whose
    `e.source` isn't its own frame, and the `switch` over the message type ends in a
    `never` check.
-6. **Decide when it's over** (example 2): when the main part has run and no timer is
-   pending, or at the timeout (`timeoutS`, default 10 s). An unhandled rejection doesn't
-   end the main part; the module keeps running. Then the frame is removed, which also
-   kills an infinite loop inside it, and the result is resolved.
+6. **Decide when it's over** (example 2): when the main part is over and no timer is
+   pending, or at the timeout (`timeoutS`, default 10 s). The main part is over when the
+   `import()` from step 3 settles: the module finished after its last top-level `await`,
+   or it threw. An error thrown anywhere else, in a timer callback, an event listener or
+   a promise nobody handles, is reported and sets exit 1, but the module keeps running,
+   as it would on a page. Until 2026-11-14 any uncaught error ended the main part, so a
+   module that was still awaiting a fetch mock or a `MessageChannel` lost the rest of
+   its output. Then the frame is removed, which also kills an infinite loop inside it,
+   and the result is resolved.
 
 `ServerRunner` is ten lines by comparison: `fetch`, a problem-details error path, and
 `(await res.json()) as RunResult`. That cast trusts the backend completely; the contract

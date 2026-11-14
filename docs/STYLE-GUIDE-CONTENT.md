@@ -86,8 +86,11 @@ Every example is one file; the Run button sends it as the only file.
   `console.log` uses Node's formatting.
 - **ts-browser**: esbuild transpiles (all TS syntax), then the code runs as an ES module
   in a sandboxed iframe with no network (CSP): mock `fetch` in the example. DOM, `File`,
-  `Blob` and streams work. The run ends when the module finished and no timer is pending;
-  clear every `setInterval`. `console.log` prints strings as-is, `Map`/`Set`/`Error`
+  `Blob` and streams work. The run ends when the module finished (or threw) and no timer
+  is pending; clear every `setInterval`. An uncaught error in a timer callback, a listener
+  or an unhandled rejection prints `Uncaught …` to stderr and sets exit 1, but doesn't end
+  the run. `document.body` starts empty. Stack traces name the example's file, with the
+  transpiled JS's line numbers. `console.log` prints strings as-is, `Map`/`Set`/`Error`
   readably, and everything else as `JSON.stringify` output.
 - **ts-browser libraries**: lessons may import `react`, `react-dom`, `react-dom/client`,
   `react-dom/server`, `react/jsx-runtime`, `react-router-dom`, `@tanstack/react-query`
