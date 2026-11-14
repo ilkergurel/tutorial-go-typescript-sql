@@ -1,0 +1,21 @@
+CREATE TABLE
+CREATE TABLE
+INSERT 0 3
+INSERT 0 5
+SELECT 3
+    name  | cheapest | offers | priced
+    ------+----------+--------+-------
+    kahve | NULL     | 0      | 0
+    simit | 1250     | 2      | 2
+    su    | 0        | 3      | 2
+SELECT 0
+SELECT 1
+    cheapest | offers
+    ---------+-------
+    NULL     | 0
+SELECT 3
+    name  | cheapest
+    ------+----------
+    kahve | no offers
+    simit | 1250
+    su    | 0

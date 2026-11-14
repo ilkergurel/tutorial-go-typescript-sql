@@ -1,0 +1,4 @@
+2 kimlik geçerli
+geçersiz: #2 "giriş", #3 ""
+okunamadı: bozuk JSON
+okunamadı: dizi bekleniyordu

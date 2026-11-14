@@ -1,0 +1,3 @@
+sdk     ["strateji = fonksiyon","URL mi?"]
+memory  ["","URL mi?"]
+cast    TypeError, typeof save = undefined

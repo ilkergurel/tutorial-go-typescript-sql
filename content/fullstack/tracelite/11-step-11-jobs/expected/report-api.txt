@@ -1,0 +1,6 @@
+409 Conflict, Content-Length 148, Content-Type application/problem+json, Content-Range ""
+  {"type":"https://tracelite.example/problems/conflict","title":"Conflict","status":409,"detail":"the report is queued; GET the job until it is done"}
+200 OK, Content-Length 76, Content-Type application/json, Content-Range ""
+  {"project":{"name":"Ödeme"},"requirements":[],"summary":{"requirements":0}}
+206 Partial Content, Content-Length 47, Content-Type application/json, Content-Range "bytes 29-75/76"
+  "requirements":[],"summary":{"requirements":0}}

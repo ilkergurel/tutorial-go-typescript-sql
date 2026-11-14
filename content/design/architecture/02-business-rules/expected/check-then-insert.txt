@@ -1,0 +1,28 @@
+[1] A: BEGIN
+[2] B: BEGIN
+[3] A: SELECT 1
+    count
+    -----
+    0
+[4] B: SELECT 1
+    count
+    -----
+    0
+[5] A: INSERT 0 1
+[6] B: INSERT 0 1
+[7] A: COMMIT
+[8] B: COMMIT
+[9] A: CREATE FUNCTION
+[10] A: CREATE TRIGGER
+[11] A: BEGIN
+[12] B: BEGIN
+[13] A: INSERT 0 1
+[14] B: INSERT 0 1
+[15] A: COMMIT
+[16] B: COMMIT
+[17] A: ERROR: course 2 is full (SQLSTATE P0001)
+[18] A: SELECT 2
+    course_id | booked
+    ----------+-------
+    1         | 2
+    2         | 2

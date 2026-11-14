@@ -1,0 +1,6 @@
+callers: 8 loads: 1
+all saw the same value: true
+connect: connection refused
+connect: connection refused
+connect: connection refused
+dial attempts: 1

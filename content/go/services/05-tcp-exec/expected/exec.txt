@@ -1,0 +1,8 @@
+go list: "Package exec runs external commands." err=<nil>
+user input as arguments:
+  arg 1: "Ayşe Yılmaz"
+  arg 2: "x; rm -rf ~"
+  arg 3: "$(whoami)"
+  arg 4: "*.go"
+failing child: exit code 3, stderr "config.toml: no such file\n"
+hanging child: killed at the deadline: true

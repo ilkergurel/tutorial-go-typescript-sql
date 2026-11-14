@@ -1,0 +1,7 @@
+find user 7: not found
+  err == ErrNotFound: false
+  errors.Is:          true
+GET /users/-1: id must be positive
+  type assertion: false
+  errors.AsType:  id / must be positive
+  errors.As:      id / must be positive

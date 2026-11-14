@@ -1,0 +1,15 @@
+sibling features/learning/api -> features/runner/types
+sibling features/learning/LessonNotes -> features/lessons/types (type)
+sibling features/learning/LessonQuiz -> features/lessons/types (type)
+sibling features/lessons/LessonContent -> features/runner/RunPanel
+sibling features/lessons/LessonContent -> features/learning/LessonNotes
+sibling features/lessons/LessonContent -> features/learning/LessonQuiz
+sibling features/lessons/types -> features/curriculum/types (type)
+sibling features/runner/judge -> features/lessons/types (type)
+sibling features/runner/RunPanel -> features/lessons/types
+sibling features/runner/RunPanel -> features/learning/store
+upward  shared/ui/LevelBadge -> features/curriculum/types (type)
+5 are import type: gone at run time, still coupled in the design
+cycle: learning <-> lessons
+cycle: learning <-> runner
+cycle: lessons <-> runner

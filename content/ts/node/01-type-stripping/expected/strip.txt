@@ -1,0 +1,8 @@
+35 İzmir
+21 DİYARBAKIR
+function label(city: City, upper = false): string {}
+function·label(city······,·upper·=·false)·········{}
+const n = cities.at(-1)!.plate as number; interface X { a: 1 }
+const·n·=·cities.at(-1)·.plate··········;·····················
+Error created on line 26
+undefined Ankara

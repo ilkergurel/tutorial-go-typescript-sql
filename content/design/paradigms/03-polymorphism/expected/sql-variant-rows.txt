@@ -1,0 +1,9 @@
+CREATE TABLE
+INSERT 0 3
+SELECT 3
+    code      | price_kurus | kind
+    ----------+-------------+--------
+    DEV250    | 0           | fixed
+    HOSGELDIN | 15000       | fixed
+    KASIM15   | 17000       | percent
+ERROR: new row for relation "discounts" violates check constraint "one_shape" (SQLSTATE 23514)

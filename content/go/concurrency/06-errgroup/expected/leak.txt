@@ -1,0 +1,2 @@
+buffered channel, leaked goroutines: 0
+unbuffered channel, leaked goroutines: 2

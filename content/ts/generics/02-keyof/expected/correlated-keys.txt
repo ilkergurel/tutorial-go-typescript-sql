@@ -1,0 +1,3 @@
+setLoose: pageSize is a string
+{"locale":"tr-TR","pageSize":20,"darkMode":true}
+pageSize=25; darkMode=açık

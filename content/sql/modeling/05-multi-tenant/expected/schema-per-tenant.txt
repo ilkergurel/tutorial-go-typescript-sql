@@ -1,0 +1,23 @@
+CREATE SCHEMA
+CREATE SCHEMA
+CREATE TABLE
+CREATE TABLE
+INSERT 0 2
+INSERT 0 1
+SET
+SELECT 1
+    id | code
+    ---+------
+    1  | REQ-1
+SELECT 2
+    tenant | requirements
+    -------+-------------
+    guney  | 1
+    kuzey  | 2
+ALTER TABLE
+SELECT 2
+    table_schema | columns
+    -------------+--------
+    tenant_guney | 2
+    tenant_kuzey | 3
+ERROR: column "priority" does not exist (SQLSTATE 42703)

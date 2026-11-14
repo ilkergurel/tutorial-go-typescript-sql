@@ -1,0 +1,2 @@
+app-dep:  190 packages, net/http true, crypto/tls true
+app-copy:  60 packages, net/http false, crypto/tls false

@@ -1,0 +1,6 @@
+$ go list -f "{{.ImportPath}} -> {{.Imports}}" ./...
+example.com/shop -> [example.com/shop/email example.com/shop/order]
+example.com/shop/email -> [example.com/shop/order fmt]
+example.com/shop/order -> []
+$ go run .
+shop@example.com to ayse@example.com: order A-1 confirmed

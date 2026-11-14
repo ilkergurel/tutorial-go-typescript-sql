@@ -1,0 +1,19 @@
+CREATE TYPE
+CREATE TABLE
+INSERT 0 3
+CREATE TABLE
+INSERT 0 3
+SELECT 1
+    enum_order              | text_order
+    ------------------------+------------------------
+    {open,in_progress,done} | {done,in_progress,open}
+SELECT 3
+    id | label_tr
+    ---+---------
+    2  | Açık
+    3  | Sürüyor
+    1  | Bitti
+ALTER TYPE
+INSERT 0 1
+ALTER TABLE
+ERROR: update or delete on table "statuses" violates foreign key constraint "tickets_as_lookup_fkey" on table "tickets" (SQLSTATE 23503)

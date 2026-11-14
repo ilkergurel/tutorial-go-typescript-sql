@@ -1,0 +1,10 @@
+== text/template: bytes in, bytes out
+<p>Hi Ayşe"><script>steal()</script></p>
+<a title="Ayşe"><script>steal()</script>" href="javascript:steal()">site</a>
+<a href="/search?q=Ayşe"><script>steal()</script>">search</a>
+<script>const user = Ayşe"><script>steal()</script>;</script>
+== html/template: escaped per context
+<p>Hi Ayşe&#34;&gt;&lt;script&gt;steal()&lt;/script&gt;</p>
+<a title="Ayşe&#34;&gt;&lt;script&gt;steal()&lt;/script&gt;" href="#ZgotmplZ">site</a>
+<a href="/search?q=Ay%c5%9fe%22%3e%3cscript%3esteal%28%29%3c%2fscript%3e">search</a>
+<script>const user = "Ayşe\"\u003e\u003cscript\u003esteal()\u003c/script\u003e";</script>

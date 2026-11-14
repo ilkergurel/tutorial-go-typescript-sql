@@ -1,0 +1,4 @@
+before COMMIT: []
+after COMMIT:  [order 1 paid]
+rolled back:   []
+four in a tx:  [order 3 paid order 4 paid order 3 shipped]

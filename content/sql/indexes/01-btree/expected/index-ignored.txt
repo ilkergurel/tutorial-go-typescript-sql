@@ -1,0 +1,51 @@
+CREATE TABLE
+INSERT 0 20000
+CREATE INDEX
+ANALYZE
+EXPLAIN
+    QUERY PLAN
+    ------------------------------------------------
+    Aggregate
+      ->  Bitmap Heap Scan on payments
+            Recheck Cond: (amount < 10)
+            ->  Bitmap Index Scan on payments_amount
+                  Index Cond: (amount < 10)
+EXPLAIN
+    QUERY PLAN
+    ------------------------------
+    Aggregate
+      ->  Seq Scan on payments
+            Filter: (amount < 900)
+EXPLAIN
+    QUERY PLAN
+    ---------------------------------------------------------
+    Aggregate (actual rows=1.00 loops=1)
+      Buffers: shared hit=147
+      ->  Seq Scan on payments (actual rows=18000.00 loops=1)
+            Filter: (amount < 900)
+            Rows Removed by Filter: 2000
+            Buffers: shared hit=147
+SET
+EXPLAIN
+    QUERY PLAN
+    -------------------------------------------------------------------------------
+    Aggregate (actual rows=1.00 loops=1)
+      Buffers: shared hit=149 read=16
+      ->  Bitmap Heap Scan on payments (actual rows=18000.00 loops=1)
+            Recheck Cond: (amount < 900)
+            Heap Blocks: exact=147
+            Buffers: shared hit=149 read=16
+            ->  Bitmap Index Scan on payments_amount (actual rows=18000.00 loops=1)
+                  Index Cond: (amount < 900)
+                  Index Searches: 1
+                  Buffers: shared hit=2 read=16
+SET
+EXPLAIN
+    QUERY PLAN
+    ---------------------------------------------------------------------------------
+    Aggregate (actual rows=1.00 loops=1)
+      Buffers: shared hit=18018
+      ->  Index Scan using payments_amount on payments (actual rows=18000.00 loops=1)
+            Index Cond: (amount < 900)
+            Index Searches: 1
+            Buffers: shared hit=18018

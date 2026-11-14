@@ -1,0 +1,2 @@
+newlines are not counted in chars or bytes
+lines=3 words=9 chars=52 bytes=57

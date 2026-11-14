@@ -1,0 +1,5 @@
+7/2 = 3
+error: division by zero
+42 <nil>
+-2 9
+0 0

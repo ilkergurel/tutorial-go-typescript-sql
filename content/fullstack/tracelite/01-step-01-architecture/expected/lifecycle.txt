@@ -1,0 +1,9 @@
+browser  GET /api/requirements/01937b6e-0000-7000-8000-000000000001
+go       matched "GET /api/requirements/{requirementId}"
+pgx      one row; created_at arrives in the zone "Local"
+browser  200 application/json {"id":"01937b6e-0000-7000-8000-000000000001","parentId":null,"createdAt":"2026-11-13T06:30:00Z"}
+
+browser  GET /api/requirements/01937b6e-0000-7000-8000-000000000999
+go       matched "GET /api/requirements/{requirementId}"
+browser  404 application/problem+json {"type":"about:blank","title":"Not Found","status":404}
+

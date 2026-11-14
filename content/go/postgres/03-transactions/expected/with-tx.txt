@@ -1,0 +1,4 @@
+transfer 30: err=<nil> insufficient=false
+  balances: [Ayşe=70 Çağrı=50] <nil>
+transfer 500: err=debit Ayşe: insufficient funds insufficient=true
+  balances: [Ayşe=70 Çağrı=50] <nil>

@@ -1,0 +1,36 @@
+[1] A: BEGIN
+[2] A: SELECT 1
+    got_it
+    ------
+    t
+[3] B: SELECT 1
+    got_it
+    ------
+    f
+[4] A: COMMIT
+[5] B: SELECT 1
+    got_it
+    ------
+    t
+[6] A: BEGIN
+[7] A: SELECT 1
+    got_it
+    ------
+    t
+[8] A: ROLLBACK
+[9] B: SELECT 1
+    got_it
+    ------
+    f
+[10] A: SELECT 1
+    released
+    --------
+    t
+[11] B: SELECT 1
+    got_it
+    ------
+    t
+[12] B: SELECT 1
+    released
+    --------
+    t

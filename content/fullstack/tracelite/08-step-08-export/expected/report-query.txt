@@ -1,0 +1,22 @@
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+SET
+INSERT 0 7
+INSERT 0 4
+INSERT 0 5
+INSERT 0 5
+PREPARE
+SELECT 9
+    code               | title                | depth | has_children | coverage   | test | result | finished_at
+    -------------------+----------------------+-------+--------------+------------+------+--------+-----------------------
+    AUTH               | Kimlik doğrulama     | 0     | t            | uncovered  | NULL | NULL   | NULL
+    AUTH-LOGIN         | Parola ile giriş     | 1     | t            | uncovered  | NULL | NULL   | NULL
+    AUTH-LOGIN-2FA     | İki adımlı doğrulama | 2     | f            | passing    | TC-1 | passed | 2026-11-13 06:00:00+00
+    AUTH-LOGIN-2FA     | İki adımlı doğrulama | 2     | f            | passing    | TC-2 | passed | 2026-11-13 06:00:00+00
+    AUTH-LOGIN-LOCKOUT | Hesap kilitleme      | 2     | f            | incomplete | TC-1 | passed | 2026-11-13 06:00:00+00
+    AUTH-LOGIN-LOCKOUT | Hesap kilitleme      | 2     | f            | incomplete | TC-4 | NULL   | NULL
+    AUTH-RESET         | Parola sıfırlama     | 1     | f            | failing    | TC-3 | failed | 2026-11-13 06:00:00+00
+    EXPORT             | Dışa aktarma         | 0     | t            | uncovered  | NULL | NULL   | NULL
+    EXPORT-CSV         | CSV indir            | 1     | f            | uncovered  | NULL | NULL   | NULL

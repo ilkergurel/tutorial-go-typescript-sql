@@ -1,0 +1,13 @@
+frontend -> backend: yes, via default
+frontend -> app-db: no
+runner -> playground-db: yes, via runner-net
+runner -> app-db: yes, via backend-net
+backend -> mocksvc: no: shares backend-net, runner-net, but listens on 127.0.0.1:8091
+runner -> internet: no
+frontend -> internet: yes, via default
+app-db publishes 127.0.0.1:5432 but sits on internal networks only
+playground-db publishes 127.0.0.1:5433 but sits on internal networks only
+after the fix:
+  runner -> app-db: no
+  runner -> backend: yes, via runner-net
+  runner -> playground-db: yes, via runner-net

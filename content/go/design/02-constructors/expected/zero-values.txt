@@ -1,0 +1,4 @@
+runs: 2 0
+merhaba, dünya
+http.Client Timeout: 0s
+http.Server ReadHeaderTimeout: 0s

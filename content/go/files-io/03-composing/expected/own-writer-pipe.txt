@@ -1,0 +1,4 @@
+{"id":1,"city":"Bursa"}
+{"id":2,"city":"Muğla"}
+{"id":3,"city":"Çorum"}
+74 bytes in 3 writes, one record at a time

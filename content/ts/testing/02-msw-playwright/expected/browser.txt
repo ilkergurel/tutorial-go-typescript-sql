@@ -1,0 +1,3 @@
+search lists the cities the API returns
+a failing API shows an alert and no list
+2 passed

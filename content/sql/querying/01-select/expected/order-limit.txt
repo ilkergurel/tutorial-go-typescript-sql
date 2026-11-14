@@ -1,0 +1,30 @@
+CREATE TABLE
+INSERT 0 6
+UPDATE 1
+SELECT 3
+    id | player
+    ---+-------
+    2  | emre
+    3  | selin
+    4  | umut
+SELECT 2
+    player | points
+    -------+-------
+    emre   | NULL
+    selin  | 90
+SELECT 2
+    player | points
+    -------+-------
+    selin  | 90
+    umut   | 85
+SELECT 2
+    player | points
+    -------+-------
+    zeynep | 85
+    deniz  | 72
+SELECT 3
+    player | points
+    -------+-------
+    selin  | 90
+    umut   | 85
+    zeynep | 85

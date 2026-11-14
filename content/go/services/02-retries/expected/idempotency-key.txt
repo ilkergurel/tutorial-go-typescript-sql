@@ -1,0 +1,6 @@
+with Idempotency-Key: false
+  no response: charged or not? unknown, so retry
+  got pay_2 (err=<nil>); customer charged 2 time(s)
+with Idempotency-Key: true
+  no response: charged or not? unknown, so retry
+  got pay_1 (err=<nil>); customer charged 1 time(s)

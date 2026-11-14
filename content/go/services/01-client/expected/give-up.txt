@@ -1,0 +1,5 @@
+http.DefaultClient.Timeout: 0s
+/ok      body="pong" timeout=false err=<nil>
+/missing body="" timeout=false err=unexpected status 404
+/hang    body="" timeout=true err=context deadline exceeded (Client.Timeout exceeded while awaiting headers)
+/stall   body="" timeout=true err=read body: context deadline exceeded

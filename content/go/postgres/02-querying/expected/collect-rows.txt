@@ -1,0 +1,4 @@
+[{ID:1 Name:Ayşe City:İzmir BirthYear:1990} {ID:3 Name:Işıl City:İzmir BirthYear:2001}] <nil>
+[Ayşe Çağrı Işıl] <nil>
+no rows in result set true true
+struct doesn't have corresponding row field phone

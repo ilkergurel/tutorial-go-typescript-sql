@@ -1,0 +1,2 @@
+read 5000 bytes, err=stalled: no data for 1s
+errors.Is(err, errStalled): true

@@ -1,0 +1,16 @@
+CREATE TABLE
+INSERT 0 7
+SELECT 5
+    outline                | depth
+    -----------------------+------
+    AUTH                   | 0
+    . AUTH-LOGIN           | 1
+    . . AUTH-LOGIN-2FA     | 2
+    . . AUTH-LOGIN-LOCKOUT | 2
+    . AUTH-RESET           | 1
+SELECT 3
+    up | code
+    ---+---------------
+    0  | AUTH-LOGIN-2FA
+    1  | AUTH-LOGIN
+    2  | AUTH

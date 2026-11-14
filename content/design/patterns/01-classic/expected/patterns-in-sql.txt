@@ -1,0 +1,20 @@
+CREATE TABLE
+INSERT 0 2
+CREATE TABLE
+INSERT 0 3
+CREATE VIEW
+SELECT 3
+    id | rule    | fee_kurus
+    ---+---------+----------
+    1  | flat    | 4990
+    2  | carrier | 0
+    3  | carrier | 6490
+CREATE TABLE
+CREATE FUNCTION
+CREATE TRIGGER
+INSERT 0 2
+SELECT 2
+    id | topic        | payload
+    ---+--------------+-------------------------
+    1  | order.placed | {"id": 4, "tl": 99.90}
+    2  | order.placed | {"id": 5, "tl": 1250.00}

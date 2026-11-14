@@ -1,0 +1,4 @@
+ok:   REQ-LOGIN <- TC-10
+hata: 2 sütun bekleniyordu, 1 bulundu
+hata: geçersiz gereksinim "giriş"
+hata: geçersiz test "TC-x"

@@ -1,0 +1,59 @@
+SET
+CREATE TABLE
+INSERT 0 20000
+CREATE INDEX
+ANALYZE
+SELECT 5
+    id    | created_at
+    ------+-----------------------
+    12000 | 2026-01-05 04:00:00+03
+    11999 | 2026-01-05 03:59:00+03
+    11998 | 2026-01-05 03:59:00+03
+    11997 | 2026-01-05 03:58:00+03
+    11996 | 2026-01-05 03:58:00+03
+SELECT 5
+    id    | created_at
+    ------+-----------------------
+    12000 | 2026-01-05 04:00:00+03
+    11999 | 2026-01-05 03:59:00+03
+    11998 | 2026-01-05 03:59:00+03
+    11997 | 2026-01-05 03:58:00+03
+    11996 | 2026-01-05 03:58:00+03
+EXPLAIN
+    QUERY PLAN
+    --------------------------------------------------------------------------------------
+    Limit (actual rows=5.00 loops=1)
+      Buffers: shared hit=93
+      ->  Index Only Scan Backward using posts_feed on posts (actual rows=8005.00 loops=1)
+            Heap Fetches: 8005
+            Index Searches: 1
+            Buffers: shared hit=93
+EXPLAIN
+    QUERY PLAN
+    ----------------------------------------------------------------------------------------------------------
+    Limit (actual rows=5.00 loops=1)
+      Buffers: shared hit=3
+      ->  Index Only Scan Backward using posts_feed on posts (actual rows=5.00 loops=1)
+            Index Cond: (ROW(created_at, id) < ROW('2026-01-05 04:00:00+03'::timestamp with time zone, 12001))
+            Heap Fetches: 5
+            Index Searches: 1
+            Buffers: shared hit=3
+SELECT 3
+    id
+    -----
+    20000
+    19999
+    19998
+INSERT 0 1
+SELECT 3
+    id
+    -----
+    19998
+    19997
+    19996
+SELECT 3
+    id
+    -----
+    19997
+    19996
+    19995

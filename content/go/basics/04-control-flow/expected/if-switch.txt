@@ -1,0 +1,9 @@
+x  -> not a number
+-5 -> negative
+0  -> zero
+4  -> even
+7  -> odd
+no team plan; free limit is 3
+Sat is weekend
+A
+this runs too, although grade < 0 is false

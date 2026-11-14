@@ -1,0 +1,18 @@
+$ levels --min warn < app.log
+WARN  1
+ERROR 2
+exit status 0
+$ levels -j < app.log
+{"INFO":2,"WARN":1,"ERROR":2}
+exit status 0
+$ levels --min < app.log
+(stderr) levels: Option '--min <value>' argument missing
+(stderr) usage: levels [--min LEVEL] [-j] < app.log
+exit status 2
+$ levels --level=ERROR < app.log
+(stderr) levels: Unknown option '--level'
+(stderr) usage: levels [--min LEVEL] [-j] < app.log
+exit status 2
+$ levels --min trace < app.log
+(stderr) levels: unknown level "trace"
+exit status 2

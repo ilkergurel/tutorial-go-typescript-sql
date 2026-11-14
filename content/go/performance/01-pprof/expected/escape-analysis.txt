@@ -1,0 +1,8 @@
+$ go build -gcflags=-m .
+./esc.go:8:2: moved to heap: p
+./esc.go:13:7: &Point{...} does not escape
+./esc.go:17:38: make([]byte, n) escapes to heap
+./esc.go:20:13: make([]byte, n) does not escape
+./esc.go:25:6: moved to heap: buf
+./esc.go:29:47: ... argument does not escape
+./esc.go:29:49: p.X escapes to heap

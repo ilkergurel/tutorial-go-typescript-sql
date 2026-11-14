@@ -1,0 +1,6 @@
+"raporlar/Ocak.csv"  utf8-flag=false IsLocal=true
+"raporlar/Şubat.csv" utf8-flag=true  IsLocal=true
+"../../evil.txt"     utf8-flag=false IsLocal=false
+extracted: evil.txt
+extracted: raporlar/Ocak.csv
+extracted: raporlar/Şubat.csv

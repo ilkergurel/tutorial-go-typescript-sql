@@ -1,0 +1,10 @@
+mount #genel
+  connect #genel
+  close #genel
+  connect #genel
+re-render, same room
+switch to #duyurular
+  close #genel
+  connect #duyurular
+unmount
+  close #duyurular

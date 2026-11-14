@@ -1,0 +1,10 @@
+$ go run .
+main.go:6:2: no required module provides package example.com/shop; to add it:
+	go get example.com/shop
+-> exit status 1
+$ go run .
+gross: 1200
+$ go build ./...
+package example.com/app/sneaky
+	sneaky/sneaky.go:3:8: use of internal package example.com/shop/internal/vat not allowed
+-> exit status 1

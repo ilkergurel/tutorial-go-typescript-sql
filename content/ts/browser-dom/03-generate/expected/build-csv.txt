@@ -1,0 +1,7 @@
+sort(): Ayşe Yılmaz, Zeynep Ak, Çağla Er, Şule Kaya
+Müşteri;Şehir;Tutar (₺);Not⏎
+Ayşe Yılmaz;Çorum;0,75;"2. kat
+3 numara"⏎
+Çağla Er;Iğdır;15;"zil bozuk; arayın"⏎
+Şule Kaya;İzmir;1234,5;⏎
+Zeynep Ak;Ankara;99,9;"kapıda ""nakit"""⏎

@@ -1,0 +1,9 @@
+EffectBadge
+  EffectBadge renders ""
+  committed: ""
+  EffectBadge renders "İI"
+  a moment later: "İI"
+DerivedBadge
+  DerivedBadge renders "İI"
+  committed: "İI"
+  a moment later: "İI"

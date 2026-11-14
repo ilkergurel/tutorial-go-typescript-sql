@@ -1,0 +1,27 @@
+CREATE TABLE
+INSERT 0 6
+SELECT 2
+    name             | price  | stock_value
+    -----------------+--------+------------
+    Çay bardağı seti | 189.90 | 7596.00
+    Bakır tepsi      | 899.00 | 2697.00
+SELECT 4
+    name
+    ----------------
+    Çay bardağı seti
+    Bakır tepsi
+    Termos
+    Hamak
+SELECT 3
+    name
+    ----------------
+    Çay bardağı seti
+    Bakır tepsi
+    Termos
+SELECT 3
+    name         | price
+    -------------+-------
+    Cezve        | 349.00
+    Kilim yastık | 520.00
+    Termos       | 649.00
+ERROR: column "stock_value" does not exist (SQLSTATE 42703)

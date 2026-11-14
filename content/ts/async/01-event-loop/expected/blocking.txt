@@ -1,0 +1,3 @@
+no pause:              the timer ran after 3 of 3 chunks
+await Promise.resolve: the timer ran after 3 of 3 chunks
+await setTimeout 0:    the timer ran after 1 of 3 chunks

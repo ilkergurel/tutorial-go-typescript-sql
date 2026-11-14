@@ -1,0 +1,13 @@
+$ casing lower İZMİR IŞIK
+izmir ışık
+  exit 0
+$ casing lower -lang en İZMİR IŞIK
+izmir işik
+  exit 0
+$ casing upper -lang=de istanbul
+  exit 2
+$ casing title x
+  exit 2
+$ casing upper istanbul ırmak
+İSTANBUL IRMAK
+  exit 0

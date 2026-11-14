@@ -1,0 +1,6 @@
+ 1 learners, 800ms per run:  1 served,  0 busy, longest wait 0s
+10 learners, 800ms per run: 10 served,  0 busy, longest wait 3.2s
+10 learners, 3s per run:  8 served,  2 busy, longest wait 9s
+30 learners, 3s per run:  8 served, 22 busy, longest wait 9s
+--- PASS: TestRunSlotsUnderLoad
+PASS

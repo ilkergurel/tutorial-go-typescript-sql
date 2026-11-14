@@ -1,0 +1,23 @@
+CREATE TABLE
+INSERT 0 50000
+ANALYZE
+CREATE FUNCTION
+SET
+SELECT 1
+    method         | stored_in
+    ---------------+----------
+    external merge | Disk
+SET
+SELECT 1
+    method    | stored_in
+    ----------+----------
+    quicksort | Memory
+SET
+EXPLAIN
+    QUERY PLAN
+    ------------------------------------------------------------------
+    Limit (actual rows=20.00 loops=1)
+      ->  Sort (actual rows=20.00 loops=1)
+            Sort Key: note
+            Sort Method: top-N heapsort  Memory: 27kB
+            ->  Seq Scan on trace_links (actual rows=50000.00 loops=1)

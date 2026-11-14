@@ -1,0 +1,16 @@
+CREATE TABLE
+INSERT 0 1000
+ALTER TABLE
+ALTER TABLE
+SELECT 1
+    rows_without_country | validated
+    ---------------------+----------
+    1000                 | f
+UPDATE 500
+UPDATE 500
+ALTER TABLE
+SELECT 1
+    rows_without_country | validated
+    ---------------------+----------
+    0                    | t
+ERROR: null value in column "country" of relation "customers" violates not-null constraint (SQLSTATE 23502)

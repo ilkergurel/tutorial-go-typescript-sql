@@ -1,0 +1,3 @@
+siparisler.csv lines: 10000 last: 9999;İstanbul;69993
+gzip.Write: non-Latin-1 header string
+"ay;tutar\nKasım;100\n", unexpected EOF

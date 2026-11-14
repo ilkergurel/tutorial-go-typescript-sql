@@ -1,0 +1,29 @@
+CREATE SCHEMA
+CREATE TABLE
+CREATE FUNCTION
+SELECT 1
+    schema_usage | table_select | function_execute
+    -------------+--------------+-----------------
+    f            | f            | t
+ALTER DEFAULT PRIVILEGES
+ALTER DEFAULT PRIVILEGES
+SELECT 2
+    for_role   | in_schema      | kind | defaclacl
+    -----------+----------------+------+--------------------------
+    playground | (every schema) | f    | {playground=X/playground}
+    playground | tracelite      | r    | {=arwd/playground}
+CREATE TABLE
+CREATE TABLE
+CREATE FUNCTION
+SELECT 2
+    obj                    | public_insert
+    -----------------------+--------------
+    tracelite.projects     | f
+    tracelite.requirements | t
+SELECT 1
+    function_execute
+    ----------------
+    f
+REVOKE
+INSERT 0 1
+ERROR: permission denied for sequence legacy_notes_id_seq (SQLSTATE 42501)

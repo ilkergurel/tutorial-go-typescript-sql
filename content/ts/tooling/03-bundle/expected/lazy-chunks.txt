@@ -1,0 +1,7 @@
+[static] evaluated before main
+main starts: merhaba
+[chunk] evaluating editor
+first click: satır 2000
+second click: satır 2000
+same instance: true
+lazy load failed: chunk failed to load

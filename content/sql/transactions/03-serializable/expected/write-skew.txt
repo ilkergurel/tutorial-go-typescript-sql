@@ -1,0 +1,18 @@
+[1] A: BEGIN
+[2] B: BEGIN
+[3] A: SELECT 1
+    on_call
+    -------
+    2
+[4] B: SELECT 1
+    on_call
+    -------
+    2
+[5] A: UPDATE 1
+[6] B: UPDATE 1
+[7] A: COMMIT
+[8] B: COMMIT
+[9] A: SELECT 1
+    on_call
+    -------
+    0

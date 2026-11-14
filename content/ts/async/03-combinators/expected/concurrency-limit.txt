@@ -1,0 +1,12 @@
+start a.csv (1 in flight)
+start b.csv (2 in flight)
+start c.csv (2 in flight)
+start d.csv (2 in flight)
+start e.csv (2 in flight)
+limit 2 -> peak 2: a.csv:ok b.csv:ok c.csv:ok d.csv:ok e.csv:ok
+start a.csv (1 in flight)
+start b.csv (2 in flight)
+start c.csv (3 in flight)
+start d.csv (4 in flight)
+start e.csv (5 in flight)
+Promise.all -> peak 5: 5 results

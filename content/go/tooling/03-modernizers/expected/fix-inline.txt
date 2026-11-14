@@ -1,0 +1,11 @@
+$ go fix -inline -diff ./...
+@@ -6,4 +6,4 @@
+ 	"example.com/shop/money"
+ )
+ 
+-func main() { fmt.Println(money.Format(1250)) }
++func main() { fmt.Println(money.Lira(1250)) }
+(exit status 1)
+$ go fix -inline ./...
+$ go run .
+12,50 TL

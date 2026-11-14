@@ -1,0 +1,4 @@
+two server processes: true
+acquired: 2 of 2
+third query: context deadline exceeded
+after rows1.Close(): 1 <nil>

@@ -1,0 +1,16 @@
+SET
+CREATE TABLE
+INSERT 0 6
+SELECT 6
+    test_case | day        | status | prev_status | prev_or_label | delta_ms | until_next_run
+    ----------+------------+--------+-------------+---------------+----------+---------------
+    Giriş     | 2026-11-10 | passed | NULL        | first run     | NULL     | 1 day
+    Giriş     | 2026-11-11 | passed | passed      | passed        | 10       | 1 day
+    Giriş     | 2026-11-12 | failed | passed      | passed        | 810      | 1 day
+    Giriş     | 2026-11-13 | passed | failed      | failed        | -815     | NULL
+    Çıkış     | 2026-11-11 | failed | NULL        | first run     | NULL     | 1 day 14:35:00
+    Çıkış     | 2026-11-13 | failed | failed      | failed        | 5        | NULL
+SELECT 1
+    test_case | ran_at
+    ----------+-----------------------
+    Giriş     | 2026-11-12 09:00:00+03

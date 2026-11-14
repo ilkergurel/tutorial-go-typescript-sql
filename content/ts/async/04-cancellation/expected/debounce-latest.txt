@@ -1,0 +1,8 @@
+search "a"
+search "an"
+search "ant"
+  "a" aborted
+  "an" aborted
+  "ant" -> Antalya
+search "izm"
+  "izm" -> İzmir

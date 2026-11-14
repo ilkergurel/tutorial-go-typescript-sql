@@ -1,0 +1,3 @@
+cities.csv: 10200000 bytes, err=<nil>
+cut.csv: 1048576 bytes, err=digest mismatch
+files left: [cities.csv]

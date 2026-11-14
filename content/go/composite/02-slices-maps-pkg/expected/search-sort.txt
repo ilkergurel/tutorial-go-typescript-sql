@@ -1,0 +1,9 @@
+true 1 42
+[3 7 7 19 42] 3 true
+Ege         İzmir    4479
+Ege         Manisa   1475
+Ege         Aydın    1166
+İç Anadolu  Ankara   5864
+İç Anadolu  Konya    2330
+first city over 5M: Ankara
+[Ankara Iğdır Zonguldak Çorum İzmir]

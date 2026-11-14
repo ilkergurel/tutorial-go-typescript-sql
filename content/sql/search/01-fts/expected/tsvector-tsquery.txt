@@ -1,0 +1,22 @@
+SELECT 1
+    document
+    ------------------------------------------------------------------------------------------
+    'archiv':11 'case':7 'everi':4 'export':1,9 'includ':3 'link':5 'must':2 'sign':8 'test':6
+SELECT 1
+    to_tsquery                       | plainto           | phraseto                     | websearch
+    ---------------------------------+-------------------+------------------------------+----------------------------------------
+    'export' & ( 'sign' | 'archiv' ) | 'sign' & 'export' | 'link' <-> 'test' <-> 'case' | 'test' <-> 'case' & 'export' & !'draft'
+SELECT 4
+    typed          | matches
+    ---------------+--------
+    exported cases | t
+    "linked test"  | t
+    "test linked"  | f
+    export -linked | f
+SELECT 3
+    typed       | english | simple
+    ------------+---------+-------
+    migr:*      | t       | t
+    migrati:*   | f       | t
+    migration:* | t       | t
+ERROR: syntax error in tsquery: "signed exports" (SQLSTATE 42601)

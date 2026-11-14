@@ -1,0 +1,22 @@
+CREATE TABLE
+INSERT 0 3
+SELECT 3
+    doc              | is_object
+    -----------------+----------
+    [1, 2]           | f
+    {"case":         | f
+    {"case": "TC-1"} | t
+CREATE TABLE
+INSERT 0 1
+SELECT 3
+    code | status
+    -----+-------
+    TC-1 | passed
+    TC-2 | passed
+    TC-4 | failed
+SELECT 3
+    action | code | old_status | new_status
+    -------+------+------------+-----------
+    UPDATE | TC-2 | failed     | passed
+    UPDATE | TC-3 | failed     | not run
+    INSERT | TC-4 | NULL       | failed

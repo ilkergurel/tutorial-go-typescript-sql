@@ -1,0 +1,4 @@
+abort(): AbortError
+timeout: TimeoutError
+any, in time: 200 /fast
+any, aborted: page closed

@@ -1,0 +1,4 @@
+localStorage unavailable (SecurityError): keeping data in memory
+first visit: {"theme":"light","pageSize":20}
+saved:       {"theme":"dark","pageSize":50}
+bad shape:   {"theme":"light","pageSize":20}

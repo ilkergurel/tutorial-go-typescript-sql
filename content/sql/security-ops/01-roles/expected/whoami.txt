@@ -1,0 +1,22 @@
+SELECT 1
+    rolname    | rolsuper | rolcreaterole | rolcreatedb | rolbypassrls
+    -----------+----------+---------------+-------------+-------------
+    playground | f        | f             | f           | f
+SELECT 2
+    rolname
+    -----------------
+    pg_database_owner
+    playground
+CREATE FUNCTION
+SELECT 9
+    statement                              | outcome
+    ---------------------------------------+----------------------------------------------------------------
+    CREATE ROLE tracelite_app LOGIN        | permission denied to create role
+    ALTER ROLE playground BYPASSRLS        | permission denied to alter role
+    SET ROLE pg_read_all_stats             | permission denied to set role "pg_read_all_stats"
+    COPY (SELECT 1) TO PROGRAM 'whoami'    | permission denied to COPY to or from an external program
+    SELECT pg_read_file('postgresql.conf') | permission denied for function pg_read_file
+    SELECT rolpassword FROM pg_authid      | permission denied for table pg_authid
+    SET log_min_duration_statement = 0     | permission denied to set parameter "log_min_duration_statement"
+    CREATE SCHEMA tracelite                | allowed
+    DROP SCHEMA public                     | must be owner of schema public

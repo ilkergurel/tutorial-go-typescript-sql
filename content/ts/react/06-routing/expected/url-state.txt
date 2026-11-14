@@ -1,0 +1,5 @@
+start           /lessons              Şablonlar, defer, Kanallar, Sözlükler
+Temel           /lessons?level=basic  Şablonlar, defer, Sözlükler
+A-Z             /lessons?level=basic  defer, Sözlükler, Şablonlar
+Sözlükler       /lessons/sozlukler    (lesson page)
+sozlukler: geri /lessons?level=basic  Şablonlar, defer, Sözlükler

@@ -1,0 +1,16 @@
+naive: pad to 10 using len(s)
+Istanbul  |
+İstanbul |
+Iğdır   |
+Ankara    |
+fmt: a width of 10 pads by runes
+Istanbul  |
+İstanbul  |
+Iğdır     |
+Ankara    |
+tabwriter: widths computed from the data
+CITY      BYTES  RUNES
+Istanbul  8      8
+İstanbul  9      8
+Iğdır     7      5
+Ankara    6      6

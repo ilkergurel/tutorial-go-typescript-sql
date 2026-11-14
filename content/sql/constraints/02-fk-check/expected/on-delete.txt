@@ -1,0 +1,19 @@
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE INDEX
+CREATE INDEX
+CREATE INDEX
+INSERT 0 2
+INSERT 0 2
+INSERT 0 3
+INSERT 0 1
+DELETE 1
+DELETE 1
+SELECT 2
+    id  | project_id | owner_id | title
+    ----+------------+----------+---------------------
+    100 | 1          | 10       | Pay by card
+    101 | 1          | NULL     | Pay by bank transfer
+ERROR: update or delete on table "requirements" violates RESTRICT setting of foreign key constraint "test_runs_requirement_id_fkey" on table "test_runs" (SQLSTATE 23001)

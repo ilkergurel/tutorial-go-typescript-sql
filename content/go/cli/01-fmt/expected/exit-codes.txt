@@ -1,0 +1,10 @@
+sum ["40" "2"] -> exit 0
+  stdout: "42\n"
+  stderr: ""
+sum ["40" "two"] -> exit 1
+  stdout: ""
+  stderr: "sum: strconv.Atoi: parsing \"two\": invalid syntax\n"
+sum [] -> exit 2
+  stdout: ""
+  stderr: "usage: sum N...\n"
+6

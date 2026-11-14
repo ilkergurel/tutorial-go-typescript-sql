@@ -1,0 +1,2 @@
+2 rows in 42ms
+error: timeout

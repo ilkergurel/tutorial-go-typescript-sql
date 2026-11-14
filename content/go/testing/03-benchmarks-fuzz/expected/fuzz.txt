@@ -1,0 +1,9 @@
+--- PASS: FuzzTruncate/seed#0
+--- PASS: FuzzTruncate/seed#1
+--- PASS: FuzzTruncate/seed#2
+Truncate("0", -42) = ""
+--- PASS: FuzzTruncate/447915f5237d057f
+Truncate("0ğ", 2) = "0"
+--- PASS: FuzzTruncate/7c28aed13156482b
+--- PASS: FuzzTruncate
+PASS

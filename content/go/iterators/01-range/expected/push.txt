@@ -1,0 +1,11 @@
+  countdown: yield 5
+body: 5
+  countdown: yield 4
+body: 4
+  countdown: cleanup
+2 ayran
+1 simit
+0 çay
+ayran 7
+simit 40
+çay 12

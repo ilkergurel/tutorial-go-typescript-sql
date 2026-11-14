@@ -1,0 +1,8 @@
+utf-8:   COPY 3
+bom:     ERROR: column name mismatch in header line field 1: got "﻿code", expected "code" (SQLSTATE 22P04)
+1254:    ERROR: invalid byte sequence for encoding "UTF8": 0xdd 0x68 (SQLSTATE 22021)
+1254+enc COPY 1
+REQ-1 | 'Giriş ekranı' | 1
+REQ-2 | 'Rapor; PDF' | NULL
+REQ-3 | '' | 2
+REQ-5 | 'İhracat şablonu' | 3

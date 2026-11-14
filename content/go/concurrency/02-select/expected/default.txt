@@ -1,0 +1,6 @@
+login queued: true
+view queued: true
+click queued: false
+handled login
+handled view
+both cases chosen: true

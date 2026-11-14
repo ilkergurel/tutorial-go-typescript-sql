@@ -1,0 +1,8 @@
+slugify > İstanbul'da Hava -> istanbulda-hava
+slugify > Iğdır Kalesi -> igdir-kalesi
+slugify >   Çay & Simit   -> cay-simit
+slugify > Öğrenci Ücretleri 2026 -> ogrenci-ucretleri-2026
+capitalize > capitalize(istanbul) is İstanbul
+capitalize > capitalize(ırmak) is Irmak
+capitalize > capitalize(çorum) is Çorum
+Tests  7 passed (7)

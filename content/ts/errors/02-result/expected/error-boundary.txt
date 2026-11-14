@@ -1,0 +1,5 @@
+[REQ-EXPORT] report: TypeError in Coverage
+[Kaydet] report: Error in SaveButton
+✓ 03_error_boundary.test.tsx > a render error replaces only its own subtree
+✓ 03_error_boundary.test.tsx > an async failure reaches the boundary only when rethrown in render
+Tests  2 passed (2)

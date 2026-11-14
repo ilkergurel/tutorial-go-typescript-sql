@@ -1,0 +1,54 @@
+SELECT 1
+    document                               | query
+    ---------------------------------------+--------
+    'kitap':3 'kitapçı':1 'tanıt':4 'ye':2 | 'kitap'
+CREATE TABLE
+INSERT 0 20000
+CREATE INDEX
+ANALYZE
+EXPLAIN
+    QUERY PLAN
+    -----------------------------------------------------------------------------------------------------
+    Aggregate
+      ->  Bitmap Heap Scan on articles
+            Recheck Cond: (to_tsvector('turkish'::regconfig, body) @@ '''kitap'' & ''dün'''::tsquery)
+            ->  Bitmap Index Scan on articles_body_fts
+                  Index Cond: (to_tsvector('turkish'::regconfig, body) @@ '''kitap'' & ''dün'''::tsquery)
+SELECT 1
+    count
+    -----
+    1000
+EXPLAIN
+    QUERY PLAN
+    ---------------------------------------------------------------------
+    Aggregate
+      ->  Seq Scan on articles
+            Filter: (to_tsvector(body) @@ '''kitap'' & ''dün'''::tsquery)
+CREATE EXTENSION
+SELECT 1
+    show_trgm
+    -------------------------------
+    {"  h"," ha",abe,ber,"er ",hab}
+EXPLAIN
+    QUERY PLAN
+    -------------------------------------------------------
+    Aggregate
+      ->  Seq Scan on articles
+            Filter: (title ~~* '%zmir haberleri 12%'::text)
+CREATE INDEX
+EXPLAIN
+    QUERY PLAN
+    -----------------------------------------------------------------
+    Aggregate
+      ->  Bitmap Heap Scan on articles
+            Recheck Cond: (title ~~* '%zmir haberleri 12%'::text)
+            ->  Bitmap Index Scan on articles_title_trgm
+                  Index Cond: (title ~~* '%zmir haberleri 12%'::text)
+SELECT 1
+    count
+    -----
+    223
+SELECT 1
+    ctype_is_c | igdir                                                   | vs_dur | upper_case
+    -----------+---------------------------------------------------------+--------+-----------
+    f          | {0xf31e1a,0x2ba731,0x3ae6f6,0x3d627d,0x4c1a67,0x5c2028} | 0      | 0

@@ -1,0 +1,25 @@
+CREATE TABLE
+INSERT 0 3
+SELECT 3
+    code  | name     | pos
+    ------+----------+----
+    REQ-1 | security | 1
+    REQ-1 | login    | 2
+    REQ-2 | export   | 1
+SELECT 4
+    code  | name
+    ------+---------
+    REQ-1 | login
+    REQ-1 | security
+    REQ-2 | export
+    REQ-3 | NULL
+CREATE TABLE
+INSERT 0 2
+SELECT 5
+    name | day
+    -----+-----------
+    S1   | 2026-11-02
+    S1   | 2026-11-03
+    S1   | 2026-11-04
+    S2   | 2026-11-05
+    S2   | 2026-11-06

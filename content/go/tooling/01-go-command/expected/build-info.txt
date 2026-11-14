@@ -1,0 +1,7 @@
+^go version: +go1\.[0-9]+\S*
+main package: lesson
+main module: +lesson \(devel\)
+dependencies: 0
+compiler: +gc
+target: +[a-z0-9]+/[a-z0-9]+
+vcs stamped: +false$

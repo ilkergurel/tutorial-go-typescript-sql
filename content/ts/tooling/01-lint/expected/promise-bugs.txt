@@ -1,0 +1,5 @@
+filter(async):   ayşe, mehmet, ışıl
+forEach(async):  0
+floating:        never
+Promise.all:     ayşe
+savedAt later:   12:00

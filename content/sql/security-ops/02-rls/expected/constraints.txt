@@ -1,0 +1,29 @@
+CREATE TABLE
+CREATE TABLE
+INSERT 0 2
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+CREATE POLICY
+CREATE POLICY
+SELECT 1
+    set_config
+    ----------
+    1
+SELECT 1
+    code
+    ----
+    BRK
+INSERT 0 0
+INSERT 0 1
+SELECT 1
+    title              | project
+    -------------------+--------
+    Stops within 300 m | NULL
+DELETE 1
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+INSERT 0 1
+ERROR: insert or update on table "requirements" violates foreign key constraint "requirements_tenant_id_project_id_fkey" (SQLSTATE 23503)

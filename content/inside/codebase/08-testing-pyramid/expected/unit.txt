@@ -1,0 +1,7 @@
+--- PASS: TestSplitStatements/two_statements
+--- PASS: TestSplitStatements/semicolon_in_a_string
+--- PASS: TestSplitStatements/doubled_quote
+--- PASS: TestSplitStatements/semicolon_in_a_comment
+--- PASS: TestSplitStatements/Turkish_identifier
+--- PASS: TestSplitStatements
+PASS

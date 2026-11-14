@@ -1,0 +1,13 @@
+SET
+CREATE TABLE
+INSERT 0 2
+SELECT 2
+    id | build | finished               | owner  | suites             | has_slow
+    ---+-------+------------------------+--------+--------------------+---------
+    1  | 108   | 2026-11-13 09:12:00+03 | NULL   | ["auth", "export"] | t
+    2  | 109   | NULL                   | nobody | ["auth"]           | f
+SELECT 1
+    two_values | an_object | missing
+    -----------+-----------+--------
+    NULL       | NULL      | NULL
+ERROR: JSON path expression in JSON_VALUE must return single scalar item (SQLSTATE 22034)

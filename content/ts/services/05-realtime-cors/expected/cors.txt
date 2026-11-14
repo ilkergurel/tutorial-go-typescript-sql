@@ -1,0 +1,16 @@
+origin: null
+document.cookie: SecurityError
+fetch defaults: mode cors, credentials same-origin
+sent directly: GET {"Accept":"application/json"}
+sent directly: POST {"Content-Type":"multipart/form-data; boundary=x"}
+OPTIONS first: POST {"Content-Type":"application/json"}
+OPTIONS first: GET {"Authorization":"Bearer abc"}
+OPTIONS first: DELETE {}
+blocked https://app.example.com: {}
+read    https://app.example.com: {"access-control-allow-origin":"*"}
+blocked https://app.example.com with cookies: {"access-control-allow-origin":"*"}
+blocked https://app.example.com with cookies: {"access-control-allow-origin":"https://app.example.com"}
+read    https://app.example.com with cookies: {"access-control-allow-origin":"https://app.example.com","access-control-allow-credentials":"true"}
+blocked null: {"access-control-allow-origin":"https://app.example.com"}
+read    null: {"access-control-allow-origin":"*"}
+read    null: {"access-control-allow-origin":"null"}

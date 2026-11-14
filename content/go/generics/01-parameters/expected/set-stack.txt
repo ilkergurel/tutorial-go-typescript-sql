@@ -1,0 +1,4 @@
+3 true false
+[Ankara Iğdır İzmir]
+şık
+'\x00' false

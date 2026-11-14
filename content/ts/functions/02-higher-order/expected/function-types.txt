@@ -1,0 +1,4 @@
+cam iğne su zil çay ılık şeker
+cam çay ılık iğne su şeker zil
+su cam çay zil ılık iğne şeker
+["saved"] number

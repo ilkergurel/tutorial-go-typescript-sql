@@ -1,0 +1,9 @@
+SELECT 1
+    characters | bytes
+    -----------+------
+    4000       | 8000
+SELECT 1
+    pg_notify
+    ---------
+
+ERROR: payload string too long (SQLSTATE 22023)

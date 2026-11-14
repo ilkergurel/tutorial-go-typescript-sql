@@ -1,0 +1,2 @@
+key=index Ankara=-, İzmir=başkent
+key=plate Ankara=başkent, İzmir=-

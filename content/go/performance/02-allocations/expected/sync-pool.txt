@@ -1,0 +1,5 @@
+new buffer per call      4
+buffer from a Pool       1
+Pool of []byte           2
+Pool of *[]byte          1
+true

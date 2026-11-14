@@ -1,0 +1,4 @@
+"" 0 false [] map[]
+nil slice: true nil map: true
+0 0
+[beta] 4 new 2 1

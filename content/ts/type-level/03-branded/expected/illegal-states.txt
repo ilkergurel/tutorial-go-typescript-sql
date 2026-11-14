@@ -1,0 +1,3 @@
+REQ-LOGIN: Işıl onayladı
+REQ-RESET: taslak
+REQ-RESET: Işıl onayladı, kanıt TC-11, TC-12

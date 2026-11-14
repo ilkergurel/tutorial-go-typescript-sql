@@ -1,0 +1,5 @@
+200 {"exitCode":1}
+400 invalid request body
+503 server busy
+level=ERROR msg="run failed" err="sqlrun: connect: connection refused"
+502 run failed: runner or playground database unavailable

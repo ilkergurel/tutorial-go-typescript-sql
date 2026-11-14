@@ -1,0 +1,28 @@
+201 application/json
+{
+  "name": "Gülşen Çağlayıcı",
+  "email": "gulsen@example.com"
+}
+422 application/problem+json
+{
+  "type": "https://example.com/problems/validation",
+  "title": "Your request is not valid.",
+  "status": 422,
+  "errors": [
+    {
+      "pointer": "#/name",
+      "detail": "must be 2-20 characters, got 1"
+    },
+    {
+      "pointer": "#/email",
+      "detail": "must be a bare address like ad@example.com"
+    }
+  ]
+}
+400 application/problem+json
+{
+  "type": "about:blank",
+  "title": "Bad Request",
+  "status": 400,
+  "detail": "malformed JSON"
+}

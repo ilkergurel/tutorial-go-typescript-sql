@@ -1,0 +1,10 @@
+POST /login 200
+    Set-Cookie: __Host-session=s3cr3t-id; Path=/; Max-Age=3600; HttpOnly; Secure; SameSite=Lax
+    Set-Cookie: raw=Aye
+    Set-Cookie: name=QXnFn2U
+GET /me 200 logged in: raw="Aye" decoded="Ayşe"
+POST /logout 403 cross-origin request detected from Sec-Fetch-Site header
+GET /me 200 logged in: raw="Aye" decoded="Ayşe"
+POST /logout 200
+    Set-Cookie: __Host-session=; Path=/; Max-Age=0; HttpOnly; Secure; SameSite=Lax
+GET /me 401 not logged in

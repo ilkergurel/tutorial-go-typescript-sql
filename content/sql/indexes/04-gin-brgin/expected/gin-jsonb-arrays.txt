@@ -1,0 +1,41 @@
+CREATE TABLE
+INSERT 0 20000
+ANALYZE
+CREATE INDEX
+EXPLAIN
+    QUERY PLAN
+    ------------------------------------------------------------------------------
+    Bitmap Heap Scan on products
+      Recheck Cond: (attrs @> '{"brand": "marka-7", "color": "siyah"}'::jsonb)
+      ->  Bitmap Index Scan on products_attrs
+            Index Cond: (attrs @> '{"brand": "marka-7", "color": "siyah"}'::jsonb)
+EXPLAIN
+    QUERY PLAN
+    ----------------------------------------------
+    Bitmap Heap Scan on products
+      Recheck Cond: (attrs ? 'discount'::text)
+      ->  Bitmap Index Scan on products_attrs
+            Index Cond: (attrs ? 'discount'::text)
+EXPLAIN
+    QUERY PLAN
+    -------------------------------------------------------
+    Seq Scan on products
+      Filter: ((attrs ->> 'brand'::text) = 'marka-7'::text)
+CREATE INDEX
+SELECT 1
+    jsonb_ops_pages | jsonb_path_ops_pages
+    ----------------+---------------------
+    37              | 24
+CREATE INDEX
+EXPLAIN
+    QUERY PLAN
+    ---------------------------------------------------------
+    Bitmap Heap Scan on products
+      Recheck Cond: (tags @> '{kategori-7,yeni}'::text[])
+      ->  Bitmap Index Scan on products_tags
+            Index Cond: (tags @> '{kategori-7,yeni}'::text[])
+EXPLAIN
+    QUERY PLAN
+    -------------------------------------------
+    Seq Scan on products
+      Filter: ('kategori-7'::text = ANY (tags))

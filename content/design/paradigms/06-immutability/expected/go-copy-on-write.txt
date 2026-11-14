@@ -1,0 +1,4 @@
+order S-1 simit: 1250
+current simit:   1500
+november ayran after writing to a copy: 0
+october ayran, isolated by With:        1000

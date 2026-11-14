@@ -1,0 +1,4 @@
+Ayşe | Dr. Ayşe
+ısparta ısparta isparta
+izmir 5 7
+["a"] ["b"]

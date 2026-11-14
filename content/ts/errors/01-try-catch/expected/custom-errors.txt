@@ -1,0 +1,4 @@
+REQ-LOGIN <- TC-10
+REQ-EXPORT yok, satır 2 atlandı
+ImportError: satır 2 içe aktarılamadı
+  cause: NotFoundError: REQ-EXPORT bulunamadı

@@ -1,0 +1,17 @@
+CREATE TABLE
+CREATE TABLE
+INSERT 0 2
+UPDATE 1
+INSERT 0 2
+CREATE VIEW
+SELECT 2
+    code | stored | actual
+    -----+--------+-------
+    TC-1 | failed | passed
+    TC-2 | NULL   | passed
+UPDATE 2
+SELECT 2
+    code | last_result | last_run_on
+    -----+-------------+------------
+    TC-1 | passed      | 2026-11-09
+    TC-2 | passed      | 2026-11-09

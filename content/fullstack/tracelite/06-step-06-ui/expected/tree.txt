@@ -1,0 +1,17 @@
+as loaded
+  AUTH: failing (1 failing, 1 incomplete, 1 passing)
+    AUTH-LOGIN: incomplete (1 incomplete, 1 passing)
+      AUTH-LOGIN-2FA: passing (1 passing)
+      AUTH-LOGIN-LOCKOUT: incomplete (1 incomplete)
+    AUTH-RESET: failing (1 failing)
+  EXPORT: uncovered (1 uncovered)
+    EXPORT-CSV: uncovered (1 uncovered)
+after AUTH-LOGIN-SSO is added
+  AUTH: failing (1 failing, 1 uncovered, 1 incomplete, 1 passing)
+    AUTH-LOGIN: uncovered (1 uncovered, 1 incomplete, 1 passing)
+      AUTH-LOGIN-2FA: passing (1 passing)
+      AUTH-LOGIN-LOCKOUT: incomplete (1 incomplete)
+      AUTH-LOGIN-SSO: uncovered (1 uncovered)
+    AUTH-RESET: failing (1 failing)
+  EXPORT: uncovered (1 uncovered)
+    EXPORT-CSV: uncovered (1 uncovered)

@@ -1,0 +1,38 @@
+CREATE TABLE
+INSERT 0 3
+ALTER TABLE
+CREATE POLICY
+SELECT 1
+    seen_by_owner
+    -------------
+    3
+ALTER TABLE
+SELECT 1
+    no_tenant_set
+    -------------
+    0
+SELECT 1
+    set_config
+    ----------
+    1
+SELECT 2
+    id | name
+    ---+----------------------
+    1  | Acme brake controller
+    2  | Acme pump firmware
+EXPLAIN
+    QUERY PLAN
+    ---------------------------------------------------------------------------------------------
+    Seq Scan on projects
+      Filter: (tenant_id = (NULLIF(current_setting('app.tenant'::text, true), ''::text))::bigint)
+UPDATE 0
+DELETE 0
+SELECT 1
+    set_config
+    ----------
+    2
+SELECT 1
+    id | name
+    ---+-----------------------
+    3  | Globex rail signalling
+ERROR: new row violates row-level security policy for table "projects" (SQLSTATE 42501)

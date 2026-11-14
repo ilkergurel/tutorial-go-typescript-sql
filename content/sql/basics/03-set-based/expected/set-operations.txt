@@ -1,0 +1,28 @@
+CREATE TABLE
+CREATE TABLE
+INSERT 0 4
+INSERT 0 5
+SELECT 2
+    sku
+    ---
+    D-9
+    E-1
+SELECT 2
+    sku
+    ---
+    A-1
+    C-3
+SELECT 2
+    sku
+    ---
+    A-2
+    B-7
+SELECT 6
+    sku
+    ---
+    A-1
+    A-2
+    B-7
+    C-3
+    D-9
+    E-1

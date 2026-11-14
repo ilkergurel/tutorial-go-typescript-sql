@@ -1,0 +1,4 @@
+Siparişi gönder (requests: 0)
+Gönderiliyor… (requests: 1)
+Stok yetersiz, tekrar dene (requests: 1)
+Sipariş alındı: TR-1042 (requests: 2)

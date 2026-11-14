@@ -1,0 +1,9 @@
+no defense             evil.example page   -> 200
+no defense             the app's own page  -> 200
+no defense             curl                -> 200
+requireJSON            evil.example page   -> 415
+requireJSON            the app's own page  -> 200
+requireJSON            curl                -> 200
+CrossOriginProtection  evil.example page   -> 403
+CrossOriginProtection  the app's own page  -> 200
+CrossOriginProtection  curl                -> 200

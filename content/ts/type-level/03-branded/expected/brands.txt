@@ -1,0 +1,5 @@
+TC-10 -> REQ-LOGIN
+REQ-LOGIN -> TC-10
+string {"req":"REQ-LOGIN"} req-login
+req-login -> REQ-LOGIN
+REQ-LOGİN -> rejected

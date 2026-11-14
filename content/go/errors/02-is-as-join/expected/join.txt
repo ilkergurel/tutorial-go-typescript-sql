@@ -1,0 +1,7 @@
+name: required
+city: 13 characters, max 10
+required? true
+too long: city 13
+valid: true
+save: conflict; rollback: connection closed
+true true <nil>

@@ -1,0 +1,6 @@
+200 (none)                    Merhaba, Ayşe!
+200 (none)                    Merhaba, İzmir!
+400 text/plain; charset=utf-8 Bad Request
+201 application/json          {"id":7,"name":"Çağla"}
+400 text/plain; charset=utf-8 Bad Request
+404 text/plain; charset=utf-8 not found

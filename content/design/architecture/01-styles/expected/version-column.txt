@@ -1,0 +1,14 @@
+[1] A: BEGIN
+[2] B: BEGIN
+[3] A: UPDATE 1
+    version
+    -------
+    2
+[4] B: waiting
+[5] A: COMMIT
+[4] B: UPDATE 0
+[6] B: COMMIT
+[7] A: SELECT 1
+    body                              | version
+    ----------------------------------+--------
+    defer runs LIFO, at function exit | 2

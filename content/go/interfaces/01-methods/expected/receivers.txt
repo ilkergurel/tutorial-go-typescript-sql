@@ -1,0 +1,5 @@
+after IncCopy: 0
+after Inc: 1
+range by value: [{0} {0}]
+range by index: [{1} {1}]
+map: map[home:{1}]

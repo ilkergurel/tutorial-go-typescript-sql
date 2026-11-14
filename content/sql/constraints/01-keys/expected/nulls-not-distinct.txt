@@ -1,0 +1,11 @@
+CREATE TABLE
+INSERT 0 3
+SELECT 3
+    tenant_id | key   | value
+    ----------+-------+------
+    NULL      | theme | dark
+    NULL      | theme | light
+    7         | theme | dark
+CREATE TABLE
+INSERT 0 2
+ERROR: duplicate key value violates unique constraint "settings_scope_key" (SQLSTATE 23505)

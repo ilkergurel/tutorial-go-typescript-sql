@@ -1,0 +1,6 @@
+post 11 is published between page 1 and page 2:
+  offset: [10 9 8] [8 7 6]
+  keyset: [10 9 8] [7 6 5]
+post 9 is deleted between page 1 and page 2:
+  offset: [10 9 8] [6 5 4]
+  keyset: [10 9 8] [7 6 5]

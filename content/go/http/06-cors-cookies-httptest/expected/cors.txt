@@ -1,0 +1,6 @@
+OPTIONS http://127.0.0.1:5173 204 allow-origin="http://127.0.0.1:5173" methods="GET, PUT"  (preflight from the app)
+PUT     http://127.0.0.1:5173 200 allow-origin="http://127.0.0.1:5173" methods=""  (the real request)
+OPTIONS https://evil.example  204 allow-origin="" methods=""  (preflight from another site)
+PUT     https://evil.example  200 allow-origin="" methods=""  (sent anyway, e.g. by curl)
+PUT     null                  200 allow-origin="" methods=""  (from a sandboxed iframe)
+the PUT handler ran 3 times

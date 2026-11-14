@@ -1,0 +1,5 @@
+ISTANBUL naive="istanbul" turkish="ıstanbul"
+DIL naive="dil" turkish="dıl"
+DİL naive="dil" turkish="dil"
+naive merge:   true
+turkish split: false

@@ -1,0 +1,52 @@
+CREATE TABLE
+INSERT 0 20000
+ANALYZE
+EXPLAIN
+    QUERY PLAN
+    ----------------------------
+    Seq Scan on orders
+      Filter: (customer_id = 42)
+CREATE INDEX
+EXPLAIN
+    QUERY PLAN
+    ---------------------------------------------
+    Bitmap Heap Scan on orders
+      Recheck Cond: (customer_id = 42)
+      ->  Bitmap Index Scan on orders_customer_id
+            Index Cond: (customer_id = 42)
+EXPLAIN
+    QUERY PLAN
+    -------------------------------------------------------------------------
+    Bitmap Heap Scan on orders (actual rows=20.00 loops=1)
+      Recheck Cond: (customer_id = 42)
+      Heap Blocks: exact=20
+      Buffers: shared hit=20 read=2
+      ->  Bitmap Index Scan on orders_customer_id (actual rows=20.00 loops=1)
+            Index Cond: (customer_id = 42)
+            Index Searches: 1
+            Buffers: shared read=2
+EXPLAIN
+    QUERY PLAN
+    ---------------------------------------------------
+    Delete on orders
+      ->  Bitmap Heap Scan on orders
+            Recheck Cond: (customer_id = 42)
+            ->  Bitmap Index Scan on orders_customer_id
+                  Index Cond: (customer_id = 42)
+EXPLAIN
+    QUERY PLAN
+    -------------------------------------------------------------------------------
+    Delete on orders (actual rows=0.00 loops=1)
+      Buffers: shared hit=42
+      ->  Bitmap Heap Scan on orders (actual rows=20.00 loops=1)
+            Recheck Cond: (customer_id = 42)
+            Heap Blocks: exact=20
+            Buffers: shared hit=22
+            ->  Bitmap Index Scan on orders_customer_id (actual rows=20.00 loops=1)
+                  Index Cond: (customer_id = 42)
+                  Index Searches: 1
+                  Buffers: shared hit=2
+SELECT 1
+    orders_left
+    -----------
+    0

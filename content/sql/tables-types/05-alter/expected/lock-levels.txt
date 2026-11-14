@@ -1,0 +1,33 @@
+CREATE TABLE
+INSERT 0 1000
+CREATE VIEW
+BEGIN
+ALTER TABLE
+SELECT 1
+    mode
+    -------------------
+    AccessExclusiveLock
+COMMIT
+BEGIN
+ALTER TABLE
+SELECT 1
+    mode
+    -------------------
+    AccessExclusiveLock
+COMMIT
+BEGIN
+ALTER TABLE
+SELECT 1
+    mode
+    ------------------------
+    ShareUpdateExclusiveLock
+COMMIT
+BEGIN
+CREATE INDEX
+SELECT 1
+    mode
+    ---------
+    ShareLock
+ROLLBACK
+BEGIN
+ERROR: CREATE INDEX CONCURRENTLY cannot run inside a transaction block (SQLSTATE 25001)

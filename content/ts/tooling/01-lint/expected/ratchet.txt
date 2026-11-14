@@ -1,0 +1,6 @@
+src/features/lessons/ExampleView.tsx      4 ->  4  ok
+src/features/lessons/LessonContent.tsx    1 ->  1  ok
+src/features/lessons/types.ts             1 ->  1  ok
+src/features/runner/browserTs.ts          0 ->  1  FAIL: new errors
+src/shared/ui/markdownBlocks.ts          22 -> 20  ok, lower the baseline
+27 errors in 5 files; ratchet FAILED

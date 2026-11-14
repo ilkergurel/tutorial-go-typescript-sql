@@ -1,0 +1,6 @@
+sql.transactions.isolation-levels: source "SELECT 1;", expected "SELECT 1\n", fixture sent as "seed.csv"
+sql.transactions.serializable: in the curriculum, no content -> "not authored yet" box
+izolasyon  toLowerCase: false | tr: true
+İZOLASYON  toLowerCase: true | tr: true
+IZOLASYON  toLowerCase: false | tr: false
+[ 'U+0069', 'U+0307' ]

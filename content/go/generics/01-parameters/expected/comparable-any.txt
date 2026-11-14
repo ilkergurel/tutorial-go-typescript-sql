@@ -1,0 +1,2 @@
+2
+recovered: runtime error: hash of unhashable type []int

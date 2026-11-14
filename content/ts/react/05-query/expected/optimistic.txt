@@ -1,0 +1,10 @@
+  server: GET /todos
+loaded      [ ] Kanalları oku
+  server: PATCH /todos/1
+optimistic  [x] Kanalları oku
+  server: GET /todos
+confirmed   [x] Kanalları oku
+  server: PATCH /todos/1
+optimistic  [ ] Kanalları oku
+  server: GET /todos
+rolled back [x] Kanalları oku (kaydedilemedi)

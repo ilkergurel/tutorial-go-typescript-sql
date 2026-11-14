@@ -1,0 +1,2 @@
+hits: 100 misses: 50
+entries: 52

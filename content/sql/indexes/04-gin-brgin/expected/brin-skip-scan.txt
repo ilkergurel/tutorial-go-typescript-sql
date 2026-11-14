@@ -1,0 +1,68 @@
+SET
+CREATE TABLE
+INSERT 0 20000
+ANALYZE
+SELECT 3
+    attname   | correlation
+    ----------+------------
+    at        | 1.00
+    sensor_id | 0.25
+    value     | 0.00
+CREATE INDEX
+CREATE INDEX
+SELECT 1
+    table_pages | brin_pages | btree_pages
+    ------------+------------+------------
+    128         | 3          | 32
+DROP INDEX
+EXPLAIN
+    QUERY PLAN
+    ----------------------------------------------------------------------------------------------------------------------------------------------------
+    Aggregate
+      ->  Bitmap Heap Scan on readings
+            Recheck Cond: ((at >= '2026-01-02 10:00:00+03'::timestamp with time zone) AND (at < '2026-01-02 11:00:00+03'::timestamp with time zone))
+            ->  Bitmap Index Scan on readings_at_brin
+                  Index Cond: ((at >= '2026-01-02 10:00:00+03'::timestamp with time zone) AND (at < '2026-01-02 11:00:00+03'::timestamp with time zone))
+EXPLAIN
+    QUERY PLAN
+    ----------------------------------------------------------------------------------------------------------------------------------------------------
+    Aggregate (actual rows=1.00 loops=1)
+      Buffers: shared hit=13
+      ->  Bitmap Heap Scan on readings (actual rows=240.00 loops=1)
+            Recheck Cond: ((at >= '2026-01-02 10:00:00+03'::timestamp with time zone) AND (at < '2026-01-02 11:00:00+03'::timestamp with time zone))
+            Rows Removed by Index Recheck: 1016
+            Heap Blocks: lossy=8
+            Buffers: shared hit=13
+            ->  Bitmap Index Scan on readings_at_brin (actual rows=80.00 loops=1)
+                  Index Cond: ((at >= '2026-01-02 10:00:00+03'::timestamp with time zone) AND (at < '2026-01-02 11:00:00+03'::timestamp with time zone))
+                  Index Searches: 1
+                  Buffers: shared hit=5
+    Planning:
+      Buffers: shared hit=1
+DROP INDEX
+CREATE INDEX
+SELECT 1
+    index_pages
+    -----------
+    79
+EXPLAIN
+    QUERY PLAN
+    ----------------------------------------------------------------------------------------------------------------------------------------------------
+    Aggregate
+      ->  Bitmap Heap Scan on readings
+            Recheck Cond: ((at >= '2026-01-02 10:00:00+03'::timestamp with time zone) AND (at < '2026-01-02 11:00:00+03'::timestamp with time zone))
+            ->  Bitmap Index Scan on readings_sensor_at
+                  Index Cond: ((at >= '2026-01-02 10:00:00+03'::timestamp with time zone) AND (at < '2026-01-02 11:00:00+03'::timestamp with time zone))
+EXPLAIN
+    QUERY PLAN
+    ----------------------------------------------------------------------------------------------------------------------------------------------------
+    Aggregate (actual rows=1.00 loops=1)
+      Buffers: shared hit=11 read=11
+      ->  Bitmap Heap Scan on readings (actual rows=240.00 loops=1)
+            Recheck Cond: ((at >= '2026-01-02 10:00:00+03'::timestamp with time zone) AND (at < '2026-01-02 11:00:00+03'::timestamp with time zone))
+            Heap Blocks: exact=3
+            Buffers: shared hit=11 read=11
+            ->  Bitmap Index Scan on readings_sensor_at (actual rows=240.00 loops=1)
+                  Index Cond: ((at >= '2026-01-02 10:00:00+03'::timestamp with time zone) AND (at < '2026-01-02 11:00:00+03'::timestamp with time zone))
+                  Index Searches: 6
+                  Buffers: shared hit=8 read=11

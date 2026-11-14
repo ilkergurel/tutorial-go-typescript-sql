@@ -1,0 +1,6 @@
+  ignored: ERROR: duplicate key value violates unique constraint "users_pkey" (SQLSTATE 23505)
+  ignored: ERROR: current transaction is aborted, commands ignored until end of transaction block (SQLSTATE 25P02)
+commit: commit unexpectedly resulted in rollback true
+  skipped duplicate ayse@example.com
+commit: <nil>
+[ayse@example.com isil@example.com] <nil>

@@ -1,0 +1,10 @@
+GET
+  #1 no response: wait 180 ms
+  #2 502: wait 300 ms
+  #3 503: wait 2000 ms
+  -> 200
+POST without a key
+  no response: did it happen or not?
+POST with an Idempotency-Key
+  #1 no response: wait 100 ms
+  -> 201

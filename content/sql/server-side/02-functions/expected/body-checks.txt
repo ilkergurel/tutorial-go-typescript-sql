@@ -1,0 +1,18 @@
+CREATE TABLE
+INSERT 0 4
+CREATE FUNCTION
+CREATE FUNCTION
+SELECT 1
+    text_body | standard_body
+    ----------+--------------
+    2         | 2
+ALTER TABLE
+SELECT 1
+    standard_body_after_rename
+    --------------------------
+    2
+SELECT 1
+    stored_body
+    ---------------------------------------------------------------------------------------------------------------------------------------------
+    RETURN (SELECT count(*) AS count FROM test_runs WHERE ((test_runs.test_case_id = failures.case_id) AND (test_runs.outcome = 'failed'::text)))
+ERROR: column "status" does not exist (SQLSTATE 42703)

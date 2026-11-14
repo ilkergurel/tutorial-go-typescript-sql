@@ -1,0 +1,5 @@
+Ayşe: 2 orders
+avatar: /default.png (avatar service down for user 7)
+recent orders: fulfilled
+timed out after 50 ms
+slow call finished anyway; nobody is listening

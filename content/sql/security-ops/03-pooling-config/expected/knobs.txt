@@ -1,0 +1,24 @@
+SELECT 10
+    name                                | context    | boot_val | unit
+    ------------------------------------+------------+----------+-----
+    max_connections                     | postmaster | 100      | NULL
+    reserved_connections                | postmaster | 0        | NULL
+    shared_buffers                      | postmaster | 16384    | 8kB
+    superuser_reserved_connections      | postmaster | 3        | NULL
+    temp_file_limit                     | superuser  | -1       | kB
+    effective_cache_size                | user       | 524288   | 8kB
+    hash_mem_multiplier                 | user       | 2        | NULL
+    idle_in_transaction_session_timeout | user       | 0        | ms
+    maintenance_work_mem                | user       | 65536    | kB
+    work_mem                            | user       | 4096     | kB
+SET
+SHOW
+    work_mem
+    --------
+    64MB
+SET
+SHOW
+    idle_in_transaction_session_timeout
+    -----------------------------------
+    30s
+ERROR: parameter "shared_buffers" cannot be changed without restarting the server (SQLSTATE 55P02)

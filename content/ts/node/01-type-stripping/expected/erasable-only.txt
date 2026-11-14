@@ -1,0 +1,14 @@
+enum.ts          ERR_UNSUPPORTED_TYPESCRIPT_SYNTAX
+                 TypeScript enum is not supported in strip-only mode
+as-const.ts      ok, exports: Level
+param-prop.ts    ERR_UNSUPPORTED_TYPESCRIPT_SYNTAX
+                 TypeScript parameter property is not supported in strip-only mode
+field.ts         ok, exports: Point
+namespace.ts     ERR_UNSUPPORTED_TYPESCRIPT_SYNTAX
+                 TypeScript namespace declaration is not supported in strip-only mode
+plain.ts         ok, exports: R
+types.ts         ok, exports: (nothing)
+value-import.ts  SyntaxError
+                 The requested module './types.ts' does not provide an export named 'User'
+type-import.ts   ok, exports: (nothing)
+no-ext.ts        ERR_MODULE_NOT_FOUND

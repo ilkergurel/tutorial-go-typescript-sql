@@ -1,0 +1,5 @@
+mount     go: yükleniyor | go: yükleniyor | ts: yükleniyor  [server: go,ts]
+loaded    go: defer, Kanallar | go: defer, Kanallar | ts: Tipler  [server: go,ts]
+remount   go: defer, Kanallar (yenileniyor)  [server: go,ts,go]
+refetched go: defer, Kanallar  [server: go,ts,go]
+fresh     ts: Tipler  [server: go,ts,go]

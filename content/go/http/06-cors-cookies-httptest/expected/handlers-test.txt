@@ -1,0 +1,7 @@
+--- PASS: TestRoutes/found
+--- PASS: TestRoutes/missing
+--- PASS: TestRoutes/wrong_method
+--- PASS: TestRoutes
+GET http://notes.example/notes/1 -> 200 {"id":1,"text":"Merhaba"}
+--- PASS: TestEndToEnd
+PASS

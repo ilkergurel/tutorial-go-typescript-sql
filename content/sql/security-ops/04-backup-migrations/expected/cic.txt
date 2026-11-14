@@ -1,0 +1,26 @@
+[1] A: ERROR: could not create unique index "users_email_lower" (SQLSTATE 23505)
+[2] A: SELECT 2
+    index             | indisvalid | indisready
+    ------------------+------------+-----------
+    users_pkey        | t          | t
+    users_email_lower | f          | f
+[3] A: INSERT 0 1
+[4] A: DROP INDEX
+[5] A: DELETE 2
+[6] B: BEGIN
+[7] B: SELECT 1
+    count
+    -----
+    1001
+[8] A: waiting
+[9] B: SELECT 1
+    command                   | phase
+    --------------------------+--------------------------
+    CREATE INDEX CONCURRENTLY | waiting for old snapshots
+[10] B: COMMIT
+[8] A: CREATE INDEX
+[11] A: SELECT 2
+    index             | indisvalid | indisready
+    ------------------+------------+-----------
+    users_pkey        | t          | t
+    users_email_lower | t          | t

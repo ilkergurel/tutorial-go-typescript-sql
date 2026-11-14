@@ -1,0 +1,33 @@
+CREATE TABLE
+CREATE TABLE
+INSERT 0 2000
+INSERT 0 20000
+CREATE INDEX
+ANALYZE
+EXPLAIN
+    QUERY PLAN
+    ---------------------------------------------------------
+    Nested Loop
+      ->  Index Only Scan using customers_pkey on customers c
+            Index Cond: (id = ANY ('{1,2,3}'::integer[]))
+      ->  Bitmap Heap Scan on orders o
+            Recheck Cond: (c.id = customer_id)
+            ->  Bitmap Index Scan on orders_customer
+                  Index Cond: (customer_id = c.id)
+EXPLAIN
+    QUERY PLAN
+    -----------------------------------------
+    HashAggregate
+      Group Key: c.city
+      ->  Hash Join
+            Hash Cond: (o.customer_id = c.id)
+            ->  Seq Scan on orders o
+            ->  Hash
+                  ->  Seq Scan on customers c
+EXPLAIN
+    QUERY PLAN
+    ---------------------------------------------------------
+    Merge Join
+      Merge Cond: (c.id = o.customer_id)
+      ->  Index Only Scan using customers_pkey on customers c
+      ->  Index Scan using orders_customer on orders o

@@ -1,0 +1,17 @@
+CREATE TABLE
+INSERT 0 7
+SELECT 7
+    suite  | title                | duration_ms | rank | dense_rank | row_number
+    -------+----------------------+-------------+------+------------+-----------
+    auth   | İki adımlı doğrulama | 500         | 1    | 1          | 1
+    auth   | Çıkış                | 300         | 2    | 2          | 2
+    auth   | Giriş                | 300         | 2    | 2          | 3
+    auth   | Oturum süresi        | 300         | 2    | 2          | 4
+    auth   | Şifre sıfırlama      | 200         | 5    | 3          | 5
+    export | CSV dışa aktarım     | 900         | 1    | 1          | 1
+    export | PDF rapor            | 900         | 1    | 1          | 2
+SELECT 2
+    suite  | suite_ms | slowest
+    -------+----------+--------
+    export | 1800     | 1
+    auth   | 1600     | 2

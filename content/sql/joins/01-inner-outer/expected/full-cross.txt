@@ -1,0 +1,24 @@
+CREATE TABLE
+CREATE TABLE
+INSERT 0 3
+INSERT 0 3
+SELECT 4
+    planned | reported | passed
+    --------+----------+-------
+    login   | login    | t
+    logout  | NULL     | NULL
+    reset   | reset    | f
+    NULL    | signup   | t
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 2
+INSERT 0 2
+INSERT 0 3
+SELECT 4
+    browser | locale | passed
+    --------+--------+-------
+    chrome  | en-US  | t
+    chrome  | tr-TR  | f
+    firefox | en-US  | t
+    firefox | tr-TR  | NULL

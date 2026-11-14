@@ -1,0 +1,27 @@
+[1] A: CREATE TABLE
+[2] A: INSERT 0 1
+[3] A: INSERT 0 1
+[4] A: ERROR: duplicate key value violates unique constraint "users_email_key" (SQLSTATE 23505)
+[5] A: ERROR: new row for relation "users" violates check constraint "users_email_check" (SQLSTATE 23514)
+[6] A: BEGIN
+[7] B: BEGIN
+[8] A: SELECT 1
+    count
+    -----
+    0
+[9] B: SELECT 1
+    count
+    -----
+    0
+[10] A: INSERT 0 1
+[11] B: waiting
+[12] A: COMMIT
+[11] B: ERROR: duplicate key value violates unique constraint "users_email_key" (SQLSTATE 23505)
+[13] B: ERROR: current transaction is aborted, commands ignored until end of transaction block (SQLSTATE 25P02)
+[14] B: ROLLBACK
+[15] A: SELECT 3
+    id | email
+    ---+-------------------
+    1  | ayse@example.com
+    2  | mehmet@example.com
+    5  | zeynep@example.com

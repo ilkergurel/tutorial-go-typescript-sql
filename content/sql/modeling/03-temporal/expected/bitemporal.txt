@@ -1,0 +1,14 @@
+CREATE EXTENSION
+CREATE TABLE
+INSERT 0 1
+UPDATE 1
+INSERT 0 2
+UPDATE 1
+INSERT 0 1
+SELECT 3
+    known_on   | price
+    -----------+-------
+    2026-02-15 | 129.00
+    2026-03-15 | 149.00
+    2026-11-13 | 139.00
+ERROR: conflicting key value violates exclusion constraint "prices_sku_valid_at_recorded_at_excl" (SQLSTATE 23P01)

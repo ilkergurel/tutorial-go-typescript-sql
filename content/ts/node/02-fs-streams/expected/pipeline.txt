@@ -1,0 +1,5 @@
+chunk by chunk: İstanbul Şanl��urfa I��dır
+stream decoded: İstanbul Şanlıurfa Iğdır
+2026-11-01T09:01:10Z ERROR db connection lost
+2026-11-01T09:02:31Z ERROR payment failed order=111042
+ENOENT, destination destroyed: true, size 0

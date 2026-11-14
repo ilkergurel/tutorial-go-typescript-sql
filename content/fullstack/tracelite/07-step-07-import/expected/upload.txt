@@ -1,0 +1,8 @@
+"CSV UTF-8": 132 bytes, sent as utf-8
+  server: text/csv; charset=utf-8; line 3 is "AUTH-LOGIN-2FA;İki adımlı doğrulama;AUTH-LOGIN;;"
+  2 gereksinim içe aktarıldı
+"CSV (Comma delimited)": 124 bytes, sent as windows-1254
+  server: text/csv; charset=windows-1254; line 3 is "AUTH-LOGIN-2FA;İki adımlı doğrulama;AUTH-LOGIN;;"
+  2 gereksinim içe aktarıldı
+ş cut at 64 KiB: charsetOf says utf-8
+  without { stream: true }: TypeError

@@ -1,0 +1,50 @@
+CREATE TABLE
+INSERT 0 20000
+CREATE INDEX
+CREATE INDEX
+ANALYZE
+EXPLAIN
+    QUERY PLAN
+    ------------------------
+    Seq Scan on readings
+      Filter: (value > 1000)
+EXPLAIN
+    QUERY PLAN
+    ------------------------------------------
+    Index Scan using readings_pkey on readings
+      Index Cond: (id = 4242)
+EXPLAIN
+    QUERY PLAN
+    -----------------------------------------------
+    Index Only Scan using readings_pkey on readings
+      Index Cond: ((id >= 10000) AND (id <= 10099))
+EXPLAIN
+    QUERY PLAN
+    -----------------------------------------
+    Bitmap Heap Scan on readings
+      Recheck Cond: (value < 100)
+      ->  Bitmap Index Scan on readings_value
+            Index Cond: (value < 100)
+EXPLAIN
+    QUERY PLAN
+    -------------------------------------------------
+    Bitmap Heap Scan on readings
+      Recheck Cond: ((value < 20) OR (sensor_id = 7))
+      ->  BitmapOr
+            ->  Bitmap Index Scan on readings_value
+                  Index Cond: (value < 20)
+            ->  Bitmap Index Scan on readings_sensor
+                  Index Cond: (sensor_id = 7)
+EXPLAIN
+    QUERY PLAN
+    -------------------------------------------------
+    Limit
+      ->  Index Scan using readings_value on readings
+EXPLAIN
+    QUERY PLAN
+    ----------------------------------------------------------------------------
+    Index Only Scan using readings_pkey on readings (actual rows=100.00 loops=1)
+      Index Cond: ((id >= 10000) AND (id <= 10099))
+      Heap Fetches: 100
+      Index Searches: 1
+      Buffers: shared hit=3

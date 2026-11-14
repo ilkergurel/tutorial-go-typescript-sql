@@ -1,0 +1,39 @@
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE INDEX
+CREATE INDEX
+CREATE FUNCTION
+CREATE TRIGGER
+CREATE TRIGGER
+SELECT 1
+    set_config
+    ----------
+    ayşe
+INSERT 0 3
+INSERT 0 1
+SELECT 1
+    set_config | set_config
+    -----------+-----------
+    mehmet     | move
+UPDATE 1
+SELECT 1
+    set_config
+    ----------
+
+UPDATE 1
+UPDATE 1
+SELECT 1
+    set_config
+    ----------
+    ayşe
+DELETE 1
+SELECT 6
+    id | actor  | action | table_name   | op     | changes
+    ---+--------+--------+--------------+--------+-------------------------------------------------------------------------------------------------------------------
+    3  | ayşe   |        | requirements | INSERT | {"code": "AUTH-RESET", "title": "Parola sıfırlama", "parent_id": "01937b6e-0000-7000-8000-000000000001"}
+    4  | ayşe   |        | trace_links  | INSERT | {"test_case_id": "01937b6e-0000-7000-8000-0000000000c3", "requirement_id": "01937b6e-0000-7000-8000-000000000005"}
+    5  | mehmet | move   | requirements | UPDATE | {"parent_id": ["01937b6e-0000-7000-8000-000000000001", "01937b6e-0000-7000-8000-000000000002"]}
+    6  | mehmet |        | requirements | UPDATE | {"title": ["Parola sıfırlama", "Parola sıfırlama e-postası"]}
+    7  | ayşe   |        | requirements | DELETE | {"code": "AUTH-RESET", "title": "Parola sıfırlama e-postası", "parent_id": "01937b6e-0000-7000-8000-000000000002"}
+    8  | ayşe   |        | trace_links  | DELETE | {"test_case_id": "01937b6e-0000-7000-8000-0000000000c3", "requirement_id": "01937b6e-0000-7000-8000-000000000005"}

@@ -1,0 +1,4 @@
+before Flush: 4096 bytes in the file, 2583 in the buffer
+after Flush and Close: 6679 bytes
+app.log: "started\nstopped\n"
+O_EXCL on an existing file is fs.ErrExist: true

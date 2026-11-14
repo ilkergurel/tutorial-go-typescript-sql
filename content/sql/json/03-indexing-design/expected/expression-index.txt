@@ -1,0 +1,29 @@
+CREATE TABLE
+INSERT 0 20000
+CREATE INDEX
+CREATE INDEX
+ANALYZE
+EXPLAIN
+    QUERY PLAN
+    --------------------------------------------------------------------
+    Bitmap Heap Scan on tickets
+      Recheck Cond: (doc @? '$."labels"[*]?(@ == "kvkk")'::jsonpath)
+      ->  Bitmap Index Scan on tickets_doc
+            Index Cond: (doc @? '$."labels"[*]?(@ == "kvkk")'::jsonpath)
+EXPLAIN
+    QUERY PLAN
+    ----------------------------------------------------------------
+    Bitmap Heap Scan on tickets
+      Recheck Cond: (((doc ->> 'priority'::text))::integer <= 1)
+      ->  Bitmap Index Scan on tickets_priority
+            Index Cond: (((doc ->> 'priority'::text))::integer <= 1)
+EXPLAIN
+    QUERY PLAN
+    --------------------------------------------------
+    Limit
+      ->  Index Scan using tickets_priority on tickets
+EXPLAIN
+    QUERY PLAN
+    -----------------------------------------------------
+    Seq Scan on tickets
+      Filter: (((doc -> 'priority'::text))::integer <= 1)

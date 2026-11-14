@@ -1,0 +1,5 @@
+<title>StackLab</title>
+<main>nothing here</main>
+<title>Profile: Ayşe</title>
+<main><p>&lt;b&gt;Go&lt;/b&gt; &amp; SQL</p> <span class="badge">admin</span></main>
+<p>&lt;b&gt;Go&lt;/b&gt; &amp; SQL</p> <img src=x onerror="steal()">

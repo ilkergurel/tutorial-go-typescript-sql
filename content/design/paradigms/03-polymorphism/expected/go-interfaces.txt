@@ -1,0 +1,4 @@
+DEV250        0  fixed              {"Kurus":25000}
+HOSGELDIN 15000  fixed              {"Kurus":5000}
+KASIM15   17000  percent            {"Pct":15}
+COMBO     17000  unknown main.Chain [{"Pct":10},{"Kurus":1000}]

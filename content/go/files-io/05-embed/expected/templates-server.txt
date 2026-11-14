@@ -1,0 +1,5 @@
+GET /hello/Ay%C5%9Fe       200 <p>Hoş geldin, Ayşe!</p>
+GET /hello/%3Cscript%3E    200 <p>Hoş geldin, &lt;script&gt;!</p>
+GET /static/app.css        200 body { font-family: system-ui; }
+GET /static/_draft.html    404 404 page not found
+GET /static/app.css        200 /* test */

@@ -1,0 +1,51 @@
+CREATE TABLE
+CREATE TABLE
+CREATE INDEX
+INSERT 0 2
+INSERT 0 3
+INSERT 0 4
+INSERT 0 2
+PREPARE
+SELECT 7
+    outline                | depth
+    -----------------------+------
+    AUTH                   | 0
+    . AUTH-LOGIN           | 1
+    . . AUTH-LOGIN-2FA     | 2
+    . . AUTH-LOGIN-LOCKOUT | 2
+    . AUTH-RESET           | 1
+    EXPORT                 | 0
+    . EXPORT-CSV           | 1
+EXPLAIN
+    QUERY PLAN
+    ------------------------------------------------------------
+    Limit
+      ->  Index Scan using requirements_code_key on requirements
+            Index Cond: ((project_id = $1) AND (code > $2))
+SELECT 3
+    code
+    ------------------
+    AUTH-LOGIN-2FA
+    AUTH-LOGIN-LOCKOUT
+    AUTH-RESET
+PREPARE
+SELECT 1
+    moved      | new_parent | would_cycle
+    -----------+------------+------------
+    AUTH-RESET | AUTH-LOGIN | f
+SELECT 1
+    moved | new_parent     | would_cycle
+    ------+----------------+------------
+    AUTH  | AUTH-LOGIN-2FA | t
+UPDATE 1
+SELECT 2
+    outline      | depth
+    -------------+------
+    EXPORT       | 0
+    . EXPORT-CSV | 1
+DELETE 1
+SELECT 1
+    requirements_left
+    -----------------
+    7
+ERROR: update or delete on table "requirements" violates foreign key constraint "requirements_parent_fkey" on table "requirements" (SQLSTATE 23503)

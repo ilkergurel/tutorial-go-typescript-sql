@@ -1,0 +1,37 @@
+CREATE TABLE
+CREATE INDEX
+INSERT 0 1000
+CREATE FUNCTION
+CREATE TABLE
+INSERT 0 1
+ALTER TABLE
+INSERT 0 1
+ALTER TABLE
+INSERT 0 1
+ALTER TABLE
+INSERT 0 1
+ALTER TABLE
+INSERT 0 1
+ALTER TABLE
+INSERT 0 1
+ALTER TABLE
+INSERT 0 1
+ALTER TABLE
+INSERT 0 1
+ALTER TABLE
+INSERT 0 1
+ALTER TABLE
+INSERT 0 1
+SELECT 10
+    change                       | table_rewritten | name_index_rebuilt
+    -----------------------------+-----------------+-------------------
+    (start)                      | NULL            | NULL
+    add column, no default       | f               | f
+    add column, constant default | f               | f
+    add column, volatile default | t               | t
+    add virtual generated column | f               | f
+    varchar(100) -> varchar(200) | f               | f
+    varchar(200) -> text         | f               | f
+    collation -> tr-x-icu        | f               | t
+    integer -> bigint            | t               | t
+    drop column                  | f               | f

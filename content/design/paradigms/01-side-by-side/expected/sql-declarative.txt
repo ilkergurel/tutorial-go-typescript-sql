@@ -1,0 +1,17 @@
+CREATE TABLE
+INSERT 0 6
+SELECT 3
+    req        | passed | failed
+    -----------+--------+-------
+    REQ-SEARCH | 0      | 2
+    REQ-LOGIN  | 2      | 1
+    REQ-EXPORT | 1      | 0
+EXPLAIN
+    QUERY PLAN
+    -------------------------------------------------------------------------
+    Sort
+      Sort Key: (count(*) FILTER (WHERE (status = 'failed'::text))) DESC, req
+      ->  HashAggregate
+            Group Key: req
+            ->  Seq Scan on runs
+ERROR: new row for relation "runs" violates check constraint "runs_status_check" (SQLSTATE 23514)

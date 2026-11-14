@@ -1,0 +1,17 @@
+[1] A: BEGIN
+[2] A: SELECT 1
+    invoices
+    --------
+    3
+[3] B: DELETE 5000
+[4] B: VACUUM
+[5] B: SELECT 1
+    shrank
+    ------
+    f
+[6] A: COMMIT
+[7] B: VACUUM
+[8] B: SELECT 1
+    shrank
+    ------
+    t

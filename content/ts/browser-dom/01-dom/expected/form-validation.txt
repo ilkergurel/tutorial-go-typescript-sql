@@ -1,0 +1,6 @@
+first try:
+  email: not an email
+  qty: below min
+  city: unknown city
+second try:
+  ok: 2 x izmir

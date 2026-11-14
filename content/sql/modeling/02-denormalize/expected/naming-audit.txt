@@ -1,0 +1,24 @@
+CREATE TABLE
+CREATE TABLE
+SELECT 4
+    conname                        | contype
+    -------------------------------+--------
+    test_cases_pkey                | p
+    test_cases_project_id_code_key | u
+    test_cases_project_id_fkey     | f
+    test_cases_title_check         | c
+INSERT 0 1
+INSERT 0 1
+UPDATE 1
+SELECT 1
+    code | title           | created_by | updated_at_unchanged
+    -----+-----------------+------------+---------------------
+    TC-1 | Valid Visa card | playground | t
+CREATE TABLE
+CREATE TABLE
+SELECT 2
+    relname  | attname
+    ---------+--------
+    TestRuns | id
+    Ürünler  | fiyat
+ERROR: relation "ürünler" does not exist (SQLSTATE 42P01)

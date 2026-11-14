@@ -1,0 +1,7 @@
+CREATE TABLE
+SELECT 1
+    data_type | column_default                          | is_identity
+    ----------+-----------------------------------------+------------
+    integer   | nextval('old_tickets_id_seq'::regclass) | NO
+INSERT 0 2
+ERROR: duplicate key value violates unique constraint "old_tickets_pkey" (SQLSTATE 23505)

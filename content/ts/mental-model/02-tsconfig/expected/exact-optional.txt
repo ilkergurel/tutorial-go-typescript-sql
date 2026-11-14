@@ -1,0 +1,3 @@
+true undefined
+false light
+{} {}

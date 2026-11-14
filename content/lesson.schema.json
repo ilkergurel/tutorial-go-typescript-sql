@@ -1,0 +1,123 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "stacklab/lesson.schema.json",
+  "title": "StackLab lesson frontmatter",
+  "description": "Validated by scripts/build-lessons.mjs for every lesson under content/. Prose H2 section order is checked separately.",
+  "type": "object",
+  "required": [
+    "id", "title", "track", "module", "order", "level", "minutes", "since",
+    "prerequisites", "compare_with", "tags", "summary", "examples",
+    "use_cases", "strengths", "weaknesses", "pitfalls", "quiz", "further_reading"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z]+\\.[a-z0-9-]+\\.[a-z0-9-]+$",
+      "description": "track.module.slug, immutable forever"
+    },
+    "title": { "type": "string", "minLength": 3 },
+    "track": { "enum": ["go", "ts", "sql", "fullstack", "design", "inside"] },
+    "module": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+    "order": { "type": "integer", "minimum": 1 },
+    "level": { "enum": ["basic", "intermediate", "advanced"] },
+    "minutes": { "type": "integer", "minimum": 1, "maximum": 15 },
+    "since": { "type": "string", "pattern": "^(go1\\.[0-9]+|ts[0-9.]+|pg[0-9.]+|es[0-9]+)$" },
+    "prerequisites": { "type": "array", "items": { "type": "string" } },
+    "compare_with": { "type": "array", "items": { "type": "string" } },
+    "tags": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+    "summary": { "type": "string", "maxLength": 320 },
+    "examples": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "file", "title", "runtime", "check"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+          "file": { "type": "string", "pattern": "^examples/" },
+          "title": { "type": "string" },
+          "runtime": {
+            "enum": ["go", "go-test", "go-server", "sql", "sql-nontx", "sql-multisession", "ts-browser", "ts-node", "ts-test"]
+          },
+          "fixtures": { "type": "array", "items": { "type": "string" } },
+          "stdin": { "type": "string" },
+          "setup": { "type": "string" },
+          "check": { "enum": ["exact", "contains", "regex", "sorted-lines", "none"] },
+          "timeout_s": { "type": "integer", "minimum": 1, "maximum": 15 },
+          "annotations": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["lines", "note"],
+              "properties": {
+                "lines": { "type": "string", "pattern": "^[0-9]+(-[0-9]+)?$" },
+                "note": { "type": "string", "minLength": 10 }
+              }
+            }
+          }
+        },
+        "allOf": [
+          {
+            "if": { "properties": { "check": { "const": "none" } } },
+            "then": { "required": ["nondeterminism_note"] }
+          }
+        ]
+      }
+    },
+    "use_cases": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+    "strengths": { "type": "array", "items": { "type": "string" }, "minItems": 2 },
+    "weaknesses": { "type": "array", "items": { "type": "string" }, "minItems": 2 },
+    "pitfalls": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["title", "detail"],
+        "properties": {
+          "title": { "type": "string" },
+          "detail": { "type": "string" },
+          "bad": { "type": "string" },
+          "good": { "type": "string" }
+        }
+      }
+    },
+    "exercises": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "check"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+          "check": { "enum": ["output", "tests"] }
+        }
+      }
+    },
+    "quiz": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 4,
+      "items": {
+        "type": "object",
+        "required": ["q", "options", "answer", "why"],
+        "properties": {
+          "q": { "type": "string" },
+          "options": { "type": "array", "items": { "type": "string" }, "minItems": 2 },
+          "answer": { "type": "integer", "minimum": 0 },
+          "why": { "type": "string" }
+        }
+      }
+    },
+    "further_reading": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["title", "url"],
+        "properties": {
+          "title": { "type": "string" },
+          "url": { "type": "string", "format": "uri" }
+        }
+      }
+    }
+  }
+}

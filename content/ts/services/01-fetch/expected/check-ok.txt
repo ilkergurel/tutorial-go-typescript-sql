@@ -1,0 +1,7 @@
+naive 7: name=Şule
+naive 8: name=undefined
+naive 9: SyntaxError
+checked 7: name=Şule
+checked 8: HTTP 404: {"error":"user 8 not found"}
+checked 9: HTTP 502: <h1>502 Bad Gateway</h1>
+real fetch: TypeError

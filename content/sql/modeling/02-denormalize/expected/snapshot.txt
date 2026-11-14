@@ -1,0 +1,9 @@
+CREATE TABLE
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+UPDATE 1
+SELECT 1
+    order_id | qty | unit_price | vat_pct | net_total | price_today | vat_today | net_if_joined
+    ---------+-----+------------+---------+-----------+-------------+-----------+--------------
+    1        | 2   | 129.00     | 18      | 258.00    | 149.00      | 20        | 298.00

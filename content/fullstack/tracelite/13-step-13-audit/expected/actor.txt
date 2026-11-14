@@ -1,0 +1,7 @@
+-- WithTx for Ayşe's request, then a request that names no one
+   audit: ayşe UPDATE AUTH
+   audit: db:playground UPDATE AUTH-RESET
+tracelite.actor after the transaction: ''
+-- SET for Ayşe's request, then a request that names no one
+   audit: ayşe UPDATE AUTH
+   audit: ayşe UPDATE AUTH-RESET

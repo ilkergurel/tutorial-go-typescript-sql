@@ -1,0 +1,5 @@
+level=INFO msg=request route="GET /notes/{id}" status=200 dur=12ms db=ok
+-- the database goes down
+level=INFO msg=request route="GET /healthz" status=200 dur=0s
+level=INFO msg=request route="GET /readyz" status=503 dur=0s
+level=INFO msg=request route="GET /notes/{id}" status=503 dur=2s db=timeout note=sql.joins.inner

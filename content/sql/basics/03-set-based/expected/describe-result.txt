@@ -1,0 +1,19 @@
+CREATE TABLE
+INSERT 0 6
+SELECT 2
+    customer | spent
+    ---------+-------
+    can      | 755.00
+    ayşe     | 650.00
+EXPLAIN
+    QUERY PLAN
+    ----------------------------------------------------------------------------------------------
+    Sort
+      Sort Key: (sum(total)) DESC
+      ->  GroupAggregate
+            Group Key: customer
+            Filter: (sum(total) >= '500'::numeric)
+            ->  Sort
+                  Sort Key: customer
+                  ->  Seq Scan on orders
+                        Filter: ((placed >= '2026-11-01'::date) AND (placed < '2026-12-01'::date))

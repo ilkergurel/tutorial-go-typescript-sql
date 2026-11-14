@@ -1,0 +1,3 @@
+DEV250        0  fixed   {"kind":"fixed","amountKurus":25000}
+HOSGELDIN 15000  fixed   {"kind":"fixed","amountKurus":5000}
+KASIM15   17000  percent {"kind":"percent","percent":15}

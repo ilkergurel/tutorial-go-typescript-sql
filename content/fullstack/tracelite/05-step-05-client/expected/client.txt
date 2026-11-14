@@ -1,0 +1,5 @@
+AUTH-LOGİN: ApiError 422 Validation failed [{"pointer":"#/code","detail":"use A-Z, 0-9 and hyphens"}]
+AUTH: ApiError 502 HTTP 502 []
+AUTH-2FA: the response broke the contract
+✖ Invalid input: expected string, received undefined
+  → at createdAt

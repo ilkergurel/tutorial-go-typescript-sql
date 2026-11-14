@@ -1,0 +1,18 @@
+AUTH-LOGIN closed, then AUTH
+  ▸ AUTH
+  ▾ EXPORT
+    · EXPORT-CSV
+AUTH open again
+  ▾ AUTH
+    ▸ AUTH-LOGIN
+    · AUTH-RESET
+  ▾ EXPORT
+    · EXPORT-CSV
+refetched, with a new REPORT
+  ▾ AUTH
+    ▸ AUTH-LOGIN
+    · AUTH-RESET
+  ▾ EXPORT
+    · EXPORT-CSV
+  ▾ REPORT
+    · REPORT-PDF

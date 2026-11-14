@@ -1,0 +1,9 @@
+this frame's origin: null
+fetch the app's own /healthz: blocked (TypeError)
+fetch https://pkg.go.dev/: blocked (TypeError)
+import a module from a CDN: blocked (TypeError)
+read parent.document: blocked (SecurityError)
+read localStorage: blocked (SecurityError)
+read document.cookie: blocked (SecurityError)
+eval a string: blocked (EvalError)
+postMessage to the parent: allowed

@@ -1,0 +1,5 @@
+lesson: Defer
+recommendations default [] (no answer in 100 ms)
+progress        cached  ["go.basics.defer"] (HTTP 503)
+banner: 2 of 2 panels degraded
+probe /healthz: 200 | /api/progress: 503

@@ -1,0 +1,20 @@
+CREATE TABLE
+INSERT 0 6
+SELECT 6
+    code    | title       | parent
+    --------+-------------+-------
+    REQ-1   | Accounts    | NULL
+    REQ-1.1 | Kayıt formu | REQ-1
+    REQ-1.2 | KAYIT FORMU | REQ-1
+    REQ-2   | Reports     | NULL
+    REQ-2.1 | Export csv  | REQ-2
+    REQ-2.2 | Export CSV  | REQ-2
+SELECT 1
+    code    | same_title_as | title
+    --------+---------------+-----------
+    REQ-2.1 | REQ-2.2       | Export csv
+SELECT 2
+    code    | same_title_as | title
+    --------+---------------+------------
+    REQ-1.1 | REQ-1.2       | Kayıt formu
+    REQ-2.1 | REQ-2.2       | Export csv

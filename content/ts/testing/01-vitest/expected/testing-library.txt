@@ -1,0 +1,3 @@
+CityForm > asks for a city instead of saving an empty one
+CityForm > disables Save while saving, then confirms
+Tests  2 passed (2)

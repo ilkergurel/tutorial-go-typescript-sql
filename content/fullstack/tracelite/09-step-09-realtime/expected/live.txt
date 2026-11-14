@@ -1,0 +1,7 @@
+mounted                          connecting, requests: 1
+the stream opens                 live, requests: 2
+a trace-links event              live, requests: 3
+the network drops                reconnecting, requests: 3
+EventSource reconnects by itself live, requests: 4
+the server refuses a reconnect   closed, requests: 4
+unmounted: the page closed the stream

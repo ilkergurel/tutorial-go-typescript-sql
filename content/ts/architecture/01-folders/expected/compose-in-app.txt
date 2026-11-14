@@ -1,0 +1,3 @@
+GET /api/progress/ts.architecture.folders
+Klasörler …
+Klasörler tamamlandı

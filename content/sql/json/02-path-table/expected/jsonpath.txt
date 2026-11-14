@@ -1,0 +1,17 @@
+CREATE TABLE
+INSERT 0 2
+SELECT 1
+    id | failed
+    ---+--------
+    1  | "Çıkış"
+SELECT 2
+    id | titles                                 | slow                 | any_failed | suites
+    ---+----------------------------------------+----------------------+------------+-------
+    1  | ["Giriş", "Çıkış", "CSV dışa aktarım"] | ["CSV dışa aktarım"] | t          | 2
+    2  | ["Giriş"]                              | []                   | f          | 1
+SELECT 2
+    id | unwrapped                              | errors
+    ---+----------------------------------------+------------
+    1  | ["Giriş", "Çıkış", "CSV dışa aktarım"] | ["timeout"]
+    2  | ["Giriş"]                              | []
+ERROR: JSON object does not contain key "error" (SQLSTATE 2203A)

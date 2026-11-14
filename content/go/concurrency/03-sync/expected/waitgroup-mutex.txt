@@ -1,0 +1,7 @@
+channels 1
+go       3
+group    1
+guards   1
+mutex    1
+state    1
+wait     1

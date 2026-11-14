@@ -1,0 +1,40 @@
+[1] A: BEGIN
+[2] A: INSERT 0 1
+    key
+    ------
+    k-7f3a
+[3] B: BEGIN
+[4] B: waiting
+[5] A: UPDATE 1
+    payment_id
+    ----------
+    1
+[6] A: COMMIT
+[4] B: INSERT 0 0
+[7] B: SELECT 1
+    payment_id
+    ----------
+    1
+[8] B: COMMIT
+[9] A: BEGIN
+[10] A: INSERT 0 1
+    key
+    ------
+    k-9c1d
+[11] B: BEGIN
+[12] B: waiting
+[13] A: ROLLBACK
+[12] B: INSERT 0 1
+    key
+    ------
+    k-9c1d
+[14] B: UPDATE 1
+    payment_id
+    ----------
+    2
+[15] B: COMMIT
+[16] A: SELECT 2
+    key    | payment_id | kurus
+    -------+------------+-------
+    k-7f3a | 1          | 125000
+    k-9c1d | 2          | 125000

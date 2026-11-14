@@ -1,0 +1,20 @@
+CREATE TABLE
+CREATE INDEX
+INSERT 0 3
+SELECT 1
+    search
+    ------------------------------------------------------------------
+    'for':3B 'kilit':2A 'kilitlemek':7B 'sa':1A 'satır':6B 'update':4B
+SELECT 2
+    id                                | rank
+    ----------------------------------+------
+    sql.transactions.row-locks        | 0.608
+    sql.transactions.isolation-levels | 0.243
+SELECT 3
+    query   | tsquery | hits
+    --------+---------+-----
+    yalıtım | 'yalıt' | 1
+    Yalıtım | 'yalıt' | 1
+    YALITIM | 'yalit' | 0
+ALTER TABLE
+ERROR: indexes on virtual generated columns are not supported (SQLSTATE 0A000)

@@ -1,0 +1,8 @@
+armut: 0 true
+kiraz: 0 false
+naive:   map[ilik:3 ılık:1]
+turkish: map[ilik:2 ılık:2]
+ilik 2
+ılık 2
+0 0
+recovered: assignment to entry in nil map

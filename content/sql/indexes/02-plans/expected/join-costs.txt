@@ -1,0 +1,86 @@
+CREATE TABLE
+CREATE TABLE
+INSERT 0 2000
+INSERT 0 20000
+CREATE INDEX
+ANALYZE
+EXPLAIN
+    QUERY PLAN
+    --------------------------------------------------
+    Aggregate
+      ->  Hash Join
+            Hash Cond: (o.customer_id = c.id)
+            ->  Seq Scan on orders o
+            ->  Hash
+                  ->  Seq Scan on customers c
+                        Filter: (city = 'İzmir'::text)
+EXPLAIN
+    QUERY PLAN
+    ----------------------------------------------------------------------
+    Aggregate (actual rows=1.00 loops=1)
+      Buffers: shared hit=120
+      ->  Hash Join (actual rows=5000.00 loops=1)
+            Hash Cond: (o.customer_id = c.id)
+            Buffers: shared hit=120
+            ->  Seq Scan on orders o (actual rows=20000.00 loops=1)
+                  Buffers: shared hit=109
+            ->  Hash (actual rows=500.00 loops=1)
+                  Buckets: 1024  Batches: 1  Memory Usage: 26kB
+                  Buffers: shared hit=11
+                  ->  Seq Scan on customers c (actual rows=500.00 loops=1)
+                        Filter: (city = 'İzmir'::text)
+                        Rows Removed by Filter: 1500
+                        Buffers: shared hit=11
+    Planning:
+      Buffers: shared hit=12
+SET
+EXPLAIN
+    QUERY PLAN
+    --------------------------------------------------------------------------------------
+    Aggregate (actual rows=1.00 loops=1)
+      Buffers: shared hit=5990 read=21
+      ->  Nested Loop (actual rows=5000.00 loops=1)
+            Buffers: shared hit=5990 read=21
+            ->  Seq Scan on customers c (actual rows=500.00 loops=1)
+                  Filter: (city = 'İzmir'::text)
+                  Rows Removed by Filter: 1500
+                  Buffers: shared hit=11
+            ->  Index Scan using orders_customer on orders o (actual rows=10.00 loops=500)
+                  Index Cond: (customer_id = c.id)
+                  Index Searches: 500
+                  Buffers: shared hit=5979 read=21
+    Planning:
+      Buffers: shared hit=12
+SET
+EXPLAIN
+    QUERY PLAN
+    ---------------------------------------------------------------------------------------
+    Aggregate (actual rows=1.00 loops=1)
+      Buffers: shared hit=20016
+      ->  Merge Join (actual rows=5000.00 loops=1)
+            Merge Cond: (o.customer_id = c.id)
+            Buffers: shared hit=20016
+            ->  Index Scan using orders_customer on orders o (actual rows=19981.00 loops=1)
+                  Index Searches: 1
+                  Buffers: shared hit=20005
+            ->  Sort (actual rows=500.00 loops=1)
+                  Sort Key: c.id
+                  Sort Method: quicksort  Memory: 25kB
+                  Buffers: shared hit=11
+                  ->  Seq Scan on customers c (actual rows=500.00 loops=1)
+                        Filter: (city = 'İzmir'::text)
+                        Rows Removed by Filter: 1500
+                        Buffers: shared hit=11
+    Planning:
+      Buffers: shared hit=12
+SET
+EXPLAIN
+    QUERY PLAN
+    --------------------------------------------------------
+    Aggregate
+      ->  Nested Loop
+            Disabled: true
+            ->  Seq Scan on customers c
+                  Filter: (city = 'İzmir'::text)
+            ->  Index Scan using orders_customer on orders o
+                  Index Cond: (customer_id = c.id)

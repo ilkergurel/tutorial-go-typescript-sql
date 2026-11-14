@@ -1,0 +1,5 @@
+GOGC=100, allocating:   cycles > 0: true
+GOGC=100, reusing:      cycles = 0
+GOGC=off, allocating:   cycles = 0
+GOGC=off, 16 MiB limit: cycles > 0: true
+default GOGC was 100

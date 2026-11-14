@@ -1,0 +1,5 @@
+fast       {"kind":"ok","body":{"status":200}}
+503        {"kind":"http","status":503}
+too slow   {"kind":"timeout"}
+closed     {"kind":"cancelled"}
+real fetch {"kind":"network"}

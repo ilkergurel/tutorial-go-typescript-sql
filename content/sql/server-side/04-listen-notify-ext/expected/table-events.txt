@@ -1,0 +1,8 @@
+INSERT, not yet committed:
+after COMMIT:
+  "test_runs",I,"id"='1'
+  "test_runs",I,"id"='2'
+UPDATE, then DELETE:
+  "test_runs",U,"id"='1'
+  "test_runs",D,"id"='2'
+rolled-back UPDATE:

@@ -1,0 +1,8 @@
+<section>
+<ul>
+<li>çevrimiçi: <span>Ayşe (İzmir)</span>
+</li>
+</ul>
+<a href="/users/7">Profil</a>
+<button type="button">Engelle</button>
+</section>

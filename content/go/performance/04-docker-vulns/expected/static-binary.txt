@@ -1,0 +1,4 @@
+format:           ELFCLASS64 EM_X86_64
+dynamic loader:   none
+shared libraries: 0
+=> no loader, no libc: the file can run in FROM scratch or distroless/static

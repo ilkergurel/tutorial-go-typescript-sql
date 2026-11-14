@@ -1,0 +1,7 @@
+protobuf 14 bytes: 08 96 01 12 05 41 79 c5 9f 65 18 c8 d0 07
+JSON     51 bytes: {"id":150,"customer":"Ayşe","amount_kurus":125000}
+a v1 reader decoding a v2 message:
+  id: 150
+  customer: "Ayşe"
+  amount_kurus: 125000
+  unknown field 4 (wire type 2): skipped

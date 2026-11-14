@@ -1,0 +1,4 @@
+REQ-SEARCH passed=0 failed=2
+REQ-LOGIN  passed=2 failed=1
+REQ-EXPORT passed=1 failed=0
+error: run TC-7: unknown status "pased"

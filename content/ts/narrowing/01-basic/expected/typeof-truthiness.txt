@@ -1,0 +1,4 @@
+06100 34000
+0 2 3
+unknown | 0 left
+["(anonymous)","İLGAZ",""]

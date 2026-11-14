@@ -1,0 +1,25 @@
+CREATE TABLE
+INSERT 0 10
+CREATE VIEW
+SELECT 10
+    test_case | build | status | starts | island
+    ----------+-------+--------+--------+-------
+    Giriş     | 101   | passed | 1      | 1
+    Giriş     | 102   | passed | 0      | 1
+    Giriş     | 103   | failed | 1      | 2
+    Giriş     | 104   | failed | 0      | 2
+    Giriş     | 105   | passed | 1      | 3
+    Giriş     | 106   | passed | 0      | 3
+    Çıkış     | 101   | passed | 1      | 1
+    Çıkış     | 103   | failed | 1      | 2
+    Çıkış     | 105   | failed | 0      | 2
+    Çıkış     | 106   | failed | 0      | 2
+SELECT 5
+    test_case | status | from_build | to_build | runs | current
+    ----------+--------+------------+----------+------+--------
+    Giriş     | passed | 101        | 102      | 2    | f
+    Giriş     | failed | 103        | 104      | 2    | f
+    Giriş     | passed | 105        | 106      | 2    | t
+    Çıkış     | passed | 101        | 101      | 1    | f
+    Çıkış     | failed | 103        | 106      | 3    | t
+ERROR: window function calls cannot be nested (SQLSTATE 42P20)

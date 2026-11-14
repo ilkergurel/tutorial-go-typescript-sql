@@ -1,0 +1,16 @@
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 2
+INSERT 0 2
+INSERT 0 3
+SELECT 2
+    code       | test_count | tags
+    -----------+------------+------------------------------------
+    REQ-EXPORT | 0          | {NULL}
+    REQ-LOGIN  | 6          | {kvkk,kvkk,security,security,ui,ui}
+SELECT 2
+    code       | tests                               | tags
+    -----------+-------------------------------------+-------------------
+    REQ-EXPORT | {}                                  | {}
+    REQ-LOGIN  | {"Locked account","Valid password"} | {kvkk,security,ui}

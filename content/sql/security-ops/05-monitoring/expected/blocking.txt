@@ -1,0 +1,19 @@
+[1] A: INSERT 0 1
+[2] B: INSERT 0 1
+[3] A: BEGIN
+[4] A: UPDATE 1
+[5] B: SELECT 1
+    name | state               | wait_event_type | wait_event | query
+    -----+---------------------+-----------------+------------+---------------------------------------------------------
+    A    | idle in transaction | Client          | ClientRead | UPDATE accounts SET balance = balance - 10 WHERE id = 1;
+[6] B: waiting
+[7] A: SELECT 1
+    name | state  | wait_event_type | wait_event    | blocked_by
+    -----+--------+-----------------+---------------+-----------
+    B    | active | Lock            | transactionid | {A}
+[8] A: SELECT 1
+    locktype      | mode      | granted
+    --------------+-----------+--------
+    transactionid | ShareLock | f
+[9] A: COMMIT
+[6] B: UPDATE 1

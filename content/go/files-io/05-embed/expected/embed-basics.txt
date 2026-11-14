@@ -1,0 +1,12 @@
+version: "1.4.2\n"
+after rewriting version.txt on disk: "1.4.2\n"
+//go:embed static
+  static/app.css
+  static/index.html
+//go:embed all:static
+  static/.env.local
+  static/_draft.html
+  static/app.css
+  static/index.html
+index.html starts with "<!doctype html>"
+_draft.html not embedded: open static/_draft.html: file does not exist

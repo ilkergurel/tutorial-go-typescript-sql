@@ -1,0 +1,3 @@
+tr-TR: <p>Ceyhan, Çanakkale, Ordu, Ödemiş, Sivas, Şanlıurfa | 1.249,90 TL</p>
+en-US: <p>Çanakkale, Ceyhan, Ödemiş, Ordu, Şanlıurfa, Sivas | 1,249.90 TL</p>
+no provider: useLocale needs a LocaleContext provider

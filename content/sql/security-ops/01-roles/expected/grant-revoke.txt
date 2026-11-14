@@ -1,0 +1,30 @@
+CREATE TABLE
+INSERT 0 1
+SELECT 1
+    relacl
+    ------
+    NULL
+GRANT
+SELECT 1
+    whole_table | name_col | tckn_col
+    ------------+----------+---------
+    f           | t        | f
+REVOKE
+GRANT
+SELECT 1
+    relacl
+    -------------------------
+    {playground=a/playground}
+SELECT 3
+    attname | attacl
+    --------+----------------------------------------
+    id      | {=r/playground}
+    name    | {=r/playground,playground=w/playground}
+    tckn    | NULL
+SELECT 1
+    id | name
+    ---+------------
+    1  | Ayşe Yılmaz
+UPDATE 1
+ALTER TABLE
+ERROR: permission denied for table customers (SQLSTATE 42501)

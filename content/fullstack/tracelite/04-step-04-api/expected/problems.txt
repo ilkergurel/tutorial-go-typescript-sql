@@ -1,0 +1,5 @@
+422 {"type":"https://tracelite.example/problems/validation","title":"Validation failed","status":422,"errors":[{"pointer":"#/code","detail":"use A-Z, 0-9 and single hyphens"},{"pointer":"#/title","detail":"must be 1-200 characters, got 0"}]}
+409 {"type":"https://tracelite.example/problems/conflict","title":"Conflict","status":409,"detail":"the code is already used in this project","errors":[{"pointer":"#/code","detail":"already used"}]}
+400 {"type":"about:blank","title":"Bad Request","status":400,"detail":"the body is not a RequirementCreate object"}
+404 {"type":"about:blank","title":"Not Found","status":404}
+500 {"type":"about:blank","title":"Internal Server Error","status":500}

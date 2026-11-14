@@ -1,0 +1,4 @@
+staged 3 rows: İki adımlı doğrulama / Parola ile giriş / Dışa aktarma; CSV
+error: <nil>
+error: record on line 2; parse error on line 3, column 23: extraneous or missing " in quoted-field
+  pgx says: ERROR: COPY from stdin failed: record on line 2; parse error on line 3, column 23: extraneous or missing " in quoted-field (SQLSTATE 57014)

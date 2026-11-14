@@ -1,0 +1,7 @@
+  sent {"type":"subscribe","topic":"orders"}
+  order 41: paid
+  dropped a malformed message
+  dropped a malformed message
+  closed (1006), reconnecting in 1000 ms
+  sent {"type":"subscribe","topic":"orders"}
+  order 41: shipped

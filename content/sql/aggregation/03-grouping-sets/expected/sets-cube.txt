@@ -1,0 +1,29 @@
+CREATE TABLE
+INSERT 0 5
+SELECT 5
+    suite  | status | runs
+    -------+--------+-----
+    auth   | NULL   | 3
+    search | NULL   | 2
+    NULL   | failed | 3
+    NULL   | passed | 2
+    NULL   | NULL   | 5
+SELECT 8
+    level | suite  | status | runs
+    ------+--------+--------+-----
+    0     | auth   | failed | 1
+    0     | auth   | passed | 2
+    0     | search | failed | 2
+    1     | auth   | NULL   | 3
+    1     | search | NULL   | 2
+    2     | NULL   | failed | 3
+    2     | NULL   | passed | 2
+    3     | NULL   | NULL   | 5
+EXPLAIN
+    QUERY PLAN
+    ---------------------------
+    MixedAggregate
+      Hash Key: suite
+      Hash Key: status
+      Group Key: ()
+      ->  Seq Scan on test_runs

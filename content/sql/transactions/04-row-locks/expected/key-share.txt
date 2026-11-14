@@ -1,0 +1,21 @@
+[1] A: BEGIN
+[2] A: UPDATE 1
+[3] B: INSERT 0 1
+[4] A: COMMIT
+[5] A: BEGIN
+[6] A: SELECT 1
+    balance
+    -------
+    90
+[7] B: waiting
+[8] A: UPDATE 1
+[9] A: COMMIT
+[7] B: INSERT 0 1
+[10] A: BEGIN
+[11] A: SELECT 1
+    balance
+    -------
+    70
+[12] B: INSERT 0 1
+[13] A: UPDATE 1
+[14] A: COMMIT

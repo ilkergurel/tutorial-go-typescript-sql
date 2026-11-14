@@ -1,0 +1,29 @@
+CREATE TABLE
+INSERT 0 3
+CREATE TABLE
+INSERT 0 3
+SELECT 2
+    code
+    ----
+    TC-1
+    TC-3
+CREATE TABLE
+INSERT 0 3
+SELECT 1
+    code
+    ----
+    TC-1
+SELECT 1
+    code | dangling_id
+    -----+------------
+    TC-3 | 99
+CREATE TABLE
+CREATE TABLE
+CREATE INDEX
+INSERT 0 3
+INSERT 0 4
+SELECT 1
+    test_case
+    ---------
+    TC-1
+ERROR: insert or update on table "test_case_requirements" violates foreign key constraint "test_case_requirements_requirement_id_fkey" (SQLSTATE 23503)

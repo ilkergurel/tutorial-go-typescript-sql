@@ -1,0 +1,4 @@
+loading yükleniyor (deneme 1)
+backoff 503, tekrar denenecek
+loading yükleniyor (deneme 2)
+ready   Klasörler, Durum, Kalıplar

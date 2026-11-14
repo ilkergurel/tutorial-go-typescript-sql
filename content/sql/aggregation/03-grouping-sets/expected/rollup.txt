@@ -1,0 +1,26 @@
+CREATE TABLE
+INSERT 0 6
+SELECT 9
+    suite  | browser | runs | total_ms
+    -------+---------+------+---------
+    auth   | chrome  | 1    | 120
+    auth   | firefox | 1    | 340
+    auth   | NULL    | 2    | 70
+    auth   | NULL    | 4    | 530
+    export | chrome  | 1    | 900
+    export | NULL    | 1    | 900
+    search | chrome  | 1    | 80
+    search | NULL    | 1    | 80
+    NULL   | NULL    | 6    | 1510
+SELECT 9
+    suite_label | browser_label | level | runs
+    ------------+---------------+-------+-----
+    auth        | chrome        | 0     | 1
+    auth        | firefox       | 0     | 1
+    auth        | api           | 0     | 2
+    auth        | all browsers  | 1     | 4
+    export      | chrome        | 0     | 1
+    export      | all browsers  | 1     | 1
+    search      | chrome        | 0     | 1
+    search      | all browsers  | 1     | 1
+    all suites  | all browsers  | 3     | 6

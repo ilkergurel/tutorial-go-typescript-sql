@@ -1,0 +1,8 @@
+dir=false Zonguldak.txt
+dir=true  node_modules
+dir=false notlar.md
+dir=true  raporlar
+dir=false İzmir.txt
+walk: data/raporlar/Ocak.csv
+walk: data/raporlar/Şubat.csv
+glob: [raporlar/Ocak.csv raporlar/Şubat.csv] <nil>

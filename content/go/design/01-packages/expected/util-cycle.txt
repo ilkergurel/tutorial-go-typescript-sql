@@ -1,0 +1,7 @@
+before$ go build ./...
+package example.com/shop/order
+	imports example.com/shop/util from order.go
+	imports example.com/shop/order from util.go: import cycle not allowed
+-> exit status 1
+after$ go build ./...
+-> <nil>

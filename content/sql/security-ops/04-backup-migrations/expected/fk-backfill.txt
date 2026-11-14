@@ -1,0 +1,31 @@
+CREATE TABLE
+CREATE TABLE
+INSERT 0 10
+INSERT 0 1000
+CREATE VIEW
+ALTER TABLE
+BEGIN
+ALTER TABLE
+SELECT 4
+    tbl          | mode
+    -------------+----------------------
+    projects     | AccessShareLock
+    projects     | ShareRowExclusiveLock
+    requirements | AccessShareLock
+    requirements | ShareRowExclusiveLock
+COMMIT
+CREATE PROCEDURE
+CALL
+    NOTICE: committed a batch of 400 rows
+    NOTICE: committed a batch of 400 rows
+    NOTICE: committed a batch of 200 rows
+BEGIN
+ALTER TABLE
+SELECT 4
+    tbl          | mode
+    -------------+-------------------------
+    projects     | AccessShareLock
+    projects     | RowShareLock
+    requirements | AccessShareLock
+    requirements | ShareUpdateExclusiveLock
+COMMIT

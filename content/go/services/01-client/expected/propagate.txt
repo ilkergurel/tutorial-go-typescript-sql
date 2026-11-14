@@ -1,0 +1,5 @@
+200 42
+504 upstream timed out
+  upstream stopped: context canceled
+caller gave up, cancelled: true
+  upstream stopped: context canceled

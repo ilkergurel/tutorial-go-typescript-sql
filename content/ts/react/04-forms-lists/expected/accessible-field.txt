@@ -1,0 +1,2 @@
+Ad [id :r0:]: valid
+E-posta [id :r1:]: invalid, described by "Geçerli bir e-posta girin"

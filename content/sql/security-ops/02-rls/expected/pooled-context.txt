@@ -1,0 +1,34 @@
+CREATE TABLE
+INSERT 0 2
+ALTER TABLE
+ALTER TABLE
+CREATE POLICY
+BEGIN
+SELECT 1
+    set_config
+    ----------
+    1
+SELECT 1
+    name
+    -----------
+    Acme brakes
+COMMIT
+SELECT 1
+    leftover | visible
+    ---------+--------
+    ''       | 0
+SELECT 1
+    set_config
+    ----------
+    2
+SELECT 1
+    name
+    -----------
+    Globex rail
+SELECT 1
+    name
+    -----------
+    Globex rail
+ALTER POLICY
+RESET
+ERROR: invalid input syntax for type bigint: "" (SQLSTATE 22P02)

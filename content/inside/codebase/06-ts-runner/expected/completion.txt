@@ -1,0 +1,3 @@
+fetchThenRender, fixed 50 ms: start @0, data loaded @30 -> done at 50 ms
+fetchThenRender, no timer pending: start @0, data loaded @30, rendered @120 -> done at 120 ms
+heartbeat, no timer pending: start @0 -> timed out after 10000 ms, exit 124

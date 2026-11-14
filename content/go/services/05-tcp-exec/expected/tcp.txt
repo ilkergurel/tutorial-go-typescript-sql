@@ -1,0 +1,4 @@
+istanbul 8 bytes -> İSTANBUL 9 bytes
+ıspanak  8 bytes -> ISPANAK  7 bytes
+çiğdem   8 bytes -> ÇİĞDEM   9 bytes
+read with nothing to read: deadline exceeded = true

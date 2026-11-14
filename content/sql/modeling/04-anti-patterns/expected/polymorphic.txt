@@ -1,0 +1,24 @@
+CREATE TABLE
+CREATE TABLE
+INSERT 0 1
+INSERT 0 2
+CREATE TABLE
+INSERT 0 3
+DELETE 1
+SELECT 3
+    id | target_type | target_id | target
+    ---+-------------+-----------+-------
+    1  | requirement | 1         | REQ-1
+    2  | test_case   | 2         | NULL
+    3  | test_case   | 9         | NULL
+CREATE TABLE
+CREATE INDEX
+CREATE INDEX
+INSERT 0 1
+INSERT 0 1
+DELETE 1
+SELECT 1
+    id | requirement_id | test_case_id | body
+    ---+----------------+--------------+------------------------
+    1  | 1              | NULL         | Needs a 3-D Secure case
+ERROR: insert or update on table "comments" violates foreign key constraint "comments_test_case_id_fkey" (SQLSTATE 23503)

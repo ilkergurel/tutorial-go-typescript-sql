@@ -1,0 +1,18 @@
+CREATE TABLE
+INSERT 0 2
+CREATE TABLE
+INSERT 0 3
+ALTER TABLE
+CREATE INDEX
+SELECT 2
+    name              | orders | total
+    ------------------+--------+--------
+    Acme Yazılım      | 2      | 1660.00
+    Boğaziçi Lojistik | 1      | 90.50
+SELECT 3
+    id | extras
+    ---+------------------------------
+    1  | {"gift_note": "Kolay gelsin"}
+    2  | {}
+    3  | {"coupon": "KASIM10"}
+ERROR: insert or update on table "orders" violates foreign key constraint "orders_customer_id_fkey" (SQLSTATE 23503)

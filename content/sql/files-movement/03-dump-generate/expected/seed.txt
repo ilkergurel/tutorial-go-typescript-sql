@@ -1,0 +1,19 @@
+CREATE TABLE
+CREATE TABLE
+INSERT 0 200
+INSERT 0 100000
+SELECT 1
+    runs   | reqs | commits | pass_pct | manual_pct | first_day  | last_day
+    -------+------+---------+----------+------------+------------+-----------
+    100000 | 200  | 4001    | 90.0     | 25.0       | 2026-01-01 | 2026-10-25
+SELECT 3
+    code    | runs
+    --------+-----
+    REQ-001 | 7273
+    REQ-002 | 2958
+    REQ-003 | 2236
+SELECT 2
+    passed | avg_s | min   | max
+    -------+-------+-------+------
+    f      | 24.78 | 19.88 | 30.20
+    t      | 4.13  | 0.20  | 19.88

@@ -1,0 +1,3 @@
+--- PASS: ExampleSlug
+--- PASS: ExampleSlug_plates
+PASS

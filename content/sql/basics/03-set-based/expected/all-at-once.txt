@@ -1,0 +1,23 @@
+CREATE TABLE
+INSERT 0 2
+UPDATE 2
+SELECT 2
+    nurse | day_ward   | night_ward
+    ------+------------+-----------
+    elif  | icu        | cardiology
+    kerem | pediatrics | er
+CREATE TABLE
+INSERT 0 3
+INSERT 0 3
+SELECT 6
+    n
+    -
+    1
+    2
+    3
+    4
+    5
+    6
+CREATE TABLE
+INSERT 0 3
+ERROR: duplicate key value violates unique constraint "queue_pos_key" (SQLSTATE 23505)

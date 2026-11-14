@@ -1,0 +1,3 @@
+order 7: 1250,50 TL
+user 3 is now Işıl
+skipped user.deleted, raw data kept: {"id": 4}

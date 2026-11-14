@@ -1,0 +1,6 @@
+tracelite dev (built outside a Git checkout)
+starting: addr=127.0.0.1:8080 db=postgres://tracelite:xxxxx@127.0.0.1:5432/tracelite owner=Ayşe Yılmaz
+refusing to start:
+TRACELITE_ADDR ":8080" is reachable from other machines, and TraceLite has no login; set TRACELITE_ALLOW_REMOTE=yes behind a proxy that authenticates
+DATABASE_URL is required, as postgres://user:password@host:port/database
+TRACELITE_OWNER must name the person using this installation

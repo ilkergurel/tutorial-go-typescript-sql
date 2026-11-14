@@ -1,0 +1,3 @@
+tagged commit:        v1.4.2
+uncommitted change:   v1.4.2+dirty
+commit after the tag: v1.4.3-0.20261102090000-<rev12>

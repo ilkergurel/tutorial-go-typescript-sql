@@ -1,0 +1,2 @@
+load config: open users.txt:
+not exist? true

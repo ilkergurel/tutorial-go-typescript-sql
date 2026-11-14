@@ -1,0 +1,4 @@
+1 Adana
+6 Ankara
+34 İstanbul
+5 [Adana Ankara Iğdır İstanbul İzmir]

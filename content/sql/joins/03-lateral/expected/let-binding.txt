@@ -1,0 +1,8 @@
+CREATE TABLE
+INSERT 0 3
+SELECT 2
+    id | ms   | over_budget_ms
+    ---+------+---------------
+    3  | 9000 | 6000
+    2  | 4000 | 1000
+ERROR: column "ms" does not exist (SQLSTATE 42703)

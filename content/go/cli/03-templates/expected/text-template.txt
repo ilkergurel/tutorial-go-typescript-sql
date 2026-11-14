@@ -1,0 +1,8 @@
+Order for Ayşe, İZMİR
+- çay    x2   91.00 TL
+- simit  x3   45.00 TL
+Note: ring twice
+Order for Mehmet, IĞDIR
+- (no items)
+written before the error: "Hello "
+error: template: bad:1:8: executing "bad" at <.Custmer>: can't evaluate field Custmer in type main.Order

@@ -1,0 +1,32 @@
+SELECT 9
+    word           | lexeme
+    ---------------+---------------
+    rapor          | 'rapor':1
+    raporlar       | 'rapor':1
+    raporları      | 'rapor':1
+    hata           | 'ha':1
+    hatalar        | 'hata':1
+    hatası         | 'hatas':1
+    gereksinim     | 'gereks':1
+    gereksinimler  | 'gereksinim':1
+    gereksinimleri | 'gereksinim':1
+SELECT 9
+    alias     | token     | dictionary   | lexemes
+    ----------+-----------+--------------+-----------
+    asciiword | TraceLite | turkish_stem | {traceli}
+    blank     | '         | NULL         | NULL
+    word      | ın        | turkish_stem | {ın}
+    blank     |           | NULL         | NULL
+    asciiword | raporu    | turkish_stem | {rapor}
+    blank     |           | NULL         | NULL
+    word      | İstanbul  | turkish_stem | {istanbul}
+    blank     | '         | NULL         | NULL
+    asciiword | da        | turkish_stem | {}
+CREATE TABLE
+INSERT 0 3
+SELECT 3
+    id | title                         | stem | prefix
+    ---+-------------------------------+------+-------
+    1  | Giriş ekranında hata mesajı   | t    | t
+    2  | Raporlama modülündeki hatalar | f    | t
+    3  | Hatay şubesi için yeni rapor  | f    | t

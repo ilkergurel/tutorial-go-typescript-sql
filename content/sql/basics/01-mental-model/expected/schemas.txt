@@ -1,0 +1,28 @@
+CREATE SCHEMA
+CREATE SCHEMA
+CREATE TABLE
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+SET
+SELECT 1
+    note
+    ----------------------
+    login fails for İlknur
+SET
+SELECT 1
+    note
+    --------------------------
+    invoice 2026-11 is overdue
+CREATE TABLE
+SELECT 3
+    table_schema | table_name
+    -------------+-----------
+    billing      | refunds
+    billing      | tickets
+    support      | tickets
+SELECT 2
+    schema  | note
+    --------+---------------------------
+    billing | invoice 2026-11 is overdue
+    support | login fails for İlknur

@@ -1,0 +1,23 @@
+CREATE TABLE
+CREATE TABLE
+INSERT 0 3
+INSERT 0 4
+SELECT 1
+    id | duration_ms
+    ---+------------
+    2  | 900
+SELECT 3
+    title          | runs | last_passed
+    ---------------+------+------------
+    Valid password | 3    | t
+    Locked account | 1    | f
+    Export CSV     | 0    | NULL
+EXPLAIN
+    QUERY PLAN
+    ---------------------------------------------
+    Seq Scan on test_cases t
+      SubPlan 1
+        ->  Aggregate
+              ->  Seq Scan on test_runs r
+                    Filter: (test_case_id = t.id)
+ERROR: more than one row returned by a subquery used as an expression (SQLSTATE 21000)

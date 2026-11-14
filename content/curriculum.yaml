@@ -1,0 +1,1498 @@
+# StackLab curriculum — Phase 0 draft for owner review.
+# Every module from the build prompt §8, expanded into lessons.
+# Each lesson: stable id (track.moduleNN.slug), title, level (basic|intermediate|advanced),
+# goal (one line), runtime (go | go-test | go-server | sql | sql-nontx |
+# sql-multisession | ts-browser | ts-node | none).
+# Review, edit, delete, or add — this file drives the sidebar and content batches.
+
+version: 0
+updated: 2026-11-12
+
+learning_paths:
+  default:
+    title: "Default path"
+    description: "Interleaved: language basics in all three tracks, then combining them, then the full-stack project."
+    sequence:
+      - go.basics
+      - go.composite
+      - sql.basics
+      - sql.tables-types
+      - ts.mental-model
+      - ts.everyday-types
+      - go.errors
+      - go.interfaces
+      - go.postgres
+      - ts.functions
+      - ts.narrowing
+      - ts.services
+      - ts.react
+      - fullstack.tracelite
+      - go.concurrency
+      - sql.transactions
+      - go.testing
+      - design.paradigms
+  go-first:
+    title: "Go first"
+    sequence: [go.tooling, go.basics, go.composite, go.interfaces, go.errors, go.generics, go.iterators, go.concurrency, go.files-io, go.cli, go.http, go.services, go.postgres, go.testing, go.design, go.performance, go.timeline]
+  ts-first:
+    title: "TypeScript first"
+    sequence: [ts.mental-model, ts.everyday-types, ts.functions, ts.narrowing, ts.objects-classes, ts.generics, ts.type-level, ts.async, ts.errors, ts.browser-dom, ts.services, ts.react, ts.testing, ts.architecture, ts.tooling, ts.node]
+  sql-first:
+    title: "PostgreSQL first"
+    sequence: [sql.basics, sql.tables-types, sql.constraints, sql.querying, sql.modifying, sql.joins, sql.aggregation, sql.subqueries-ctes, sql.windows, sql.modeling, sql.indexes, sql.transactions, sql.json, sql.search, sql.server-side, sql.files-movement, sql.security-ops, sql.modern]
+
+tracks:
+  go:
+    title: "Go"
+    description: "Backend Go, from the go command to shipping a single binary."
+
+    modules:
+      - id: go.tooling
+        title: "Tooling & project basics"
+        order: 1
+        lessons:
+          - id: go.tooling.go-command
+            title: "The go command: mod, run, build, test, vet, fmt, doc"
+            level: basic
+            goal: "Drive the whole toolchain from one binary; understand modules vs packages."
+            runtime: go
+          - id: go.tooling.project-layout
+            title: "Modules, packages, internal/, and the cmd/ layout"
+            level: basic
+            goal: "Know where code goes and what exported vs unexported means; peek at go.work."
+            runtime: go
+          - id: go.tooling.modernizers
+            title: "go fix modernizers and the toolchain directive"
+            level: intermediate
+            goal: "Let the tool modernize old code and pin toolchains reproducibly."
+            runtime: go
+
+      - id: go.basics
+        title: "Basics"
+        order: 2
+        lessons:
+          - id: go.basics.variables
+            title: "var vs :=, zero values, constants and iota"
+            level: basic
+            goal: "Declaration forms, the zero-value philosophy, typed constants."
+            runtime: go
+          - id: go.basics.types-conversion
+            title: "Basic types and explicit conversion"
+            level: basic
+            goal: "No implicit conversions, ever — and why that catches real bugs."
+            runtime: go
+          - id: go.basics.strings-runes
+            title: "Strings, bytes and runes: UTF-8 and Turkish characters"
+            level: basic
+            goal: "Range over a string, len vs rune count, İ/ı case mapping, unicode.TurkishCase."
+            runtime: go
+          - id: go.basics.control-flow
+            title: "if with init, the one for, switch without fallthrough, labels"
+            level: basic
+            goal: "Go's control flow: fewer constructs, each doing more."
+            runtime: go
+          - id: go.basics.functions
+            title: "Functions: multiple returns, named results, variadic, closures"
+            level: basic
+            goal: "The (value, error) idiom starts here."
+            runtime: go
+          - id: go.basics.defer
+            title: "defer: LIFO order and when arguments are evaluated"
+            level: basic
+            goal: "Resource cleanup that can't be skipped — and the log.Fatalf trap."
+            runtime: go
+          - id: go.basics.pointers
+            title: "Pointers without arithmetic; new(expr) vs &T{}"
+            level: basic
+            goal: "Escape analysis makes stack-vs-heap a non-decision; Go 1.26 new(expr)."
+            runtime: go
+
+      - id: go.composite
+        title: "Composite types"
+        order: 3
+        lessons:
+          - id: go.composite.slices-and-maps
+            title: "Slices and maps: len/cap, append, aliasing, nil maps, comma-ok"
+            level: basic
+            goal: "The two workhorse collections and their classic bugs (aliasing, random order)."
+            runtime: go
+          - id: go.composite.slices-maps-pkg
+            title: "The slices and maps packages, copy, clear"
+            level: basic
+            goal: "Stop hand-writing loops the standard library already has."
+            runtime: go
+          - id: go.composite.structs
+            title: "Structs, embedding, tags, value vs reference semantics"
+            level: basic
+            goal: "Composition over inheritance: promoted fields, struct tags, comparability."
+            runtime: go
+
+      - id: go.interfaces
+        title: "Methods & interfaces"
+        order: 4
+        lessons:
+          - id: go.interfaces.methods
+            title: "Methods: value vs pointer receivers and method sets"
+            level: basic
+            goal: "Choose a receiver rule per type and never mix them."
+            runtime: go
+          - id: go.interfaces.implicit
+            title: "Implicit interfaces; io.Reader, io.Writer, fmt.Stringer"
+            level: basic
+            goal: "Small interfaces declared by the consumer; accept interfaces, return structs."
+            runtime: go
+          - id: go.interfaces.assertions
+            title: "Type assertions, type switches, any, and the nil-interface trap"
+            level: intermediate
+            goal: "Downcasting without shame — and the non-nil interface holding a nil pointer."
+            runtime: go
+
+      - id: go.errors
+        title: "Errors"
+        order: 5
+        lessons:
+          - id: go.errors.errors-as-values
+            title: "Errors as values: creation, wrapping with %w, adding context"
+            level: basic
+            goal: "Error handling without exceptions; wrap, don't spam."
+            runtime: go
+          - id: go.errors.is-as-join
+            title: "errors.Is, errors.As, errors.Join; sentinels vs error types"
+            level: intermediate
+            goal: "Inspect wrapped errors without breaking abstractions."
+            runtime: go
+          - id: go.errors.panic-strategy
+            title: "panic/recover and an error strategy across layers"
+            level: intermediate
+            goal: "Panic only for programmer errors; recover at goroutine and HTTP boundaries."
+            runtime: go
+
+      - id: go.generics
+        title: "Generics"
+        order: 6
+        lessons:
+          - id: go.generics.parameters
+            title: "Type parameters, constraints, ~, comparable, cmp.Ordered"
+            level: intermediate
+            goal: "Write Set[T] and Stack[T]; inference does the rest."
+            runtime: go
+          - id: go.generics.methods-when
+            title: "Generic methods (Go 1.27) and when an interface wins"
+            level: advanced
+            goal: "The last generics gap closed; recognizing over-genericized code."
+            runtime: go
+
+      - id: go.iterators
+        title: "Iterators & collections"
+        order: 7
+        lessons:
+          - id: go.iterators.range
+            title: "Range over int and range over functions (iter.Seq/Seq2)"
+            level: intermediate
+            goal: "Go 1.22 loop variables, Go 1.23 iterators: pull vs push."
+            runtime: go
+          - id: go.iterators.writing
+            title: "Writing your own iterators; helper functions in slices/maps/strings"
+            level: intermediate
+            goal: "strings.Lines, strings.SplitSeq, slices.Values — compose lazy pipelines."
+            runtime: go
+
+      - id: go.concurrency
+        title: "Concurrency"
+        order: 8
+        lessons:
+          - id: go.concurrency.goroutines-channels
+            title: "Goroutines and channels: buffered, close, ranging, nil channels"
+            level: intermediate
+            goal: "CSP from zero; who closes the channel is a design decision."
+            runtime: go
+          - id: go.concurrency.select
+            title: "select: timeouts, default, and multiplexing"
+            level: intermediate
+            goal: "First-class waiting on multiple channel operations."
+            runtime: go
+          - id: go.concurrency.sync
+            title: "sync: WaitGroup (and wg.Go), Mutex/RWMutex, Once/OnceValue, atomic"
+            level: intermediate
+            goal: "Shared-state concurrency done carefully; channels vs mutexes."
+            runtime: go
+          - id: go.concurrency.context
+            title: "context: cancellation, deadlines, values used sparingly"
+            level: intermediate
+            goal: "The standard way every I/O call gets cancelled."
+            runtime: go
+          - id: go.concurrency.patterns
+            title: "Patterns: worker pool, fan-out/fan-in, pipelines, semaphores, rate limiting"
+            level: advanced
+            goal: "The reusable shapes behind most concurrent Go programs."
+            runtime: go
+          - id: go.concurrency.errgroup
+            title: "errgroup with limits, data races, -race, goroutine leaks"
+            level: advanced
+            goal: "Structured concurrency; finding leaks and races before production does."
+            runtime: go
+          - id: go.concurrency.synctest
+            title: "testing/synctest: deterministic time for concurrent tests"
+            level: advanced
+            goal: "Test timeouts and retries instantly with virtual time."
+            runtime: go-test
+
+      - id: go.files-io
+        title: "Files & I/O"
+        order: 9
+        lessons:
+          - id: go.files-io.reading-files
+            title: "Reading files: whole file vs streaming"
+            level: basic
+            goal: "os.ReadFile vs bufio.Scanner; constant memory; always check sc.Err()."
+            runtime: go
+          - id: go.files-io.writing
+            title: "Writing files: atomic writes, permissions, bufio.Writer"
+            level: basic
+            goal: "Temp file + rename so a crash never corrupts data."
+            runtime: go
+          - id: go.files-io.composing
+            title: "Composing readers and writers: io.Copy, TeeReader, MultiWriter, LimitReader"
+            level: intermediate
+            goal: "Interfaces snap together like pipes."
+            runtime: go
+          - id: go.files-io.directories
+            title: "Directories: ReadDir, WalkDir, path vs path/filepath, os.Root"
+            level: intermediate
+            goal: "Walk trees portably and open user-supplied paths safely."
+            runtime: go
+          - id: go.files-io.embed
+            title: "embed.FS: shipping static assets in the binary"
+            level: intermediate
+            goal: "One binary that carries its own templates and frontend."
+            runtime: go
+          - id: go.files-io.csv-json
+            title: "CSV and JSON: encoding/csv, encoding/json (and json/v2, Go 1.27)"
+            level: intermediate
+            goal: "Struct tags, streaming Decoder, RawMessage; the new json/v2 package."
+            runtime: go
+          - id: go.files-io.binary
+            title: "Binary data, byte order, gzip and zip"
+            level: advanced
+            goal: "encoding/binary for device protocols; compressed streams as Readers."
+            runtime: go
+
+      - id: go.cli
+        title: "Output & CLI"
+        order: 10
+        lessons:
+          - id: go.cli.fmt
+            title: "fmt verbs, tabwriter tables, stdout vs stderr, exit codes"
+            level: basic
+            goal: "Print like a tool author, not a debugger."
+            runtime: go
+          - id: go.cli.flag-env
+            title: "flag and subcommands, environment variables, stdin"
+            level: basic
+            goal: "Build a small CLI with the standard library only."
+            runtime: go
+          - id: go.cli.templates
+            title: "text/template vs html/template"
+            level: intermediate
+            goal: "The same engine; html/template auto-escapes and saves you from XSS."
+            runtime: go
+          - id: go.cli.slog
+            title: "log/slog: levels, attributes, handlers, JSON output"
+            level: intermediate
+            goal: "Structured logging that both humans and machines read."
+            runtime: go
+
+      - id: go.http
+        title: "HTTP servers"
+        order: 11
+        lessons:
+          - id: go.http.handlers
+            title: "The handler model and ServeMux patterns"
+            level: intermediate
+            goal: "Method and wildcard patterns, precedence rules, no framework."
+            runtime: go-server
+          - id: go.http.json-validation
+            title: "JSON helpers, validation, problem-details errors (RFC 9457)"
+            level: intermediate
+            goal: "Decode strictly, validate at the edge, answer with machine-readable errors."
+            runtime: go-server
+          - id: go.http.middleware
+            title: "Middleware as function wrappers: logging, recovery, request ID, timeouts"
+            level: intermediate
+            goal: "Cross-cutting concerns without a framework."
+            runtime: go-server
+          - id: go.http.server-lifecycle
+            title: "Server timeouts, graceful shutdown, static files with embed"
+            level: intermediate
+            goal: "Why default timeouts are dangerous; draining connections cleanly."
+            runtime: go-server
+          - id: go.http.uploads-streams
+            title: "File upload (multipart, size limits), streaming download, SSE, WebSockets"
+            level: advanced
+            goal: "Streams in and out without buffering the world."
+            runtime: go-server
+          - id: go.http.cors-cookies-httptest
+            title: "CORS, cookies, and httptest"
+            level: advanced
+            goal: "Why the sandboxed iframe has a null origin; test handlers without a network."
+            runtime: go-server
+
+      - id: go.services
+        title: "Talking to other services"
+        order: 12
+        lessons:
+          - id: go.services.client
+            title: "http.Client without timeouts is a bug; per-request context"
+            level: intermediate
+            goal: "Call out, give up, and clean up — against the mock services."
+            runtime: go
+          - id: go.services.retries
+            title: "Retries with backoff and jitter; 429 and Retry-After; idempotency"
+            level: advanced
+            goal: "Retry only what's safe to repeat; make flaky endpoints reliable."
+            runtime: go
+          - id: go.services.pagination-streaming
+            title: "Cursor pagination and streaming large responses"
+            level: advanced
+            goal: "Consume a paged API end to end; stream a 1 GB download."
+            runtime: go
+          - id: go.services.webhooks-hmac
+            title: "Webhooks with HMAC signature verification"
+            level: advanced
+            goal: "Receive callbacks without trusting the network."
+            runtime: go-server
+          - id: go.services.tcp-exec
+            title: "TCP with net, os/exec without a shell, ReverseProxy"
+            level: advanced
+            goal: "Drop a level lower when HTTP isn't the answer."
+            runtime: go
+          - id: go.services.listen-notify
+            title: "Postgres LISTEN/NOTIFY as a lightweight message bus"
+            level: advanced
+            goal: "Push events from the database to your server without a broker."
+            runtime: go
+          - id: go.services.grpc-brokers
+            title: "gRPC/protobuf and message brokers: when to choose them (concepts)"
+            level: intermediate
+            goal: "Know the trade-offs before you need them."
+            runtime: none
+
+      - id: go.postgres
+        title: "Go + PostgreSQL"
+        order: 13
+        lessons:
+          - id: go.postgres.pgx
+            title: "database/sql vs native pgx; pgxpool sizing and lifecycle"
+            level: intermediate
+            goal: "Pick the driver deliberately and size the pool."
+            runtime: go
+          - id: go.postgres.querying
+            title: "Querying and scanning: CollectRows, RowToStructByName, NULL handling"
+            level: intermediate
+            goal: "Map rows to structs honestly, NULLs included."
+            runtime: go
+          - id: go.postgres.transactions
+            title: "Transactions: a WithTx helper, deferred rollback, injection-safe parameters"
+            level: intermediate
+            goal: "Group writes correctly; never concatenate SQL."
+            runtime: go
+          - id: go.postgres.bulk
+            title: "CopyFrom bulk loads, batches, context timeouts and cancellation"
+            level: advanced
+            goal: "Load 100k rows in a blink and cancel queries politely."
+            runtime: go
+          - id: go.postgres.migrations-sqlc
+            title: "goose migrations and the sqlc workflow"
+            level: intermediate
+            goal: "Schema changes as versioned SQL; queries as type-safe generated code."
+            runtime: go
+          - id: go.postgres.repository-testing
+            title: "The repository pattern (and when it's overkill); testing DB code on real Postgres"
+            level: advanced
+            goal: "Wrap the store only when a real boundary exists."
+            runtime: go
+
+      - id: go.testing
+        title: "Testing"
+        order: 14
+        lessons:
+          - id: go.testing.table-driven
+            title: "Table-driven tests, t.Run, t.Helper, t.Cleanup, t.Context"
+            level: basic
+            goal: "Plain testing package only — no assertion library."
+            runtime: go-test
+          - id: go.testing.fakes-httptest
+            title: "Fakes behind small interfaces; httptest; golden files"
+            level: intermediate
+            goal: "Test handlers and services without mock frameworks."
+            runtime: go-test
+          - id: go.testing.benchmarks-fuzz
+            title: "Benchmarks with b.Loop, fuzzing, coverage, Example functions"
+            level: advanced
+            goal: "Measure honestly, break the parser, document by example."
+            runtime: go-test
+          - id: go.testing.integration
+            title: "Build-tagged integration tests on a real Postgres"
+            level: advanced
+            goal: "Fast unit suite locally, honest DB suite on demand."
+            runtime: go-test
+
+      - id: go.design
+        title: "Design & architecture in Go"
+        order: 15
+        lessons:
+          - id: go.design.packages
+            title: "Package design: by feature, small API surface, no util packages"
+            level: intermediate
+            goal: "Avoid import cycles by giving every package one job."
+            runtime: none
+          - id: go.design.constructors
+            title: "Constructor injection, functional options, useful zero values"
+            level: intermediate
+            goal: "Dependencies passed explicitly; configs that default sensibly."
+            runtime: go
+          - id: go.design.layers
+            title: "Layered vs hexagonal: handler/service/store trade-offs"
+            level: advanced
+            goal: "Choose a shape for the program you have, not the one you imagine."
+            runtime: none
+          - id: go.design.copying
+            title: "A little copying is better than a little dependency; Go proverbs, examined"
+            level: intermediate
+            goal: "Read the proverbs critically and know which ones bend."
+            runtime: none
+
+      - id: go.performance
+        title: "Performance & shipping"
+        order: 16
+        lessons:
+          - id: go.performance.pprof
+            title: "pprof: CPU and heap profiling, escape analysis (-gcflags=-m)"
+            level: advanced
+            goal: "Find real hot spots instead of guessing."
+            runtime: go
+          - id: go.performance.allocations
+            title: "Reducing allocations; sync.Pool (and when not to use it); the Green Tea GC"
+            level: advanced
+            goal: "Measure, allocate less, understand the collector at a high level."
+            runtime: go
+          - id: go.performance.cross-compile
+            title: "Cross-compilation and the single binary: GOOS/GOARCH, CGO_ENABLED=0, ldflags"
+            level: intermediate
+            goal: "Ship one static file per OS with version stamps."
+            runtime: go
+          - id: go.performance.docker-vulns
+            title: "Multi-stage Docker builds, govulncheck, a release checklist"
+            level: intermediate
+            goal: "Small images, known-clean dependencies, repeatable releases."
+            runtime: none
+
+      - id: go.timeline
+        title: "Modern Go timeline"
+        order: 17
+        lessons:
+          - id: go.timeline.1-21-to-1-27
+            title: "What changed from Go 1.21 to 1.27 and how to spot old code"
+            level: intermediate
+            goal: "Loop variables, range-over-int, iterators, wg.Go, os.Root, json/v2, stdlib UUID."
+            runtime: none
+
+  ts:
+    title: "TypeScript"
+    description: "TypeScript 7 in the browser and (optionally) Node, from mental model to React."
+
+    modules:
+      - id: ts.mental-model
+        title: "Setup & mental model"
+        order: 1
+        lessons:
+          - id: ts.mental-model.erasable
+            title: "TS = JS + erasable static types; what tsc 7 does vs what bundlers do"
+            level: basic
+            goal: "Types vanish at runtime; tsc checks (and can emit), bundlers only strip."
+            runtime: ts-browser
+          - id: ts.mental-model.tsconfig
+            title: "Essential tsconfig options and the strict flags"
+            level: basic
+            goal: "strict, noUncheckedIndexedAccess, exactOptionalPropertyTypes, verbatimModuleSyntax."
+            runtime: ts-browser
+          - id: ts.mental-model.structural
+            title: "Structural typing vs nominal typing; where TS runs"
+            level: basic
+            goal: "Shapes decide compatibility — unlike Java or C++."
+            runtime: ts-browser
+
+      - id: ts.everyday-types
+        title: "Everyday types"
+        order: 2
+        lessons:
+          - id: ts.everyday-types.primitives
+            title: "Primitives, literal types, any vs unknown vs never"
+            level: basic
+            goal: "The type vocabulary you'll use hourly."
+            runtime: ts-browser
+          - id: ts.everyday-types.objects
+            title: "Arrays, readonly tuples, object types, optional and readonly properties"
+            level: basic
+            goal: "Model data precisely, including what must not change."
+            runtime: ts-browser
+          - id: ts.everyday-types.null
+            title: "null/undefined under strictNullChecks; ?. and ??"
+            level: basic
+            goal: "Absence made explicit instead of a NullPointerException."
+            runtime: ts-browser
+          - id: ts.everyday-types.unions-enums
+            title: "Enums vs literal unions with as const; type aliases vs interfaces"
+            level: basic
+            goal: "Why erasableSyntaxOnly discourages enums."
+            runtime: ts-browser
+
+      - id: ts.functions
+        title: "Functions"
+        order: 3
+        lessons:
+          - id: ts.functions.signatures
+            title: "Parameter and return types; optional, default and rest parameters"
+            level: basic
+            goal: "Annotate where inference can't help."
+            runtime: ts-browser
+          - id: ts.functions.higher-order
+            title: "Function types, callbacks, closures, this, arrow vs function, void vs undefined"
+            level: basic
+            goal: "First-class functions typed precisely; overloads and better alternatives."
+            runtime: ts-browser
+
+      - id: ts.narrowing
+        title: "Narrowing & unions"
+        order: 4
+        lessons:
+          - id: ts.narrowing.basic
+            title: "typeof, instanceof and in narrowing"
+            level: basic
+            goal: "The compiler follows your runtime checks."
+            runtime: ts-browser
+          - id: ts.narrowing.discriminated-unions
+            title: "Discriminated unions: the single most important pattern"
+            level: basic
+            goal: "Model a value as exactly one variant, exhaustively."
+            runtime: ts-browser
+          - id: ts.narrowing.guards
+            title: "Type guards, assertion functions, satisfies, never for exhaustiveness"
+            level: intermediate
+            goal: "Custom narrowing plus the check that keeps switches honest."
+            runtime: ts-browser
+
+      - id: ts.objects-classes
+        title: "Objects, classes & modules"
+        order: 5
+        lessons:
+          - id: ts.objects-classes.spread
+            title: "Spread/rest and immutability"
+            level: basic
+            goal: "Update data functionally; shallow copies and their limits."
+            runtime: ts-browser
+          - id: ts.objects-classes.classes
+            title: "Classes: #private vs private, readonly, abstract, parameter properties"
+            level: intermediate
+            goal: "When classes earn their place; parameter properties aren't erasable."
+            runtime: ts-browser
+          - id: ts.objects-classes.modules
+            title: "ES modules: import type, verbatimModuleSyntax, barrels, path aliases, .d.ts"
+            level: intermediate
+            goal: "Module hygiene for a codebase that stays readable."
+            runtime: ts-browser
+
+      - id: ts.generics
+        title: "Generics"
+        order: 6
+        lessons:
+          - id: ts.generics.functions
+            title: "Generic functions and types, extends constraints, defaults"
+            level: intermediate
+            goal: "Reuse logic while keeping precise return types."
+            runtime: ts-browser
+          - id: ts.generics.keyof
+            title: "keyof, indexed access types, generic React components"
+            level: advanced
+            goal: "Type-safe property access and reusable components."
+            runtime: ts-browser
+
+      - id: ts.type-level
+        title: "Type-level programming"
+        order: 7
+        lessons:
+          - id: ts.type-level.utility
+            title: "Mapped types and the built-in utilities: Partial, Pick, Omit, Record, Awaited..."
+            level: advanced
+            goal: "Derive types instead of maintaining them."
+            runtime: ts-browser
+          - id: ts.type-level.conditionals
+            title: "Conditional types, infer, template literal types"
+            level: advanced
+            goal: "Small type-level programs; know when to stop."
+            runtime: ts-browser
+          - id: ts.type-level.branded
+            title: "Branded types (RequirementId) and making illegal states unrepresentable"
+            level: advanced
+            goal: "Let the compiler enforce domain invariants; closing lesson on over-engineering."
+            runtime: ts-browser
+
+      - id: ts.async
+        title: "Async"
+        order: 8
+        lessons:
+          - id: ts.async.event-loop
+            title: "The event loop, compared with goroutines"
+            level: basic
+            goal: "One thread, a queue, and why blocking it freezes everything."
+            runtime: ts-browser
+          - id: ts.async.promises
+            title: "Promises and async/await, error handling"
+            level: basic
+            goal: "Sequential-looking async code and its failure modes."
+            runtime: ts-browser
+          - id: ts.async.combinators
+            title: "Promise.all / allSettled / race / any; concurrency limits"
+            level: intermediate
+            goal: "Choose the combinator whose failure semantics you actually want."
+            runtime: ts-browser
+          - id: ts.async.cancellation
+            title: "Cancellation with AbortController and AbortSignal.timeout; async iterators; debounce"
+            level: intermediate
+            goal: "Stop work that no longer matters."
+            runtime: ts-browser
+
+      - id: ts.errors
+        title: "Errors"
+        order: 9
+        lessons:
+          - id: ts.errors.try-catch
+            title: "try/catch with unknown; custom error classes and cause"
+            level: intermediate
+            goal: "Catch honestly — anything can be thrown."
+            runtime: ts-browser
+          - id: ts.errors.result
+            title: "The Result pattern vs exceptions, compared with Go; React error boundaries"
+            level: advanced
+            goal: "Encode failure in return types; boundaries catch what slipped through."
+            runtime: ts-browser
+
+      - id: ts.browser-dom
+        title: "Browser, DOM & files"
+        order: 10
+        lessons:
+          - id: ts.browser-dom.dom
+            title: "Typed DOM queries and events; forms and validation"
+            level: basic
+            goal: "The DOM with types instead of 'any'."
+            runtime: ts-browser
+          - id: ts.browser-dom.reading-files
+            title: "Reading user-selected files: File/Blob .text(), .arrayBuffer(), .stream()"
+            level: intermediate
+            goal: "Input type=file without the legacy FileReader."
+            runtime: ts-browser
+          - id: ts.browser-dom.generate
+            title: "Generating and downloading files (Blob + object URL); drag and drop; clipboard"
+            level: intermediate
+            goal: "Export CSV from the browser in a few lines."
+            runtime: ts-browser
+          - id: ts.browser-dom.storage
+            title: "localStorage, sessionStorage, IndexedDB, Web Workers, URL/URLSearchParams"
+            level: intermediate
+            goal: "Where browser data lives and what belongs where."
+            runtime: ts-browser
+
+      - id: ts.services
+        title: "Talking to services"
+        order: 11
+        lessons:
+          - id: ts.services.fetch
+            title: "fetch basics and pitfalls: it doesn't throw on 4xx/5xx"
+            level: intermediate
+            goal: "Check response.ok, read the body once, handle timeouts."
+            runtime: ts-browser
+          - id: ts.services.zod
+            title: "Runtime validation with zod at the trust boundary"
+            level: intermediate
+            goal: "Types vanish at runtime — validate what arrives over the network."
+            runtime: ts-browser
+          - id: ts.services.openapi
+            title: "Generating types from OpenAPI; a typed API client"
+            level: intermediate
+            goal: "The contract is the source of truth for both sides."
+            runtime: ts-browser
+          - id: ts.services.advanced
+            title: "Retries with backoff, timeouts, pagination, uploads with progress"
+            level: advanced
+            goal: "A production-grade client against the mock services."
+            runtime: ts-browser
+          - id: ts.services.realtime-cors
+            title: "WebSockets, EventSource (SSE), CORS from both sides, tokens vs cookies (concepts)"
+            level: advanced
+            goal: "Live updates, and how CORS decides what a page (even a null-origin one) may read."
+            runtime: ts-browser
+
+      - id: ts.react
+        title: "React with TypeScript"
+        order: 12
+        lessons:
+          - id: ts.react.components
+            title: "Typed components and props: children, ComponentProps"
+            level: intermediate
+            goal: "Props as data structures, derived not duplicated."
+            runtime: ts-browser
+          - id: ts.react.state
+            title: "useState and useReducer with discriminated unions"
+            level: intermediate
+            goal: "State machines that can't hold impossible values."
+            runtime: ts-browser
+          - id: ts.react.effects-hooks
+            title: "Effects and cleanup (and when you don't need an effect); custom hooks; context"
+            level: intermediate
+            goal: "Escape hatches used sparingly; hooks that compose."
+            runtime: ts-browser
+          - id: ts.react.forms-lists
+            title: "Controlled forms, lists and keys, accessibility basics"
+            level: intermediate
+            goal: "Forms that behave; lists that don't lose state."
+            runtime: ts-browser
+          - id: ts.react.query
+            title: "TanStack Query: caching, invalidation, optimistic updates"
+            level: advanced
+            goal: "Server state without a global store."
+            runtime: ts-browser
+          - id: ts.react.routing
+            title: "Routing and URL state; the rendering model and memoization; composition"
+            level: advanced
+            goal: "The URL owns navigation state; memoize only measured problems."
+            runtime: ts-browser
+
+      - id: ts.testing
+        title: "Testing"
+        order: 13
+        lessons:
+          - id: ts.testing.vitest
+            title: "Vitest: it.each tables, Testing Library (behavior, not implementation)"
+            level: intermediate
+            goal: "Component tests a user would recognize."
+            runtime: ts-test
+          - id: ts.testing.msw-playwright
+            title: "MSW for the API; Playwright basics; type tests with expectTypeOf"
+            level: advanced
+            goal: "Mock the network at the boundary; type-test your types."
+            runtime: ts-test
+
+      - id: ts.architecture
+        title: "Frontend design & architecture"
+        order: 14
+        lessons:
+          - id: ts.architecture.folders
+            title: "Feature-based folders and layering: UI, state, API client"
+            level: intermediate
+            goal: "One direction of dependencies, features that don't reach into each other."
+            runtime: none
+          - id: ts.architecture.state
+            title: "Choosing the right home for state: server, client or URL"
+            level: intermediate
+            goal: "Most 'state problems' are state-in-the-wrong-place problems."
+            runtime: none
+          - id: ts.architecture.patterns
+            title: "Idiomatic TS patterns (strategy, adapter, observer, factory) — not ported Java"
+            level: advanced
+            goal: "The patterns survive the translation; the class hierarchies don't."
+            runtime: ts-browser
+          - id: ts.architecture.explicit-states
+            title: "Loading and error states as explicit types; functional core, imperative shell"
+            level: advanced
+            goal: "Every async UI is a discriminated union."
+            runtime: ts-browser
+
+      - id: ts.tooling
+        title: "Tooling & quality"
+        order: 15
+        lessons:
+          - id: ts.tooling.lint
+            title: "A ladder of tsconfig strictness; ESLint + typescript-eslint; Prettier"
+            level: intermediate
+            goal: "Tighten rules as the codebase matures."
+            runtime: none
+          - id: ts.tooling.vite
+            title: "Vite: dev server, proxy, env variables, build, source maps, DevTools debugging"
+            level: intermediate
+            goal: "Know the tool that transpiles, serves and bundles."
+            runtime: none
+          - id: ts.tooling.bundle
+            title: "Bundle-size awareness; the TS 7 native compiler and what changed since 5/6"
+            level: advanced
+            goal: "Ship less JavaScript; understand the compiler switch."
+            runtime: none
+
+      - id: ts.node
+        title: "TypeScript outside the browser (optional)"
+        order: 16
+        lessons:
+          - id: ts.node.type-stripping
+            title: "Node running .ts via type stripping; erasable syntax only"
+            level: intermediate
+            goal: "No build step; tie-in with erasableSyntaxOnly."
+            runtime: ts-node
+          - id: ts.node.fs-streams
+            title: "node:fs/promises and streams, side by side with Go equivalents"
+            level: intermediate
+            goal: "The same file-reading lessons in a second language."
+            runtime: ts-node
+          - id: ts.node.cli-server
+            title: "A small CLI and a tiny HTTP server in Node, next to the Go version"
+            level: advanced
+            goal: "Compare runtime models on the same problem."
+            runtime: ts-node
+
+  sql:
+    title: "PostgreSQL"
+    description: "Serious PostgreSQL work: data types, querying, modeling, concurrency, performance."
+
+    modules:
+      - id: sql.basics
+        title: "Setup & mental model"
+        order: 1
+        lessons:
+          - id: sql.basics.mental-model
+            title: "Client/server, databases vs schemas vs roles"
+            level: basic
+            goal: "The vocabulary and hierarchy every later lesson builds on."
+            runtime: sql
+          - id: sql.basics.psql
+            title: "psql essentials: \\d, \\dt, \\x, \\timing, \\e"
+            level: basic
+            goal: "Explore a database without a GUI."
+            runtime: sql
+          - id: sql.basics.set-based
+            title: "SQL as a declarative, set-based language (vs loops in Go/TS)"
+            level: basic
+            goal: "Describe the result; stop simulating the loop."
+            runtime: sql
+
+      - id: sql.tables-types
+        title: "Tables & data types"
+        order: 2
+        lessons:
+          - id: sql.tables-types.text-numbers
+            title: "text vs varchar(n), integer vs bigint, numeric for money (never float)"
+            level: basic
+            goal: "Pick types that don't corrupt your data."
+            runtime: sql
+          - id: sql.tables-types.time
+            title: "timestamptz vs timestamp, date, interval; time zones done right"
+            level: basic
+            goal: "The single most common Postgres data-type mistake."
+            runtime: sql
+          - id: sql.tables-types.ids
+            title: "uuid with uuidv7() (PG 18); identity columns vs serial"
+            level: basic
+            goal: "Primary keys that sort correctly and don't need sequences."
+            runtime: sql
+          - id: sql.tables-types.jsonb-arrays
+            title: "jsonb, arrays, enums vs lookup tables vs CHECK"
+            level: intermediate
+            goal: "Flexible types and where they belong."
+            runtime: sql
+          - id: sql.tables-types.alter
+            title: "ALTER TABLE done safely"
+            level: intermediate
+            goal: "Which changes rewrite the table, and the safe order."
+            runtime: sql
+
+      - id: sql.constraints
+        title: "Constraints & integrity"
+        order: 3
+        lessons:
+          - id: sql.constraints.keys
+            title: "NOT NULL, DEFAULT, primary keys (surrogate vs natural), UNIQUE with NULLS NOT DISTINCT"
+            level: basic
+            goal: "Declare invariants where they can't be forgotten."
+            runtime: sql
+          - id: sql.constraints.fk-check
+            title: "Foreign keys and ON DELETE choices, CHECK, deferrable constraints"
+            level: basic
+            goal: "Relationships the database enforces."
+            runtime: sql
+          - id: sql.constraints.generated
+            title: "Generated columns (virtual by default in PG 18, vs STORED), exclusion constraints"
+            level: advanced
+            goal: "Derived data with zero application code; constraint types beyond equality."
+            runtime: sql
+
+      - id: sql.querying
+        title: "Querying"
+        order: 4
+        lessons:
+          - id: sql.querying.select
+            title: "SELECT/WHERE/ORDER BY/LIMIT"
+            level: basic
+            goal: "The working set of everyday queries."
+            runtime: sql
+          - id: sql.querying.null-logic
+            title: "NULL and three-valued logic: IS DISTINCT FROM, COALESCE, NULLIF"
+            level: basic
+            goal: "Why x != 'a' doesn't match NULL."
+            runtime: sql
+          - id: sql.querying.patterns
+            title: "LIKE/ILIKE/regex, CASE, string and date functions"
+            level: basic
+            goal: "Compute in the database instead of in the app."
+            runtime: sql
+
+      - id: sql.modifying
+        title: "Modifying data"
+        order: 5
+        lessons:
+          - id: sql.modifying.insert-update
+            title: "Multi-row INSERT, INSERT ... SELECT, UPDATE ... FROM, DELETE ... USING"
+            level: basic
+            goal: "Set-based modification, not one row at a time."
+            runtime: sql
+          - id: sql.modifying.returning-upsert
+            title: "RETURNING (incl. OLD/NEW in PG 18), upsert with ON CONFLICT, MERGE"
+            level: intermediate
+            goal: "Write and read back in one statement."
+            runtime: sql
+          - id: sql.modifying.soft-delete
+            title: "Soft-delete trade-offs"
+            level: intermediate
+            goal: "What 'deleted' means, and what it costs."
+            runtime: sql
+
+      - id: sql.joins
+        title: "Joins"
+        order: 6
+        lessons:
+          - id: sql.joins.inner-outer
+            title: "Inner, left/right/full outer, cross and self joins"
+            level: basic
+            goal: "Match rows across tables deliberately."
+            runtime: sql
+          - id: sql.joins.many-to-many
+            title: "Many-to-many via junction tables; semi-joins (EXISTS); anti-joins (NOT IN NULL trap)"
+            level: intermediate
+            goal: "The trace-link pattern, and the NOT IN trap that bites everyone once."
+            runtime: sql
+          - id: sql.joins.lateral
+            title: "LATERAL joins"
+            level: advanced
+            goal: "Correlated subqueries that can also expand rows."
+            runtime: sql
+
+      - id: sql.aggregation
+        title: "Aggregation"
+        order: 7
+        lessons:
+          - id: sql.aggregation.group-by
+            title: "GROUP BY, HAVING, FILTER (WHERE ...)"
+            level: basic
+            goal: "Summarize sets; FILTER makes counts readable."
+            runtime: sql
+          - id: sql.aggregation.agg-funcs
+            title: "string_agg, array_agg, jsonb_agg"
+            level: intermediate
+            goal: "Build lists and JSON from rows."
+            runtime: sql
+          - id: sql.aggregation.grouping-sets
+            title: "GROUPING SETS/ROLLUP/CUBE, DISTINCT ON"
+            level: advanced
+            goal: "Multi-level summaries; the Postgres-only 'first row per group'."
+            runtime: sql
+
+      - id: sql.subqueries-ctes
+        title: "Subqueries & CTEs"
+        order: 8
+        lessons:
+          - id: sql.subqueries-ctes.scalar
+            title: "Scalar and correlated subqueries; CTEs for readability; MATERIALIZED choice"
+            level: intermediate
+            goal: "Structure complex queries without fear (PG 12+ inlining)."
+            runtime: sql
+          - id: sql.subqueries-ctes.recursive
+            title: "Recursive CTEs: requirement hierarchies and trace chains, with the CYCLE clause"
+            level: advanced
+            goal: "Walk trees and graphs in pure SQL."
+            runtime: sql
+          - id: sql.subqueries-ctes.modifying
+            title: "Data-modifying CTEs"
+            level: advanced
+            goal: "Read what you wrote in one atomic statement."
+            runtime: sql
+
+      - id: sql.windows
+        title: "Window functions"
+        order: 9
+        lessons:
+          - id: sql.windows.over
+            title: "OVER and PARTITION BY: ROW_NUMBER, RANK, DENSE_RANK, LAG/LEAD"
+            level: intermediate
+            goal: "Per-group computation without collapsing rows."
+            runtime: sql
+          - id: sql.windows.frames
+            title: "Running totals, frames, moving averages, top-N per group"
+            level: advanced
+            goal: "Frame arithmetic and the classic top-N pattern."
+            runtime: sql
+          - id: sql.windows.gaps-islands
+            title: "Gaps and islands"
+            level: advanced
+            goal: "Group consecutive events with window logic."
+            runtime: sql
+
+      - id: sql.modeling
+        title: "Data modeling & design"
+        order: 10
+        lessons:
+          - id: sql.modeling.normalization
+            title: "From entities to tables; normalization 1NF-BCNF by fixing a messy spreadsheet"
+            level: intermediate
+            goal: "Constraints follow naturally from good modeling."
+            runtime: sql
+          - id: sql.modeling.denormalize
+            title: "When to denormalize; naming conventions; keys; audit columns"
+            level: intermediate
+            goal: "Deviate from the rules on purpose, not by accident."
+            runtime: sql
+          - id: sql.modeling.temporal
+            title: "History and temporal data: PG 18 WITHOUT OVERLAPS, history tables, bitemporal intro"
+            level: advanced
+            goal: "Store what was true when."
+            runtime: sql
+          - id: sql.modeling.anti-patterns
+            title: "Anti-patterns: EAV, polymorphic FKs, comma-separated lists, jsonb for everything"
+            level: advanced
+            goal: "Recognize the designs that fight the database."
+            runtime: sql
+          - id: sql.modeling.multi-tenant
+            title: "Multi-tenant patterns"
+            level: advanced
+            goal: "Column, schema or database tenancy, and RLS (see security module)."
+            runtime: sql
+
+      - id: sql.indexes
+        title: "Indexes & performance"
+        order: 11
+        lessons:
+          - id: sql.indexes.btree
+            title: "How B-trees work; EXPLAIN vs EXPLAIN ANALYZE with buffers"
+            level: intermediate
+            goal: "Read a plan before trusting an index."
+            runtime: sql
+          - id: sql.indexes.plans
+            title: "Reading plans: seq/index/index-only/bitmap scans, nested loop/hash/merge joins"
+            level: advanced
+            goal: "The planner's menu, and what each choice means."
+            runtime: sql
+          - id: sql.indexes.composite
+            title: "Composite index column order, partial and expression indexes, covering (INCLUDE)"
+            level: advanced
+            goal: "Design the index for the query, not the table."
+            runtime: sql
+          - id: sql.indexes.gin-brgin
+            title: "GIN (jsonb, arrays, full-text, trigram), BRIN for time series, skip scan (PG 18)"
+            level: advanced
+            goal: "Beyond B-trees; the newest scan optimization."
+            runtime: sql
+          - id: sql.indexes.stats-pagination
+            title: "Statistics and ANALYZE; keyset vs OFFSET pagination; the N+1 problem; pg_stat_statements"
+            level: advanced
+            goal: "Performance hygiene for real applications."
+            runtime: sql
+
+      - id: sql.transactions
+        title: "Transactions & concurrency"
+        order: 12
+        lessons:
+          - id: sql.transactions.acid-mvcc
+            title: "ACID, savepoints, MVCC: why readers don't block writers"
+            level: intermediate
+            goal: "The transaction is the unit of correctness."
+            runtime: sql
+          - id: sql.transactions.isolation-levels
+            title: "Isolation levels with live anomalies (two-session runner)"
+            level: advanced
+            goal: "See dirty/non-repeatable/phantom reads happen, then prevent them."
+            runtime: sql-multisession
+          - id: sql.transactions.serializable
+            title: "Serializable isolation and retry loops"
+            level: advanced
+            goal: "Correctness without locks, at the price of retries."
+            runtime: sql-multisession
+          - id: sql.transactions.row-locks
+            title: "Row locks: FOR UPDATE, FOR NO KEY UPDATE, NOWAIT"
+            level: advanced
+            goal: "Serialize the updates that matter, narrowly."
+            runtime: sql-multisession
+          - id: sql.transactions.skip-locked
+            title: "A job queue with FOR UPDATE SKIP LOCKED"
+            level: advanced
+            goal: "The pattern behind TraceLite's background jobs."
+            runtime: sql-multisession
+          - id: sql.transactions.deadlocks-locks
+            title: "Deadlocks (cause and prevention via lock ordering), advisory locks"
+            level: advanced
+            goal: "Watch a deadlock happen, then fix it."
+            runtime: sql-multisession
+          - id: sql.transactions.vacuum
+            title: "VACUUM, autovacuum and bloat"
+            level: advanced
+            goal: "MVCC's price and how Postgres collects it."
+            runtime: sql-nontx
+
+      - id: sql.json
+        title: "JSON"
+        order: 13
+        lessons:
+          - id: sql.json.jsonb-operators
+            title: "json vs jsonb; the operators ->, ->>, @>, ?"
+            level: intermediate
+            goal: "Query semi-structured data competently."
+            runtime: sql
+          - id: sql.json.path-table
+            title: "SQL/JSON path and JSON_TABLE (PG 17)"
+            level: advanced
+            goal: "Turn JSON documents into relational rows."
+            runtime: sql
+          - id: sql.json.indexing-design
+            title: "Indexing jsonb, building JSON responses in SQL, when a real column wins"
+            level: advanced
+            goal: "Structured where it's stable, JSON where it isn't."
+            runtime: sql
+
+      - id: sql.search
+        title: "Search & text"
+        order: 14
+        lessons:
+          - id: sql.search.fts
+            title: "Full-text search: tsvector, tsquery, ranking, a stored tsvector with GIN"
+            level: advanced
+            goal: "The engine behind StackLab's own Ctrl+K."
+            runtime: sql
+          - id: sql.search.turkish
+            title: "The turkish, english and simple FTS configurations; Turkish text gotchas"
+            level: advanced
+            goal: "Stemming that knows İ/ı; why the wrong config silently fails."
+            runtime: sql
+          - id: sql.search.trigram
+            title: "pg_trgm similarity, ICU collations and case-insensitive matching, unaccent"
+            level: advanced
+            goal: "Fuzzy matching and collation-aware comparison for İ/ı."
+            runtime: sql
+
+      - id: sql.server-side
+        title: "Server-side logic"
+        order: 15
+        lessons:
+          - id: sql.server-side.views
+            title: "Views and materialized views"
+            level: intermediate
+            goal: "Named queries; precomputed results with refresh semantics."
+            runtime: sql
+          - id: sql.server-side.functions
+            title: "SQL functions vs PL/pgSQL; procedures"
+            level: advanced
+            goal: "Push logic down when, and only when, it pays."
+            runtime: sql
+          - id: sql.server-side.triggers
+            title: "Triggers: an audit trail and updated_at; why business logic mostly belongs in the app"
+            level: advanced
+            goal: "Automatic invariants vs hidden control flow."
+            runtime: sql
+          - id: sql.server-side.listen-notify-ext
+            title: "LISTEN/NOTIFY; extensions"
+            level: advanced
+            goal: "The database as an event source; the extension ecosystem."
+            runtime: sql
+
+      - id: sql.files-movement
+        title: "Files & data movement"
+        order: 16
+        lessons:
+          - id: sql.files-movement.copy
+            title: "COPY ... FROM/TO vs \\copy"
+            level: intermediate
+            goal: "The fastest way in and out of Postgres."
+            runtime: sql
+          - id: sql.files-movement.csv-staging
+            title: "CSV import through a staging table with validation"
+            level: intermediate
+            goal: "Reject bad rows before they touch real tables."
+            runtime: sql
+          - id: sql.files-movement.dump-generate
+            title: "Exporting results; pg_dump/pg_restore; generating test data with generate_series"
+            level: intermediate
+            goal: "Seed 100k rows of realistic data in one statement."
+            runtime: sql
+
+      - id: sql.security-ops
+        title: "Security & operations"
+        order: 17
+        lessons:
+          - id: sql.security-ops.roles
+            title: "Roles and privileges: GRANT, default privileges, a least-privilege app user"
+            level: intermediate
+            goal: "Why the playground role owns only sandbox objects."
+            runtime: sql
+          - id: sql.security-ops.rls
+            title: "Row-level security for multi-tenant isolation"
+            level: advanced
+            goal: "Enforce tenancy in the database, not just the query."
+            runtime: sql
+          - id: sql.security-ops.pooling-config
+            title: "Connection limits and pooling (the PgBouncer concept); shared_buffers and work_mem basics"
+            level: advanced
+            goal: "Memory and connections are the two knobs to understand first."
+            runtime: none
+          - id: sql.security-ops.backup-migrations
+            title: "Backups and PITR (concepts); zero-downtime migrations (add, backfill, NOT VALID + VALIDATE)"
+            level: advanced
+            goal: "Change schemas without stopping the world."
+            runtime: none
+          - id: sql.security-ops.monitoring
+            title: "Monitoring essentials"
+            level: advanced
+            goal: "The views and counters you check first when it's slow."
+            runtime: none
+
+      - id: sql.modern
+        title: "Modern Postgres"
+        order: 18
+        lessons:
+          - id: sql.modern.16-to-18
+            title: "Highlights from PG 16 to 18: uuidv7, virtual generated columns, OLD/NEW in RETURNING, temporal constraints, skip scan, async I/O, JSON_TABLE, MERGE ... RETURNING"
+            level: intermediate
+            goal: "Know what's new so old advice doesn't mislead you."
+            runtime: sql
+
+  fullstack:
+    title: "Full-stack: TraceLite"
+    description: "One running project — projects, requirements, test cases, test runs, trace links — built step by step."
+
+    modules:
+      - id: fullstack.tracelite
+        title: "TraceLite steps"
+        order: 1
+        lessons:
+          - id: fullstack.tracelite.step-01-architecture
+            title: "Step 1: Architecture and request lifecycle; contract-first API with OpenAPI"
+            level: intermediate
+            goal: "Browser to Vite proxy to Go to pgx to Postgres and back; where types live."
+            runtime: go-server
+          - id: fullstack.tracelite.step-02-schema
+            title: "Step 2: Schema: hierarchical requirements, test cases, trace links, test runs"
+            level: intermediate
+            goal: "parent_id + recursive CTE trees; constraints, indexes, migrations."
+            runtime: sql
+          - id: fullstack.tracelite.step-03-store
+            title: "Step 3: The store layer with sqlc, and transactions"
+            level: intermediate
+            goal: "Type-safe queries and a WithTx boundary."
+            runtime: go-test
+          - id: fullstack.tracelite.step-04-api
+            title: "Step 4: The REST API: CRUD, validation, problem-details errors, keyset pagination"
+            level: intermediate
+            goal: "A clean handler/service/store vertical."
+            runtime: go-server
+          - id: fullstack.tracelite.step-05-client
+            title: "Step 5: Typed TS client from OpenAPI + zod, wrapped in TanStack Query hooks"
+            level: intermediate
+            goal: "One contract, both ends, validated."
+            runtime: ts-browser
+          - id: fullstack.tracelite.step-06-ui
+            title: "Step 6: The UI: requirement tree, detail form, trace matrix, coverage indicator"
+            level: intermediate
+            goal: "Recursive data rendered recursively."
+            runtime: ts-browser
+          - id: fullstack.tracelite.step-07-import
+            title: "Step 7: File import: browser CSV upload, Go streaming validation, staging table, COPY"
+            level: advanced
+            goal: "Row-level errors reported back to the UI."
+            runtime: go-server
+          - id: fullstack.tracelite.step-08-export
+            title: "Step 8: File export: streaming CSV/JSON download and a traceability report"
+            level: advanced
+            goal: "Stream out without buffering."
+            runtime: go-server
+          - id: fullstack.tracelite.step-09-realtime
+            title: "Step 9: Real-time: Postgres LISTEN/NOTIFY, a Go hub, SSE, EventSource updating the matrix"
+            level: advanced
+            goal: "Live trace updates end to end."
+            runtime: go-server
+          - id: fullstack.tracelite.step-10-external
+            title: "Step 10: External service: standards lookup with timeouts, retries, caching; outbound webhooks"
+            level: advanced
+            goal: "Talk to an unreliable world politely."
+            runtime: go-server
+          - id: fullstack.tracelite.step-11-jobs
+            title: "Step 11: Background jobs: job table + SKIP LOCKED + a Go worker pool, with graceful shutdown"
+            level: advanced
+            goal: "Report generation that survives restarts."
+            runtime: go-server
+          - id: fullstack.tracelite.step-12-search
+            title: "Step 12: Search across requirements (full-text + trigram)"
+            level: advanced
+            goal: "Find requirements like a user, not a database."
+            runtime: sql
+          - id: fullstack.tracelite.step-13-audit
+            title: "Step 13: Audit history: database trigger vs application events, and the trade-offs"
+            level: advanced
+            goal: "Two honest designs for one problem."
+            runtime: sql
+          - id: fullstack.tracelite.step-14-testing
+            title: "Step 14: Testing the stack: Go integration tests, Vitest + MSW, one Playwright e2e test"
+            level: advanced
+            goal: "Confidence at every layer."
+            runtime: go-test
+          - id: fullstack.tracelite.step-15-packaging
+            title: "Step 15: Packaging: one binary embedding frontend + migrations; cross-compiling; customer-machine setup"
+            level: advanced
+            goal: "The product you set out to build: a single Go binary plus web UI plus Postgres."
+            runtime: none
+
+  design:
+    title: "Design approaches"
+    description: "Cross-language design: paradigms side by side, patterns translated idiomatically."
+
+    modules:
+      - id: design.paradigms
+        title: "Paradigms and comparison"
+        order: 1
+        lessons:
+          - id: design.paradigms.side-by-side
+            title: "Paradigms side by side: Go, TS, SQL"
+            level: intermediate
+            goal: "Simple explicit Go; structural type-driven TS; declarative set-based SQL."
+            runtime: none
+          - id: design.paradigms.errors
+            title: "The same problem: error handling (Go errors vs TS exceptions/Result vs SQL constraints)"
+            level: intermediate
+            goal: "Three honest answers to failure."
+            runtime: none
+          - id: design.paradigms.polymorphism
+            title: "The same problem: polymorphism (Go interfaces vs TS unions vs modeling variants in SQL)"
+            level: intermediate
+            goal: "Variants modeled three ways."
+            runtime: none
+          - id: design.paradigms.concurrency
+            title: "The same problem: concurrency (goroutines vs the event loop vs MVCC)"
+            level: advanced
+            goal: "Threads, tasks, transactions."
+            runtime: none
+          - id: design.paradigms.generics-absence
+            title: "The same problem: generics, and absence (zero values vs undefined/null vs NULL)"
+            level: advanced
+            goal: "What 'missing' means in each language."
+            runtime: none
+          - id: design.paradigms.immutability
+            title: "The same problem: immutability"
+            level: advanced
+            goal: "const, copy-on-write, and INSERT-only tables."
+            runtime: none
+
+      - id: design.patterns
+        title: "Patterns, translated"
+        order: 2
+        lessons:
+          - id: design.patterns.classic
+            title: "Strategy, adapter, decorator/middleware, observer/pub-sub — idiomatically per language"
+            level: intermediate
+            goal: "The patterns survive translation into Go/TS/SQL; the boilerplate doesn't."
+            runtime: none
+          - id: design.patterns.constructors
+            title: "Repository, factory/constructor, builder vs functional options, DI without frameworks"
+            level: intermediate
+            goal: "Construction and wiring, three ways."
+            runtime: none
+          - id: design.patterns.anti-patterns
+            title: "Anti-patterns: Java getters/setters in Go, deep hierarchies in TS, god packages, anemic models"
+            level: advanced
+            goal: "Recognize designs that fight the language."
+            runtime: none
+
+      - id: design.architecture
+        title: "Architecture and reliability"
+        order: 3
+        lessons:
+          - id: design.architecture.styles
+            title: "Layered, hexagonal/clean, modular monolith vs microservices; REST API design"
+            level: advanced
+            goal: "Why a solo developer starts with a modular monolith."
+            runtime: none
+          - id: design.architecture.business-rules
+            title: "Where business rules live: app vs database"
+            level: advanced
+            goal: "The most consequential line you'll draw in a system."
+            runtime: none
+          - id: design.architecture.reliability
+            title: "Reliability: timeouts everywhere, retries with idempotency, graceful degradation, observability"
+            level: advanced
+            goal: "The four habits of systems that don't page you."
+            runtime: none
+          - id: design.architecture.security
+            title: "Security across the stack: validation, SQL injection, XSS, CSRF, secrets, least privilege"
+            level: advanced
+            goal: "Attack surfaces by layer, and the default defense for each."
+            runtime: none
+
+  inside:
+    title: "Inside StackLab"
+    description: "The app's own source code as a reference implementation, via LEARN markers."
+
+    modules:
+      - id: inside.codebase
+        title: "Reading this codebase"
+        order: 1
+        lessons:
+          - id: inside.codebase.wiring
+            title: "How main.go wires dependencies"
+            level: intermediate
+            goal: "Constructor injection in one readable file."
+            runtime: none
+          - id: inside.codebase.http-layer
+            title: "The HTTP layer and middleware chain"
+            level: intermediate
+            goal: "Router, error mapping, middleware — the lessons applied."
+            runtime: none
+          - id: inside.codebase.runner-sandbox
+            title: "The runner sandbox and its threat model"
+            level: advanced
+            goal: "Read the limits ADR-0003 promised, in code."
+            runtime: none
+          - id: inside.codebase.sql-rollback
+            title: "The SQL runner's transaction-and-rollback technique"
+            level: advanced
+            goal: "How nothing ever persists from a lesson run."
+            runtime: none
+          - id: inside.codebase.content-pipeline
+            title: "Content loading and full-text indexing"
+            level: intermediate
+            goal: "Files to lessons table to Ctrl+K."
+            runtime: none
+          - id: inside.codebase.ts-runner
+            title: "The TS CodeRunner strategy: ServerRunner vs BrowserTsRunner"
+            level: advanced
+            goal: "The strategy pattern, in production code you use daily."
+            runtime: none
+          - id: inside.codebase.contract
+            title: "The API contract and type generation"
+            level: intermediate
+            goal: "One openapi.yaml, two languages."
+            runtime: none
+          - id: inside.codebase.testing-pyramid
+            title: "This repo's test pyramid"
+            level: intermediate
+            goal: "Unit, handler, store, runner, e2e — and why at each level."
+            runtime: none
+          - id: inside.codebase.compose-topology
+            title: "The Compose topology: who can talk to whom"
+            level: intermediate
+            goal: "Network boundaries as a security tool."
+            runtime: none
+          - id: inside.codebase.at-10x
+            title: "What I'd change at 10x scale"
+            level: advanced
+            goal: "Honest limits of this design, and the first cracks to appear."
+            runtime: none

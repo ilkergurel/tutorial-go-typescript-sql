@@ -1,0 +1,7 @@
+/                                               200  the app                   no-cache
+/projects/01937b6e-0000-7000-8000-00000000000a  200  the app                   no-cache
+/assets/index-B2xk91fa.js                       200  file                      public, max-age=31536000, immutable
+/assets/_commonjsHelpers-Dk2Y9xQb.js            200  file                      public, max-age=31536000, immutable
+/assets/index-A1old000.js                       404  text/plain; charset=utf-8
+/index.html                                     200  the app                   no-cache
+/api/no-such-endpoint                           404  application/problem+json

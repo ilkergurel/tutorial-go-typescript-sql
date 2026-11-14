@@ -1,0 +1,6 @@
+end of main body
+closure reads x when it runs: 2
+argument evaluated at defer time: 1
+deferred in loop: 2
+deferred in loop: 1
+deferred in loop: 0

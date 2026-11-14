@@ -1,0 +1,29 @@
+CREATE TABLE
+INSERT 0 4
+SELECT 4
+    id | first | index_zero | past_end | array_length | cardinality
+    ---+-------+------------+----------+--------------+------------
+    1  | go    | NULL       | NULL     | 2            | 2
+    2  | sql   | NULL       | NULL     | 2            | 2
+    3  | go    | NULL       | NULL     | 2            | 2
+    4  | NULL  | NULL       | NULL     | NULL         | 0
+SELECT 2
+    id | title
+    ---+----------------------
+    2  | timestamptz explained
+    3  | pgx and transactions
+SELECT 1
+    id | title
+    ---+---------------------
+    3  | pgx and transactions
+SELECT 4
+    tag         | articles
+    ------------+---------
+    concurrency | 1
+    go          | 2
+    sql         | 2
+    time        | 1
+UPDATE 1
+    id | tags
+    ---+------------------------
+    1  | {go,concurrency,golang}

@@ -1,0 +1,3 @@
+hits: 1000
+racy balance: 50
+serialized balance: 20

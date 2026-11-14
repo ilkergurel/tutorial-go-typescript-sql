@@ -1,0 +1,24 @@
+CREATE TABLE
+CREATE TABLE
+INSERT 0 3
+INSERT 0 3
+SELECT 3
+    code       | rows_in_group | tests
+    -----------+---------------+------
+    REQ-EXPORT | 1             | 0
+    REQ-LOGIN  | 2             | 2
+    REQ-RESET  | 1             | 1
+CREATE TABLE
+INSERT 0 5
+SELECT 4
+    city_key   | customers
+    -----------+----------
+    diyarbakir | 1
+    diyarbakır | 2
+    iğdir      | 1
+    iğdır      | 1
+SELECT 2
+    city_key   | customers
+    -----------+----------
+    diyarbakır | 3
+    ığdır      | 2

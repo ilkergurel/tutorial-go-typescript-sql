@@ -1,0 +1,14 @@
+start:
+  pool: connected
+  pool: closed
+  startup failed: migrate: up: no migrations found (real main: os.Exit(1))
+start:
+  pool: connected
+  migrations applied: 3
+  serving
+  shutdown signal received, draining
+  drain budget derived from ctx:        context canceled
+  drain budget derived from Background: <nil>
+  server drained
+  pool: closed
+  stopped

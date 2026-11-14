@@ -1,0 +1,9 @@
+  applying 001_users.sql
+deploy 1: <nil>
+  applying 002_users_name.sql
+deploy 2: <nil>
+deploy 3: <nil>
+  applying 003_broken.sql
+deploy 4: migration 003_broken.sql: ERROR: column "email" of relation "users" already exists (SQLSTATE 42701)
+backfilled name: ayse <nil>
+city after deploy 4: ERROR: column "city" does not exist (SQLSTATE 42703)

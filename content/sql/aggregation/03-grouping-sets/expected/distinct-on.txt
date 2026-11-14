@@ -1,0 +1,22 @@
+SET
+CREATE TABLE
+INSERT 0 5
+SELECT 3
+    test_case | ran_at                 | passed | id
+    ----------+------------------------+--------+---
+    Export    | 2026-11-13 08:00:00+03 | t      | 5
+    Login     | 2026-11-13 09:00:00+03 | f      | 2
+    Logout    | 2026-11-12 10:00:00+03 | t      | 3
+SELECT 3
+    test_case | ran_at                 | passed
+    ----------+------------------------+-------
+    Login     | 2026-11-13 09:00:00+03 | f
+    Export    | 2026-11-13 08:00:00+03 | t
+    Logout    | 2026-11-12 10:00:00+03 | t
+SELECT 3
+    test_case | ran_at                 | passed
+    ----------+------------------------+-------
+    Export    | 2026-11-13 08:00:00+03 | t
+    Login     | 2026-11-13 09:00:00+03 | f
+    Logout    | 2026-11-12 10:00:00+03 | t
+ERROR: SELECT DISTINCT ON expressions must match initial ORDER BY expressions (SQLSTATE 42P10)

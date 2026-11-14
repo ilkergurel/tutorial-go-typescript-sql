@@ -1,0 +1,6 @@
+level=INFO msg="signed in" user="Ayşe Yılmaz" city=İzmir attempt=2
+level=WARN msg="slow query" took=1.5s db.table=orders db.rows=1200
+level=ERROR msg="payment failed" err="card declined" amount=99.9
+{"level":"INFO","msg":"signed in","user":"Ayşe Yılmaz","city":"İzmir","attempt":2}
+{"level":"WARN","msg":"slow query","took":1500000000,"db":{"table":"orders","rows":1200}}
+{"level":"ERROR","msg":"payment failed","err":"card declined","amount":99.9}

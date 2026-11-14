@@ -1,0 +1,34 @@
+CREATE TABLE
+CREATE EXTENSION
+CREATE EXTENSION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+ALTER TABLE
+CREATE INDEX
+CREATE INDEX
+INSERT 0 6
+SELECT 1
+    title         | description                       | search
+    --------------+-----------------------------------+------------------------------------------------------------------------------------------------------------------------------------
+    KARANLIK TEMA | Gece kullanımı için koyu renkler. | 'gece':10B 'geç':5B 'için':12B 'karanlık':1A,3A 'ko':8B 'koyu':13B 'kullan':6B 'kullanımı':11B 'renk':9B 'renkler':14B 'tema':2A,4A
+SELECT 1
+    turkish_keyboard                                 | caps_lock                                        | typing
+    -------------------------------------------------+--------------------------------------------------+------------------
+    'parol' & 'sıfırla' | 'parola':* & 'sıfırlama':* | 'parol' & 'sıfırla' | 'parola':* & 'sıfırlama':* | 'paro' | 'paro':*
+SELECT 9
+    typed            | by_code                                      | by_words              | by_trigram
+    -----------------+----------------------------------------------+-----------------------+----------------------
+    auth-l           | AUTH-LOGIN AUTH-LOGIN-2FA AUTH-LOGIN-LOCKOUT | NULL                  | NULL
+    PAROLA SIFIRLAMA | NULL                                         | AUTH-RESET            | AUTH-RESET
+    parolalar        | NULL                                         | AUTH-LOGIN AUTH-RESET | AUTH-LOGIN AUTH-RESET
+    paro             | NULL                                         | AUTH-LOGIN AUTH-RESET | AUTH-LOGIN AUTH-RESET
+    karanlık         | NULL                                         | UI-DARK               | UI-DARK
+    IKI ADIMLI       | NULL                                         | NULL                  | AUTH-LOGIN-2FA
+    sifirlma         | NULL                                         | NULL                  | AUTH-RESET
+    kilitlenir       | NULL                                         | AUTH-LOGIN-LOCKOUT    | AUTH-LOGIN-LOCKOUT
+    e-posta          | NULL                                         | AUTH-LOGIN AUTH-RESET | NULL
+SELECT 1
+    db_lower            | tr_lower
+    --------------------+--------------------
+    'parol' & 'sifirla' | 'parol' & 'sıfırla'

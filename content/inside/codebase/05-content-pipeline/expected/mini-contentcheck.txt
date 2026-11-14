@@ -1,0 +1,5 @@
+ERROR: go/basics/04-loops: id "go.basics.loop" must be go.basics.loops
+ERROR: go.basics.loop: H2 sections out of order
+ERROR: go.basics.loop: further_reading must be official docs only, got stackoverflow.com
+ERROR: go/basics/04-loops/examples/01_range.go: LEARN(go.basics.loop) names no curriculum lesson
+contentcheck: 4 error(s); no bundle written

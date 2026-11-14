@@ -1,0 +1,19 @@
+CREATE TABLE
+PREPARE
+INSERT 0 1
+INSERT 0 1
+SELECT 1
+    lesson_id       | status
+    ----------------+----------
+    go.basics.defer | completed
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+ALTER TABLE
+PREPARE
+INSERT 0 1
+SELECT 2
+    user_id | lesson_id       | status
+    --------+-----------------+----------
+    ayse    | go.basics.defer | completed
+    mehmet  | go.basics.defer | viewed

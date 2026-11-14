@@ -1,0 +1,6 @@
+evaluating money
+1.250,50 money 1.4
+evaluating dates
+evaluating charts (imagine 300 kB)
+same function: true
+VERSION: undefined; exports: drawChart, formatDate, formatMoney

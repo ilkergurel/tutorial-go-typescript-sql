@@ -1,0 +1,14 @@
+CREATE TABLE
+INSERT 0 2
+INSERT 0 2
+    sku    | qty
+    -------+----
+    widget | 15
+    gizmo  | 7
+CREATE TABLE
+INSERT 0 2
+MERGE 2
+    merge_action | sku    | qty
+    -------------+--------+----
+    UPDATE       | gadget | 1
+    INSERT       | doodad | 1

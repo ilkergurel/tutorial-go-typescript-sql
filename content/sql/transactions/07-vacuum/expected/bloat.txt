@@ -1,0 +1,26 @@
+CREATE TABLE
+INSERT 0 10000
+CREATE TABLE
+INSERT 0 1
+UPDATE 10000
+INSERT 0 1
+VACUUM
+INSERT 0 1
+UPDATE 10000
+INSERT 0 1
+DELETE 5000
+INSERT 0 1
+VACUUM
+INSERT 0 1
+VACUUM
+INSERT 0 1
+SELECT 7
+    n | step                   | size_vs_loaded
+    --+------------------------+---------------
+    1 | 10000 rows loaded      | 1.0
+    2 | UPDATE every row       | 2.0
+    3 | VACUUM                 | 2.0
+    4 | UPDATE every row again | 2.0
+    5 | DELETE every other row | 2.0
+    6 | VACUUM                 | 2.0
+    7 | VACUUM FULL            | 0.5

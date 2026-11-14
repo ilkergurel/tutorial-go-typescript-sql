@@ -1,0 +1,18 @@
+CREATE TABLE
+CREATE TABLE
+INSERT 0 2
+INSERT 0 2
+SELECT 2
+    code       | tests
+    -----------+-------------------------------------------------------------------------------
+    REQ-EXPORT | [{"id": null, "title": null}]
+    REQ-LOGIN  | [{"id": 10, "title": "Valid password"}, {"id": 11, "title": "Locked account"}]
+SELECT 2
+    doc
+    --------------------------------------------------------------------------------------------------------------
+    {"code": "REQ-EXPORT", "tests": []}
+    {"code": "REQ-LOGIN", "tests": [{"id": 10, "title": "Valid password"}, {"id": 11, "title": "Locked account"}]}
+SELECT 1
+    tests_by_status
+    --------------------------
+    {"failed": 1, "passed": 1}

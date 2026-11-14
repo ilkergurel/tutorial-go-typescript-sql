@@ -1,0 +1,7 @@
+succeed  (no change)
+send     {"status":"sending","attempt":1}
+send     (no change)
+fail     {"status":"failed","attempt":1,"error":"Stok yetersiz"}
+send     {"status":"sending","attempt":2}
+succeed  {"status":"done","orderNo":"TR-1042"}
+after two clicks: sending

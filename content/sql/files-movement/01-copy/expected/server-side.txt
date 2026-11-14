@@ -1,0 +1,9 @@
+CREATE TABLE
+INSERT 0 2
+COPY 2
+COPY 1
+SELECT 1
+    current_user | read_files | write_files | run_programs
+    -------------+------------+-------------+-------------
+    playground   | f          | f           | f
+ERROR: permission denied to COPY from a file (SQLSTATE 42501)

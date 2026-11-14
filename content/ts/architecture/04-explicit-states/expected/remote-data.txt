@@ -1,0 +1,7 @@
+idle     <p>-</p>
+loading  <p aria-busy="true">yükleniyor</p>
+ready    <p>12 ders</p>
+loading  <p aria-busy="true">12 ders, yenileniyor</p>
+failed   <p role="alert">12 ders (eski: ağ hatası)</p>
+loading  <p aria-busy="true">12 ders, yenileniyor</p>
+ready    <p>13 ders</p>

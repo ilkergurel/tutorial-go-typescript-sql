@@ -1,0 +1,6 @@
+loaded: {"title":"Parola ile giriş","description":""}
+  server: PATCH {"description":"Başka sekmeden eklendi."}
+another tab saved: {"title":"Parola ile giriş","description":""}
+  server: PATCH {"title":"Parola ile oturum açma"}
+title saved: {"title":"Parola ile oturum açma","description":"Başka sekmeden eklendi."}
+unchanged once trimmed: {"title":"Parola ile oturum açma  ","description":"Başka sekmeden eklendi."}

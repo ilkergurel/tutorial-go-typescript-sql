@@ -1,0 +1,10 @@
+concatenated ORDER BY title
+  -> [Defer Joins] <nil>
+concatenated ORDER BY title; DROP TABLE api_keys
+  -> [] ERROR: cannot insert multiple commands into a prepared statement (SQLSTATE 42601)
+concatenated ORDER BY (SELECT CAST(secret AS int) FROM api_keys LIMIT 1)
+  -> [] ERROR: invalid input syntax for type integer: "sk_live_7Hq2" (SQLSTATE 22P02)
+allow-listed, unknown key
+  -> unknown sort key
+allow-listed, newest
+  -> [Joins Defer] <nil>

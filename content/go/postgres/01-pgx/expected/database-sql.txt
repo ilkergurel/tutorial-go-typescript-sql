@@ -1,0 +1,5 @@
+database/sql MaxOpenConnections: 0 (0 = unlimited)
+database/sql: [go pgx çay] <nil>
+pgx:          [go pgx çay] <nil>
+copied through Raw: 2
+rows seen through the shared pool: 2 <nil>

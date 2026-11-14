@@ -1,0 +1,14 @@
+CREATE TABLE
+CREATE TABLE
+INSERT 0 1000
+CREATE PROCEDURE
+CALL
+    NOTICE: archived 120 runs
+    NOTICE: archived 120 runs
+    NOTICE: archived 59 runs
+SELECT 1
+    live | archived
+    -----+---------
+    701  | 299
+BEGIN
+ERROR: invalid transaction termination (SQLSTATE 2D000)

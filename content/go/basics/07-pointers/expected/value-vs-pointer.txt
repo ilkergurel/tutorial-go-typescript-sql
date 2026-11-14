@@ -1,0 +1,5 @@
+after incByValue: 0
+after incByPointer: 1
+db 5
+read through p: 0
+nil pointer: true

@@ -1,0 +1,17 @@
+SELECT 3
+    cfg     | document
+    --------+------------------------------------------------------------------------------
+    turkish | 'bit':7 'hazırla':4 'istanbul':2 'rapor':1 'test':6
+    english | 'bitti':7 'da':3 'hazırlandı':4 'istanbul':2 'raporlar':1 'testleri':6 've':5
+    simple  | 'bitti':7 'da':3 'hazırlandı':4 'istanbul':2 'raporlar':1 'testleri':6 've':5
+CREATE TABLE
+INSERT 0 3
+SET
+SELECT 5
+    typed     | turkish | no_config | simple
+    ----------+---------+-----------+-------
+    rapor     | 1,2     | 1,2       | 1,2
+    raporlar  | 1,2     | NULL      | NULL
+    raporları | 1,2     | NULL      | NULL
+    şifre     | 3       | NULL      | 3
+    şifreler  | 3       | NULL      | NULL

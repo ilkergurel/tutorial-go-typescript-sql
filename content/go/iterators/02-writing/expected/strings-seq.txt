@@ -1,0 +1,9 @@
+"ürün;etiketler\n"
+"çay;sıcak,içecek\n"
+"simit;fırın,susamlı\n"
+"ayran;soğuk,içecek\n"
+ÇAY: sıcak içecek
+SİMİT: fırın susamlı
+AYRAN: soğuk içecek
+["bir" "iki" "üç"]
+4 0

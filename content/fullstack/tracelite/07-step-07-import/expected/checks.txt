@@ -1,0 +1,20 @@
+CREATE TABLE
+INSERT 0 1
+CREATE TABLE
+INSERT 0 7
+SELECT 5
+    line | column | detail
+    -----+--------+-----------------------------------------------------
+    4    | code   | already used in this project
+    5    | code   | also on line 3
+    6    | parent | no requirement EXPORT in the file or the project
+    7    | parent | its chain of parents loops and never reaches the top
+    8    | parent | its chain of parents loops and never reaches the top
+DELETE 5
+INSERT 0 2
+SELECT 3
+    code           | parent     | title
+    ---------------+------------+---------------------
+    AUTH           | NULL       | Kimlik doğrulama
+    AUTH-LOGIN     | AUTH       | Parola ile giriş
+    AUTH-LOGIN-2FA | AUTH-LOGIN | İki adımlı doğrulama

@@ -1,0 +1,24 @@
+SELECT 7
+    spelling | default_lower | turkish_lower
+    ---------+---------------+--------------
+    IĞDIR    | 'ik':1        | 'ık':1
+    Iğdır    | 'iğdır':1     | 'ık':1
+    ığdır    | 'ık':1        | 'ık':1
+    ISPARTA  | 'ispar':1     | 'ıspar':1
+    ısparta  | 'ıspar':1     | 'ıspar':1
+    İZMİR    | 'izmir':1     | 'izmir':1
+    IZMIR    | 'izmir':1     | 'ızmır':1
+SELECT 1
+    collate_ignored
+    ---------------
+    'ispar':1
+CREATE TABLE
+INSERT 0 3
+SELECT 5
+    typed   | raw_query | turkish_lowered_query
+    --------+-----------+----------------------
+    ığdır   | 1,2       | 1,2
+    IĞDIR   | NULL      | 1,2
+    Iğdır   | NULL      | 1,2
+    ISPARTA | NULL      | 3
+    igdir   | NULL      | NULL

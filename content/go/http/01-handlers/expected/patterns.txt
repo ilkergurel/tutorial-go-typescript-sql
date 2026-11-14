@@ -1,0 +1,8 @@
+/posts/42              -> GET /posts/{id} id=42
+/posts/latest          -> GET /posts/latest
+/posts/42/comments     -> /
+/files/2026/rapor.pdf  -> GET /files/{rest...} rest=2026/rapor.pdf
+/docs/http/intro       -> GET /docs/
+/docs                  -> GET /docs/ (redirected to /docs/)
+/                      -> GET /{$}
+/nope                  -> /

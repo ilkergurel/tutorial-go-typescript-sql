@@ -1,0 +1,12 @@
+SELECT 1
+    backend_type   | database   | role       | state
+    ---------------+------------+------------+-------
+    client backend | playground | playground | active
+SELECT 1
+    current_database | session_user | current_user
+    -----------------+--------------+-------------
+    playground       | playground   | playground
+SELECT 1
+    current_schema | effective_path
+    ---------------+----------------------
+    run_<id>       | {pg_catalog,run_<id>}

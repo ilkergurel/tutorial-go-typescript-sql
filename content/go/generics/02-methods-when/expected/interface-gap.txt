@@ -1,0 +1,4 @@
+"42"
+Box(42)
+implements ToText: false
+reflect sees: String

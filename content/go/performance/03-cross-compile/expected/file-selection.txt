@@ -1,0 +1,4 @@
+linux/amd64    [main.go proc_unix.go] ignored: [proc_windows.go]
+darwin/arm64   [main.go proc_unix.go] ignored: [proc_windows.go]
+windows/amd64  [main.go proc_windows.go] ignored: [proc_unix.go]
+plan9/amd64    [main.go] ignored: [proc_unix.go proc_windows.go]

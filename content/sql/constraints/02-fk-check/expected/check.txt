@@ -1,0 +1,8 @@
+CREATE TABLE
+INSERT 0 2
+SELECT 2
+    id | status  | duration_ms | finished_at
+    ---+---------+-------------+----------------------
+    1  | passed  | 1200        | 2026-11-13 10:00:01.2
+    2  | skipped | NULL        | NULL
+ERROR: new row for relation "test_runs" violates check constraint "finished_after_start" (SQLSTATE 23514)

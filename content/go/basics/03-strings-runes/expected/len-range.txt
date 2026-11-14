@@ -1,0 +1,6 @@
+len: 4 runes: 3
+byte 0: rune D
+byte 1: rune İ
+byte 3: rune L
+t[1] as byte: 'Ä'
+t[1] decoded: İ

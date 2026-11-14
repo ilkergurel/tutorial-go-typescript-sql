@@ -1,0 +1,9 @@
+--- PASS: TestWords
+got = []string{}, got == nil: false
+reflect.DeepEqual(got, nil) = false
+slices.Equal(got, nil)      = true
+--- PASS: TestNilVersusEmpty
+equal: false
+%+q: "i\u0307stanbul" vs "istanbul"
+--- PASS: TestInvisibleDifference
+PASS

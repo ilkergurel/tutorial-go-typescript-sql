@@ -1,0 +1,13 @@
+[1] A: BEGIN
+[2] A: SELECT 1
+    balance
+    -------
+    100
+[3] B: ERROR: could not obtain lock on row in relation "accounts" (SQLSTATE 55P03)
+[4] B: SET
+[5] B: ERROR: canceling statement due to lock timeout (SQLSTATE 55P03)
+[6] B: SELECT 1
+    balance
+    -------
+    100
+[7] A: COMMIT

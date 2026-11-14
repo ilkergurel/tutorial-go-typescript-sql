@@ -1,0 +1,2 @@
+İzmir: [{2 ayse@example.com İzmir {+90 232 000 00 00 true}} {1 ilker@example.com İzmir { false}}] nil=false err=<nil>
+Muğla: [] nil=true err=<nil>

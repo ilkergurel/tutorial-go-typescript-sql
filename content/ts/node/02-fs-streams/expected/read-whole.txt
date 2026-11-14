@@ -1,0 +1,5 @@
+read 250 bytes, 5 lines
+first line: 2026-11-01T09:00:00Z INFO server started port=8080
+missing.log: does not exist
+31 bytes, 26 characters
+<Buffer 49 c4 9f>

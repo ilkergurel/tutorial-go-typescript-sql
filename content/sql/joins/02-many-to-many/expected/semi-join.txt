@@ -1,0 +1,22 @@
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 3
+INSERT 0 3
+INSERT 0 4
+SELECT 4
+    code
+    ---------
+    REQ-LOGIN
+    REQ-LOGIN
+    REQ-RESET
+    REQ-RESET
+SELECT 2
+    code
+    ---------
+    REQ-LOGIN
+    REQ-RESET
+SELECT 1
+    code
+    ---------
+    REQ-LOGIN

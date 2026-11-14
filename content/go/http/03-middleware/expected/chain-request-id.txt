@@ -1,0 +1,6 @@
+  -> outer
+  -> inner
+  handler sees req-1
+  <- inner
+  <- outer
+response X-Request-ID: req-1

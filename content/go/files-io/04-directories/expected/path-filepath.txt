@@ -1,0 +1,12 @@
+/static/img/logo.png
+raporlar/2026 users .gz
+data/raporlar/Şubat.csv raporlar/Şubat.csv <nil>
+../etc/passwd
+IsLocal("raporlar/Şubat.csv") = true
+IsLocal("a/../b") = true
+IsLocal("../secret.env") = false
+IsLocal("a/../../b") = false
+IsLocal("/etc/passwd") = false
+IsLocal("") = false
+Localize("raporlar/Şubat.csv") = "raporlar/Şubat.csv", <nil>
+Localize("../secret.env") = "", invalid path

@@ -1,0 +1,4 @@
+create user: duplicate key value violates unique constraint "users_email_key" (SQLSTATE 23505)
+  email taken: false | driver type visible: true
+create user ayse@example.com: email already registered: duplicate key value violates unique constraint "users_email_key" (SQLSTATE 23505)
+  email taken: true | driver type visible: false

@@ -1,0 +1,6 @@
+received:   {"type":"order.created","customer":"Ay\u015fe \u00c7elik","note":"<VIP> & co"}
+re-encoded: {"customer":"Ayşe Çelik","note":"\u003cVIP\u003e \u0026 co","type":"order.created"}
+same JSON value, same bytes? false
+verify the received bytes:  true
+verify the re-encoded bytes: false
+customer "Ayşe Çelik": 10 characters, 12 bytes

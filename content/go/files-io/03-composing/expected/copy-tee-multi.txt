@@ -1,0 +1,3 @@
+copied 69 bytes for 64 characters
+lines read: 4
+sha256 d27c4d7a25cc19cb…, same as sent: true

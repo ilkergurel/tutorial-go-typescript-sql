@@ -1,0 +1,24 @@
+CREATE TABLE
+CREATE TABLE
+CREATE INDEX
+CREATE FUNCTION
+INSERT 0 2
+SELECT 9
+    attempt                   | outcome
+    --------------------------+--------------------------------
+    top level                 | ok
+    child                     | ok
+    lower-case code           | 23514 requirements_code_format
+    upper-cased in tr locale  | 23514 requirements_code_format
+    same code, same project   | 23505 requirements_code_key
+    parent in other project   | 23503 requirements_parent_fkey
+    200 characters, 400 bytes | ok
+    201 characters            | 23514 requirements_title_length
+    same code, other project  | ok
+SELECT 4
+    name      | code       | top_level | title_bytes
+    ----------+------------+-----------+------------
+    Raporlama | AUTH       | t         | 13
+    Ödeme     | AUTH       | t         | 17
+    Ödeme     | AUTH-LOGIN | f         | 17
+    Ödeme     | LONG       | t         | 400

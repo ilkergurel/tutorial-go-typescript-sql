@@ -1,0 +1,6 @@
+naive: İzmir / İzmir
+functional: İstanbul / Ankara
+shared tags: true, shared address: false
+{"pageSize":50,"locale":"tr-TR"} {"pageSize":20,"locale":"tr-TR"}
+["vip","yeni","bayi","kurumsal"] ["vip","bayi"]
+["vip","eski","bayi"] ["bayi","vip","yeni"] ["vip","yeni","bayi"]

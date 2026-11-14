@@ -1,0 +1,12 @@
+CREATE TABLE
+INSERT 0 2
+SELECT 5
+    id | suite_no | suite  | test_no | title | ms   | has_error
+    ---+----------+--------+---------+-------+------+----------
+    1  | 1        | auth   | 1       | Giriş | 120  | f
+    1  | 1        | auth   | 2       | Çıkış | 85   | t
+    1  | 2        | export | NULL    | NULL  | NULL | NULL
+    2  | 1        | auth   | 1       | Giriş | NULL | f
+    2  | 1        | auth   | 2       | Çıkış | NULL | f
+CREATE TABLE
+ERROR: invalid input syntax for type integer: "slow" (SQLSTATE 22P02)

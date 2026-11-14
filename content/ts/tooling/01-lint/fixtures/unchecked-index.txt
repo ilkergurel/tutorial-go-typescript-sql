@@ -1,0 +1,42 @@
+src/features/lessons/ExampleView.tsx(27,21): error TS18048: 'i' is possibly 'undefined'.
+src/features/lessons/ExampleView.tsx(27,26): error TS18048: 'b' is possibly 'undefined'.
+src/features/lessons/ExampleView.tsx(27,29): error TS18048: 'i' is possibly 'undefined'.
+src/features/lessons/ExampleView.tsx(27,42): error TS2345: Argument of type 'number | undefined' is not assignable to parameter of type 'number'.
+  Type 'undefined' is not assignable to type 'number'.
+src/features/lessons/LessonContent.tsx(41,52): error TS2532: Object is possibly 'undefined'.
+src/features/lessons/types.ts(134,7): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/features/runner/browserTs.ts(145,101): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/shared/ui/markdownBlocks.ts(23,9): error TS18048: 'line' is possibly 'undefined'.
+src/shared/ui/markdownBlocks.ts(27,30): error TS18048: 'line' is possibly 'undefined'.
+src/shared/ui/markdownBlocks.ts(31,51): error TS2532: Object is possibly 'undefined'.
+src/shared/ui/markdownBlocks.ts(31,79): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/shared/ui/markdownBlocks.ts(33,35): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/shared/ui/markdownBlocks.ts(36,34): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/shared/ui/markdownBlocks.ts(38,45): error TS2532: Object is possibly 'undefined'.
+src/shared/ui/markdownBlocks.ts(38,78): error TS2322: Type 'string | undefined' is not assignable to type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/shared/ui/markdownBlocks.ts(42,33): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/shared/ui/markdownBlocks.ts(44,33): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/shared/ui/markdownBlocks.ts(47,37): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/shared/ui/markdownBlocks.ts(48,31): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/shared/ui/markdownBlocks.ts(49,22): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/shared/ui/markdownBlocks.ts(50,54): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/shared/ui/markdownBlocks.ts(53,44): error TS2532: Object is possibly 'undefined'.
+src/shared/ui/markdownBlocks.ts(65,7): error TS2532: Object is possibly 'undefined'.
+src/shared/ui/markdownBlocks.ts(66,19): error TS2532: Object is possibly 'undefined'.
+src/shared/ui/markdownBlocks.ts(67,21): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/shared/ui/markdownBlocks.ts(68,23): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/shared/ui/markdownBlocks.ts(70,17): error TS2532: Object is possibly 'undefined'.

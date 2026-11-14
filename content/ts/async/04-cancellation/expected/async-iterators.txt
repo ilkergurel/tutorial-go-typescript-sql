@@ -1,0 +1,7 @@
+  fetched page 0
+  fetched page 1
+found E
+  cleanup in finally
+  fetched page 0
+  cleanup in finally
+stopped after ABC: AbortError

@@ -1,0 +1,6 @@
+open     {"status":"loading","attempt":1} {"type":"fetch","attempt":1}
+rejected {"status":"backoff","attempt":1,"error":"503"} {"type":"sleep","ms":100}
+timer    {"status":"loading","attempt":2} {"type":"fetch","attempt":2}
+rejected (ignored)
+loaded   {"status":"ready","titles":["Klasörler","Durum"]}
+open     (ignored)

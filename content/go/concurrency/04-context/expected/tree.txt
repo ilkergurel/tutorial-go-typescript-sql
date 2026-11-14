@@ -1,0 +1,4 @@
+cache canceled; request: <nil> | db: <nil>
+AfterFunc: closing the request's connection
+db: context canceled | cache: context canceled
+audit: <nil> | user: ayşe

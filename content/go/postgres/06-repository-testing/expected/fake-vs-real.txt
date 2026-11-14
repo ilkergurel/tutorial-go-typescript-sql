@@ -1,0 +1,6 @@
+fake:
+  ayse@example.com id=1 err=<nil>
+  Ayse@Example.com id=2 err=<nil>
+postgres:
+  ayse@example.com id=1 err=<nil>
+  Ayse@Example.com id=0 err=email already registered

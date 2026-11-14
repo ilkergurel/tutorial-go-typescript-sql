@@ -1,0 +1,23 @@
+CREATE TABLE
+INSERT 0 2
+CREATE TABLE
+INSERT 0 1
+CREATE TABLE
+INSERT 0 8
+CREATE VIEW
+SELECT 6
+    row_no | case_code | problems
+    -------+-----------+--------------------------------------------------
+    3      | TC-4      | unknown requirement
+    4      | TC-5      | date is not DD.MM.YYYY; result is not Geçti/Kaldı
+    5      | TC-6      | negative seconds
+    6      | TC-1      | already imported
+    7      | TC-7      | twice in file
+    8      | TC-7      | twice in file
+INSERT 0 2
+SELECT 3
+    case_code | req_code | run_on     | seconds | passed
+    ----------+----------+------------+---------+-------
+    TC-1      | REQ-1    | 2026-11-02 | 4.00    | t
+    TC-2      | REQ-1    | 2026-11-09 | 1250.50 | t
+    TC-3      | REQ-2    | 2026-11-10 | 0.75    | f

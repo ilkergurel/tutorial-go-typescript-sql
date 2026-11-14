@@ -1,0 +1,43 @@
+[1] A: CREATE FUNCTION
+[2] A: BEGIN
+[3] B: BEGIN
+[4] A: SELECT 1
+    would_cycle
+    -----------
+    f
+[5] B: SELECT 1
+    would_cycle
+    -----------
+    f
+[6] A: UPDATE 1
+[7] B: UPDATE 1
+[8] A: COMMIT
+[9] B: COMMIT
+[10] A: SELECT 2
+    code   | parent
+    -------+-------
+    AUTH   | EXPORT
+    EXPORT | AUTH
+[11] A: UPDATE 2
+[12] A: BEGIN
+[13] B: BEGIN
+[14] A: SELECT 1
+    name
+    -----
+    Ödeme
+[15] B: waiting
+[16] A: SELECT 1
+    would_cycle
+    -----------
+    f
+[17] A: UPDATE 1
+[18] A: COMMIT
+[15] B: SELECT 1
+    name
+    -----
+    Ödeme
+[19] B: SELECT 1
+    would_cycle
+    -----------
+    t
+[20] B: ROLLBACK

@@ -1,0 +1,6 @@
+JSON.parse threw an Error: SyntaxError
+new URL threw an Error: TypeError
+legacy lib threw a string: "zaman aşımı"
+fetch wrapper threw a non-Error object: {"status":404}
+e.message: undefined
+reason: a string: "zaman aşımı"

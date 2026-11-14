@@ -1,0 +1,10 @@
+2 desi, 450,00 TL
+  flat                49,90 TL
+  carrier             64,90 TL
+  carrier, capped     64,90 TL
+  free over 500 TL    64,90 TL
+6 desi, 720,00 TL
+  flat                49,90 TL
+  carrier            114,90 TL
+  carrier, capped     99,90 TL
+  free over 500 TL     0,00 TL

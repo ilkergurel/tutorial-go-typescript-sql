@@ -1,0 +1,290 @@
+---
+id: sql.files-movement.csv-staging
+title: "CSV import through a staging table with validation"
+track: sql
+module: files-movement
+order: 2
+level: intermediate
+minutes: 15
+since: pg18
+prerequisites: [sql.files-movement.copy, sql.modifying.insert-update]
+compare_with: [go.files-io.csv-json, ts.services.zod, go.postgres.bulk, fullstack.tracelite.step-07-import]
+tags: [csv, staging, validation, copy, on-error, datestyle, turkish, import]
+summary: >
+  Load the file as text into a staging table, compute typed values and a list of
+  problems per row in one view, then move only the clean rows and report the rest
+  with row numbers. COPY's ON_ERROR ignore is the quick alternative, and the
+  example shows what it can't catch.
+examples:
+  - id: casts
+    file: examples/01_casts.sql
+    title: "Which casts you can trust with Turkish input"
+    runtime: sql
+    check: exact
+    annotations:
+      - lines: "4-7"
+        note: >
+          The same text is March 4 under MDY and April 3 under DMY, and
+          31.12.2026 is valid only under DMY. DateStyle's built-in default is
+          ISO, MDY, but initdb sets it from the server's lc_time locale, so one
+          import can mean different dates on two servers. Build YYYY-MM-DD
+          yourself: ISO dates read the same under every DateStyle.
+      - lines: "10-12"
+        note: >
+          pg_input_is_valid and pg_input_error_info (PG 16) run the type's input
+          check without raising an error, so nothing aborts. '1.250' passes:
+          it is 1.25 to PostgreSQL and 1250 to a Turkish reader. Valid input
+          isn't necessarily the value the user meant, so check the format first.
+      - lines: "15-16"
+        note: >
+          lower() follows the collation's case rules. Under the default ones I
+          lowers to i, so KALDI becomes kaldi and matches neither spelling;
+          tr-x-icu applies Turkish rules (I to ı, İ to i) and all three rows
+          agree.
+      - lines: "19"
+        note: >
+          An ordinary cast has no soft mode: the error aborts the statement
+          and the transaction, and this runner stops here the way psql does
+          with ON_ERROR_STOP. COPY behaves the same by default, which is why
+          the validation below never casts before checking.
+  - id: validate-move
+    file: examples/02_validate_move.sql
+    title: "Stage as text, validate in one view, report, then move the clean rows"
+    runtime: sql
+    check: exact
+    annotations:
+      - lines: "13-18"
+        note: >
+          Text columns and no constraints: every line of the file lands, and the
+          rules run afterwards, in SQL you can query. \copy with a column list
+          leaves row_no out, so the identity numbers rows in the order COPY
+          reads them: the numbers you report back. A quoted field with a line
+          break makes rows and file lines differ.
+      - lines: "26-35"
+        note: >
+          Each CASE yields a reason or NULL, and array_remove drops the NULLs,
+          so '{}' means clean. One row can collect several reasons (TC-5 has
+          two), so the user fixes the file in one pass instead of one error
+          per attempt.
+      - lines: "29-31"
+        note: >
+          The first and third rules repeat the target's foreign key and its
+          CHECK (seconds >= 0). Left to the INSERT, the first violation would
+          fail the whole statement, naming a constraint rather than a row.
+      - lines: "33-35"
+        note: >
+          The primary key, checked twice: against the file itself (both TC-7
+          rows are rejected, since nothing says which is right) and against
+          the table, which makes re-running the same file harmless.
+      - lines: "37-38"
+        note: >
+          regexp_match returns the captured groups or NULL. A date that isn't
+          DD.MM.YYYY, an ISO date included, yields NULL instead of a guess.
+          Numbers lose their thousands dots and get a decimal point.
+      - lines: "40-43"
+        note: >
+          A cast runs only when pg_input_is_valid says it will succeed, so the
+          view itself can never raise an error: 31.11.2026 fits the pattern but
+          isn't a date. The regex insists on Turkish grouping, so 1.250,5 is
+          1250.5 and a bare 1.250 would be 1250, never 1.25.
+      - lines: "44"
+        note: >
+          KALDI is accepted thanks to the Turkish collation; Gecti, typed
+          without the ç, is rejected rather than guessed at.
+      - lines: "47-51"
+        note: >
+          Report first. A view is evaluated on every read: after the INSERT the
+          good rows are in test_runs and would come back as "already imported".
+          One statement with a data-modifying CTE also works, since all its
+          parts see the same snapshot.
+  - id: on-error
+    file: examples/03_on_error.go
+    title: "COPY ON_ERROR ignore, LOG_VERBOSITY and REJECT_LIMIT, and what they miss"
+    runtime: go
+    check: exact
+    timeout_s: 10
+    annotations:
+      - lines: "14-19"
+        note: >
+          TC-3 (month 13) and TC-4 (decimal comma) fail type conversion. TC-2
+          doesn't: under MDY, 09.11.2026 is a perfectly good September 11.
+      - lines: "27"
+        note: >
+          Pinned so the example gives the same result on every server; the
+          point stands for whatever DateStyle yours has.
+      - lines: "28"
+        note: >
+          Skipped rows are reported as NOTICEs, which pgx hands to OnNotice
+          rather than returning them from CopyFrom. The line numbers count the
+          header line.
+      - lines: "49"
+        note: >
+          ON_ERROR ignore (PG 17) skips rows whose values fail conversion, and
+          the tag counts only what was loaded: COPY 3 of 5. Without verbose you
+          get just the summary notice; LOG_VERBOSITY silent (PG 18) drops that
+          too.
+      - lines: "50"
+        note: >
+          REJECT_LIMIT (PG 18): the second bad row exceeds the limit of 1 and the
+          whole COPY fails as if ignore weren't there. A guard for feeds: skip
+          the odd bad row, refuse a file that is mostly garbage.
+      - lines: "51-52"
+        note: >
+          ignore covers conversion errors only. A CHECK violation or a missing
+          column still aborts the whole COPY, and nothing from that file is
+          loaded, not even TC-1.
+      - lines: "54-59"
+        note: >
+          TC-2 sits in the table as 2026-09-11. ON_ERROR can tell bad syntax
+          from good, not a wrong value from a right one; that takes rules,
+          which is what the staging view is for.
+use_cases:
+  - "Importing test results, requirement lists or price lists that people export from Excel, with an error report they can act on"
+  - "Nightly feeds from another system: stage, validate, move, and keep the rejects for someone to look at"
+  - "Loading into a table with row-level security, which COPY FROM doesn't support: COPY into staging, then INSERT ... SELECT"
+  - "Machine-generated files where an occasional malformed row may be dropped: COPY with ON_ERROR ignore and a REJECT_LIMIT"
+strengths:
+  - "Every rule sees the whole file and the real tables at once: duplicates within the file and references to existing rows are one EXISTS or window function, where a Go or Python loop would have to load the lookup tables first"
+  - "Collects every problem of every row in one pass, unlike COPY or a constrained INSERT, which stop at the first error"
+  - "The soft checks (pg_input_is_valid) use the server's own parsers, so a value that passes is exactly what the column will accept"
+  - "Bad rows never touch the real table: no dead rows from a failed load, no partially imported file"
+weaknesses:
+  - "The data is written twice (staging, then target); for very large, trusted feeds, COPY straight into the table is faster"
+  - "Every constraint of the target has to be mirrored as a rule, and the two can drift apart when the schema changes"
+  - "SQL regexes and CASE chains get long; messages meant for end users (and in Turkish) are easier to build in application code"
+  - "ON_ERROR ignore is quick but blind: it reports bad rows only as NOTICEs and lets wrong-but-parseable values through"
+pitfalls:
+  - title: "Casting DD.MM.YYYY straight to date"
+    detail: "The result depends on DateStyle: 03.04.2026 becomes March 4 on a server with MDY. Match the pattern and build an ISO date."
+    bad: "SELECT run_on::date FROM staging;"
+    good: "SELECT make_date(d[3]::int, d[2]::int, d[1]::int)\nFROM staging, regexp_match(run_on, '^(\\d\\d)\\.(\\d\\d)\\.(\\d{4})$') AS d;"
+  - title: "Treating \"valid\" as \"correct\""
+    detail: "pg_input_is_valid('1.250', 'numeric') is true, and the value is 1.25. Check the Turkish format with a regex before converting, so the dot is read as a thousands separator."
+  - title: "lower() without the Turkish collation"
+    detail: "Under the default case rules KALDI lowers to kaldi, which matches no label. Apply tr-x-icu, or compare against a fixed list of accepted spellings."
+    bad: "CASE lower(result) WHEN 'kaldı' THEN false END"
+    good: "CASE lower(result COLLATE \"tr-x-icu\") WHEN 'kaldı' THEN false END"
+  - title: "Expecting ON_ERROR ignore to clean a file"
+    detail: "It skips type-conversion failures only. A CHECK, NOT NULL, unique or foreign key violation still aborts the whole COPY, and values that parse but mean something else (09.11.2026 under MDY) go straight in."
+  - title: "Reading the validation view after the move"
+    detail: "The view re-runs its checks on every read; once the clean rows are in the target, they look like duplicates. Report before moving, do both in one statement, or store the verdicts in a staging column."
+quiz:
+  - q: "With DateStyle = 'ISO, MDY', what does SELECT '03.04.2026'::date return?"
+    options: ["2026-04-03", "2026-03-04", "An error: the format is ambiguous"]
+    answer: 1
+    why: "Ambiguous day/month input follows DateStyle's field order, and MDY reads 03 as the month. Nothing warns you."
+  - q: "COPY ... WITH (FORMAT csv, ON_ERROR ignore) reads 1,000 rows; row 500 violates a CHECK constraint. What ends up in the table?"
+    options: ["999 rows", "Nothing: the COPY fails", "1,000 rows, with row 500's value set to NULL"]
+    answer: 1
+    why: "ON_ERROR only applies to errors converting input values to column types. A constraint violation aborts the statement as usual."
+  - q: "Why collect the problems in an array instead of a CASE that returns the first failing rule?"
+    options:
+      - "Arrays are faster to compare"
+      - "A row can break several rules, and the user should see them all in one report"
+      - "CASE can't contain EXISTS"
+    answer: 1
+    why: "array_remove(ARRAY[...], NULL) keeps every reason that applies; a single CASE stops at its first true branch."
+  - q: "In a UTF-8 database with default case rules, which expression maps both KALDI and Kaldı to 'kaldı'?"
+    options:
+      - "lower(result)"
+      - "lower(result COLLATE \"tr-x-icu\")"
+      - "upper(result) = 'KALDI'"
+    answer: 1
+    why: "Only Turkish case rules lower I to dotless ı; the default rules give kaldi."
+further_reading:
+  - title: "PostgreSQL docs: COPY (ON_ERROR, REJECT_LIMIT, LOG_VERBOSITY)"
+    url: "https://www.postgresql.org/docs/current/sql-copy.html"
+  - title: "PostgreSQL docs: System Information Functions (pg_input_is_valid, pg_input_error_info)"
+    url: "https://www.postgresql.org/docs/current/functions-info.html"
+  - title: "PostgreSQL docs: Date/Time Types, date input and DateStyle"
+    url: "https://www.postgresql.org/docs/current/datatype-datetime.html"
+  - title: "PostgreSQL docs: Collation Support (ICU collations)"
+    url: "https://www.postgresql.org/docs/current/collation.html"
+  - title: "PostgreSQL docs: Pattern Matching (regexp_match)"
+    url: "https://www.postgresql.org/docs/current/functions-matching.html"
+---
+
+## Concept
+
+Never `COPY` a file from people straight into the table it belongs in. Use three steps:
+
+1. **Load** the file into a staging table whose columns are all `text`, with no
+   constraints, plus a row number. `\copy` in psql or `PgConn().CopyFrom` in Go. The
+   load can't fail on content, so every line arrives.
+2. **Validate** with one query, usually a view: compute the typed value of each field (or
+   NULL), and a list of problems per row. Formats are checked with regular expressions,
+   "would this cast work?" with `pg_input_is_valid` (PG 16), references with `EXISTS`
+   against the real tables, duplicates within the file with a window function, and
+   duplicates against the target with `EXISTS` again.
+3. **Move and report**: `INSERT ... SELECT` the rows without problems, and give the
+   others back to the user with their row numbers and reasons.
+
+Whether a bad row means "skip it" or "refuse the whole file" is a policy decision, and
+both are one `WHERE` clause away: the example imports the clean rows; adding
+`AND NOT EXISTS (SELECT FROM checked WHERE problems <> '{}')` makes it all or nothing.
+
+COPY's own alternative is `ON_ERROR ignore` (PG 17), with `LOG_VERBOSITY verbose`
+to name the skipped rows and `REJECT_LIMIT` (PG 18) to cap them. It skips rows whose
+values fail type conversion and nothing else: no format rules, no references, no
+duplicates, no CHECK constraints.
+
+## Coming from C/C++/Java/Python/JS
+
+- **Python/pandas**: `read_csv(dtype=str)` followed by `pd.to_numeric(errors="coerce")`
+  is the same shape: everything as text first, then a conversion that yields a missing
+  value instead of raising. `pg_input_is_valid` is that `errors="coerce"`, in SQL.
+- **Java**: Bean Validation reports every constraint violation of an object, not the
+  first. The `problems` array does that for every row of a file in one query.
+- **TS**: zod's `safeParse` returns all issues instead of throwing (see
+  `ts.services.zod`); a staging view is `safeParse` over a whole table.
+- **Go**: the `go.files-io.csv-json` lesson validates per field while reading with
+  `csv.Reader`. That is the better place for format checks with exact line and column
+  positions; SQL is better at the rules that need other rows: duplicates and
+  references, checked without loading lookup tables into Go.
+- **ETL tools** (SSIS, Talend): their "error output" of rejected rows is here just the
+  rows `WHERE problems <> '{}'`.
+
+## How it works
+
+Staging as text works because conversion is where COPY and INSERT fail fast. A text
+column accepts any string, and with no constraints there is nothing else to violate.
+The checks then use functions that report instead of raising: `pg_input_is_valid(text,
+type)` returns false where the cast would throw, and `pg_input_error_info` returns the
+message, detail and SQLSTATE it would have thrown. Both take a type name with modifiers,
+such as `'numeric(6,2)'`, so they also catch overflow. The docs note they only work this
+way for types whose input function reports soft errors; the built-in date and numeric
+types used here do.
+
+Three Turkish traps sit in this path. Dates: an ambiguous date like `03.04.2026` is read
+in DateStyle's field order (built-in default `ISO, MDY`, though initdb picks one from
+the server locale); `YYYY-MM-DD` input means the same everywhere. Numbers:
+PostgreSQL only reads a decimal point, and `1.250` is a valid number with a different
+meaning. Case: `lower` and `upper` follow the collation, and only Turkish rules (`COLLATE
+"tr-x-icu"`) map I to ı and İ to i.
+
+For real loads, the staging table can be `TEMPORARY` (private to the session, dropped
+at its end) or `UNLOGGED` (no write-ahead log, so faster, but emptied after a crash).
+Either fits data you can reload from the file. COPY can fill staging from a Turkish
+Excel file directly:
+`\copy staging (case_code, req_code, run_on, seconds, result) FROM 'kosular.csv' WITH (FORMAT csv, HEADER true, DELIMITER ';', ENCODING 'WIN1254')`.
+
+## Design notes
+
+Keep the verdicts. A staging table with an `import_id` and a `problems` column filled
+by `UPDATE ... FROM checked` survives the request, so the UI can offer the rejected
+rows as a CSV with an extra "Hata" column, which is what people fixing a spreadsheet
+actually want. Delete old imports on a schedule.
+
+Mirror every constraint of the target as a rule, or the move can still fail as a
+whole, but keep the constraints too: they are the guarantee, the rules are the error
+messages. Two imports of the same file at the same moment can both pass the
+"already imported" check; the primary key still stops the second one, and
+`ON CONFLICT DO NOTHING` in the move, or an advisory lock around the import (the
+transactions module), turns that into a clean outcome.
+
+Split the work by what each side is good at: the Go handler checks encoding, header
+and field formats while it streams the upload and can point at line and column; SQL
+checks what needs the database: references, duplicates, existing rows. Keep
+`ON_ERROR ignore` for machine feeds where dropping the odd malformed row is acceptable,
+and always give it a `REJECT_LIMIT`, so a feed that suddenly changed its format fails
+instead of loading 3 rows out of 30,000.

@@ -1,0 +1,4 @@
+200 attachment; filename*=utf-8''%C3%96deme%20gereksinimleri.csv
+"\ufeffcode;title;parent;status;description\r\n"
+"AUTH;Kimlik doğrulama;;approved;\r\n"
+"AUTH-LOGIN;Parola ile giriş;AUTH;draft;\"Kullanıcı adı; parola\"\r\n"

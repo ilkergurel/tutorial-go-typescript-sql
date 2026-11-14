@@ -1,0 +1,7 @@
+[] -> {Verbose:false Timeout:5s Retries:3 Files:[]}
+["-v" "--timeout=1.5s" "-retries" "0" "a.txt" "b.txt"] -> {Verbose:true Timeout:1.5s Retries:0 Files:[a.txt b.txt]}
+["a.txt" "-v"] -> {Verbose:false Timeout:5s Retries:3 Files:[a.txt -v]}
+["-v=false" "--" "-odd-name.txt"] -> {Verbose:false Timeout:5s Retries:3 Files:[-odd-name.txt]}
+["-retries" "many"] -> invalid value "many" for flag -retries: parse error, exit 2
+["-x"] -> flag provided but not defined: -x, exit 2
+["-h"] -> help requested, exit 0

@@ -1,0 +1,17 @@
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+    NOTICE: identifier "iade_talepleri_için_günlük_özet_çizelgesi_ağustos_ölçüm" will be truncated to "iade_talepleri_için_günlük_özet_çizelgesi_ağustos_ölçü"
+SELECT 4
+    stored_name                                            | chars | bytes
+    -------------------------------------------------------+-------+------
+    Invoices                                               | 8     | 8
+    iade_talepleri_için_günlük_özet_çizelgesi_ağustos_ölçü | 54    | 63
+    payments                                               | 8     | 8
+    Şubeler                                                | 7     | 8
+SELECT 1
+    payments | PAYMENTS | invoices | quoted Invoices | şubeler
+    ---------+----------+----------+-----------------+--------
+    t        | t        | f        | t               | f
+ERROR: relation "invoices" does not exist (SQLSTATE 42P01)

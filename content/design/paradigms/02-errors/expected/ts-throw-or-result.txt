@@ -1,0 +1,3 @@
+mehmet@example.com  throw: 201  result: 201
+ayse@example.com    throw: 409  result: 409
+can.example.com     throw: 422  result: 422

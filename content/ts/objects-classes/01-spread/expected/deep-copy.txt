@@ -1,0 +1,7 @@
+qty: shallow 99, deep 2
+string {} false
+true 10 true
+JSON copy: TypeError
+false {"amount":42}
+cloned.format(): TypeError
+DataCloneError

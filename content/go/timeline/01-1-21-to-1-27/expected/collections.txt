@@ -1,0 +1,6 @@
+sort.Strings:    [Adana Bursa Muğla İzmir]
+slices.Sorted:   [Adana Bursa Muğla İzmir]
+min, max:        1 48
+cmp.Or:          tr-TR
+range over func: [0 2 4 6]
+SplitSeq:        [Çay][Simit][Ayran]

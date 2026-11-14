@@ -1,0 +1,15 @@
+[1] A: BEGIN
+[2] B: BEGIN
+[3] A: UPDATE 1
+[4] B: UPDATE 1
+[5] A: waiting
+[6] B: waiting
+[5] A: ERROR: deadlock detected (SQLSTATE 40P01)
+[6] B: UPDATE 1
+[7] A: ROLLBACK
+[8] B: COMMIT
+[9] A: SELECT 2
+    id | balance
+    ---+--------
+    a  | 120
+    b  | 80

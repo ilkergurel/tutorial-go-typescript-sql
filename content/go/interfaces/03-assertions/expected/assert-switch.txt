@@ -1,0 +1,10 @@
+İzmir true
+0 false
+interface conversion: interface {} is string, not int
+nil interface
+integer 42 of type int
+integer 7 of type int64
+string: 6 bytes, 4 runes
+error: boom
+Stringer: 1m30s
+something else: float64

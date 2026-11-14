@@ -1,0 +1,8 @@
+input    Go       Go tr    PG       PG "tr-x-icu"
+IŞIL     işil     ışıl     işil     ışıl
+Isparta  isparta  ısparta  isparta  ısparta
+İsmail   ismail   ismail   ismail   ismail
+sign up ışıl  -> <nil>
+sign up IŞIL  -> username taken
+sign up Işıl  -> username taken
+sign up işil  -> <nil>

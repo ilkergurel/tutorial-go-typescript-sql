@@ -1,0 +1,4 @@
+order S-1 simit: 1250
+current simit:   1500
+writing to a frozen list: TypeError
+frozen draft ayran after a write: 0

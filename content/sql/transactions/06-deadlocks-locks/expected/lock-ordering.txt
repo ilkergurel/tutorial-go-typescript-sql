@@ -1,0 +1,24 @@
+[1] A: BEGIN
+[2] B: BEGIN
+[3] A: SELECT 2
+    id
+    --
+    a
+    b
+[4] B: waiting
+[5] A: UPDATE 1
+[6] A: UPDATE 1
+[7] A: COMMIT
+[4] B: SELECT 2
+    id
+    --
+    a
+    b
+[8] B: UPDATE 1
+[9] B: UPDATE 1
+[10] B: COMMIT
+[11] B: SELECT 2
+    id | balance
+    ---+--------
+    a  | 110
+    b  | 90

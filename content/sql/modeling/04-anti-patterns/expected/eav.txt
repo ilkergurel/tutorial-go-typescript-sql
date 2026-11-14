@@ -1,0 +1,17 @@
+CREATE TABLE
+CREATE TABLE
+INSERT 0 3
+INSERT 0 4
+SELECT 3
+    code | priority | automated
+    -----+----------+----------
+    TC-1 | 1        | true
+    TC-2 | high     | NULL
+    TC-3 | NULL     | NULL
+CREATE TABLE
+INSERT 0 1
+SELECT 1
+    code | priority | automated | browser
+    -----+----------+-----------+--------
+    TC-1 | 1        | t         | Firefox
+ERROR: invalid input syntax for type smallint: "high" (SQLSTATE 22P02)

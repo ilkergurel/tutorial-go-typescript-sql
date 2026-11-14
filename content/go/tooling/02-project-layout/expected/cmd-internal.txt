@@ -1,0 +1,10 @@
+$ go list ./...
+example.com/shop/cmd/peek
+example.com/shop/cmd/shopd
+example.com/shop/internal/vat
+$ go run ./cmd/shopd
+gross: 1200
+$ go build ./...
+# example.com/shop/cmd/peek
+cmd/peek/main.go:9:31: name round not exported by package vat
+-> exit status 1

@@ -1,0 +1,27 @@
+CREATE EXTENSION
+CREATE EXTENSION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE TABLE
+CREATE INDEX
+CREATE INDEX
+INSERT 0 6
+PREPARE
+SELECT 4
+    tier | score  | code               | title
+    -----+--------+--------------------+-------------------------------
+    1    | 0      | PAROLA-KURAL       | Parola kuralları
+    2    | 759909 | AUTH-LOGIN         | Parola ile giriş
+    2    | 607927 | AUTH-RESET         | Parola sıfırlama
+    2    | 243171 | AUTH-LOGIN-LOCKOUT | Hatalı girişte hesap kilitleme
+SELECT 3
+    tier | score  | code               | title
+    -----+--------+--------------------+-------------------------------
+    2    | 243171 | AUTH-LOGIN-LOCKOUT | Hatalı girişte hesap kilitleme
+    2    | 243171 | AUTH-RESET-EXPIRY  | Sıfırlama bağlantısının süresi
+    2    | 243171 | PROFILE            | Profil sayfası
+SELECT 1
+    tier | score  | code              | title
+    -----+--------+-------------------+-------------------------------
+    3    | 739130 | AUTH-RESET-EXPIRY | Sıfırlama bağlantısının süresi

@@ -1,0 +1,4 @@
+half a request, no timeouts:        still open; a server goroutine is still waiting for headers
+half a request, ReadHeaderTimeout:  closed by the server
+slow handler, WriteTimeout: client got no response at all
+the handler's own write returned: <nil>

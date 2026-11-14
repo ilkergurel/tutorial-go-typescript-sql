@@ -1,0 +1,11 @@
+CREATE TABLE
+INSERT 0 1
+CREATE TABLE
+INSERT 0 3
+INSERT 0 2
+SELECT 3
+    sku    | name                  | price   | active
+    -------+-----------------------+---------+-------
+    BAK-01 | Fıstıklı baklava 1 kg | 1250.00 | f
+    SIM-01 | Simit                 | 15.00   | f
+    TEA-01 | Rize çayı 1 kg        | 210.00  | t

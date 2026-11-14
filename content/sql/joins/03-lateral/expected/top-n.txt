@@ -1,0 +1,13 @@
+CREATE TABLE
+CREATE TABLE
+CREATE INDEX
+INSERT 0 3
+INSERT 0 4
+SELECT 4
+    title          | finished_at         | passed
+    ---------------+---------------------+-------
+    Login          | 2026-11-12 09:00:00 | t
+    Login          | 2026-11-11 09:00:00 | f
+    Password reset | 2026-11-12 10:00:00 | t
+    Export CSV     | NULL                | NULL
+ERROR: invalid reference to FROM-clause entry for table "t" (SQLSTATE 42P01)

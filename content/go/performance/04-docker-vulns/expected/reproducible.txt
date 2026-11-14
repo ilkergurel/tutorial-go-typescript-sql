@@ -1,0 +1,2 @@
+go build           identical: false  laptop path inside: true
+go build -trimpath identical: true   laptop path inside: false

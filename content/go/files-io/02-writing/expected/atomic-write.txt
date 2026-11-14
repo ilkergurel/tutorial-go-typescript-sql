@@ -1,0 +1,5 @@
+in place: simulated crash
+atomic:   simulated crash
+inplace.json valid JSON: false {"version":2,"ci
+atomic.json  valid JSON: true  {"version":1,"city":"İzmir"}
+temp files left: 0

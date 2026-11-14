@@ -1,0 +1,8 @@
+code units 8, code points 8
+UTF-8 bytes 9
+i̇stanbul length 9
+istanbul length 8
+IYI İYİ
+false
+true
+2 1

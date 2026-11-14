@@ -1,0 +1,7 @@
+map[lang:tr theme:dark tz:Europe/Istanbul]
+defaults untouched: light
+[lang theme tz]
+[Europe/Istanbul dark tr]
+map[lang:tr theme:dark] true
+map[0:sıfır 1:bir 2:iki]
+map[lang:en] 1

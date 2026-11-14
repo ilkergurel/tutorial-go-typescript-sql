@@ -1,0 +1,20 @@
+CREATE TABLE
+INSERT 0 6
+SELECT 6
+    project   | ran_on     | id | failed | range_default | rows_running | project_total
+    ----------+------------+----+--------+---------------+--------------+--------------
+    StackLab  | 2026-11-10 | 5  | 5      | 5             | 5            | 5
+    StackLab  | 2026-11-11 | 6  | 0      | 5             | 5            | 5
+    TraceLite | 2026-11-09 | 1  | 3      | 3             | 3            | 10
+    TraceLite | 2026-11-10 | 2  | 1      | 8             | 4            | 10
+    TraceLite | 2026-11-10 | 3  | 4      | 8             | 8            | 10
+    TraceLite | 2026-11-12 | 4  | 2      | 10            | 10           | 10
+SELECT 6
+    project   | id | failed | last_default | latest_failed
+    ----------+----+--------+--------------+--------------
+    StackLab  | 5  | 5      | 5            | 0
+    StackLab  | 6  | 0      | 0            | 0
+    TraceLite | 1  | 3      | 3            | 2
+    TraceLite | 2  | 1      | 1            | 2
+    TraceLite | 3  | 4      | 4            | 2
+    TraceLite | 4  | 2      | 2            | 2

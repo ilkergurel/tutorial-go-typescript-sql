@@ -1,0 +1,34 @@
+CREATE TABLE
+CREATE TABLE
+INSERT 0 3
+INSERT 0 3
+CREATE VIEW
+SELECT 2
+    code      | tests | passed
+    ----------+-------+-------
+    REQ-AUDIT | 0     | 0
+    REQ-LOGIN | 2     | 1
+EXPLAIN
+    QUERY PLAN
+    --------------------------------------------------------------------------------
+    Subquery Scan on requirement_coverage
+      ->  GroupAggregate
+            ->  Hash Right Join
+                  Hash Cond: (t.requirement_id = r.id)
+                  ->  Seq Scan on test_cases t
+                  ->  Hash
+                        ->  Index Scan using requirements_code_key on requirements r
+                              Index Cond: (code = 'REQ-LOGIN'::text)
+CREATE VIEW
+ALTER TABLE
+SELECT 3
+    id | code       | title
+    ---+------------+-----------------
+    1  | REQ-LOGIN  | Kullanıcı girişi
+    2  | REQ-EXPORT | CSV dışa aktarım
+    3  | REQ-AUDIT  | Denetim izi
+SELECT 1
+    stored_query
+    -----------------------------------------
+    SELECT id, code, title FROM requirements;
+ERROR: cannot alter type of a column used by a view or rule (SQLSTATE 0A000)

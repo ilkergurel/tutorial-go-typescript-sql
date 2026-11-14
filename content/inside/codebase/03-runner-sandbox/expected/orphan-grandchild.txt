@@ -1,0 +1,3 @@
+WaitDelay=0s: Run waited for the orphaned grandchild: true
+WaitDelay=300ms: Run waited for the orphaned grandchild: false
+  grandchild still running, killed now: true

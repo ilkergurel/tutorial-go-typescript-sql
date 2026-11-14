@@ -1,0 +1,14 @@
+level=INFO msg=request method=GET path=/ok status=200
+client got 200:
+fine
+level=INFO msg=request method=GET path=/missing status=404
+client got 404:
+404 page not found
+level=ERROR msg=panic path=/boom value="assignment to entry in nil map"
+level=INFO msg=request method=GET path=/boom status=500
+client got 500:
+internal error
+level=INFO msg=request method=GET path=/flush status=200
+client got 200:
+with Unwrap:    <nil>
+without Unwrap: feature not supported

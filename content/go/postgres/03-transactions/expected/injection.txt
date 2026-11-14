@@ -1,0 +1,5 @@
+parameter:    0 rows changed <nil>
+concatenated: 3 rows changed <nil>
+SELECT count(*) FROM "accounts""; DROP TABLE accounts; --"
+ERROR: relation "accounts"; DROP TABLE accounts; --" does not exist (SQLSTATE 42P01)
+accounts left: 3 <nil>

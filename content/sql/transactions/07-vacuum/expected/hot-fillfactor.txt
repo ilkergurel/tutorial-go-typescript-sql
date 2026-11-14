@@ -1,0 +1,15 @@
+CREATE TABLE
+CREATE TABLE
+INSERT 0 10000
+INSERT 0 10000
+SELECT 1
+UPDATE 10000
+UPDATE 10000
+UPDATE 10000
+UPDATE 10000
+UPDATE 10000
+UPDATE 10000
+SELECT 1
+    packed_growth | roomy_growth | roomy_start_vs_packed
+    --------------+--------------+----------------------
+    4.0           | 1.0          | 2.0

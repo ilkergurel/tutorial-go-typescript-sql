@@ -1,0 +1,26 @@
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE INDEX
+CREATE TABLE
+CREATE INDEX
+INSERT 0 1
+INSERT 0 4
+INSERT 0 4
+PREPARE
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 1
+INSERT 0 0
+INSERT 0 5
+SELECT 4
+    code         | tests | naive_all_passed | coverage
+    -------------+-------+------------------+-----------
+    AUTH-LOCKOUT | 2     | t                | incomplete
+    AUTH-LOGIN   | 2     | t                | passing
+    AUTH-RESET   | 1     | f                | failing
+    EXPORT-CSV   | 0     | NULL             | uncovered
+ERROR: update or delete on table "test_cases" violates RESTRICT setting of foreign key constraint "test_runs_test_case_fkey" on table "test_runs" (SQLSTATE 23001)

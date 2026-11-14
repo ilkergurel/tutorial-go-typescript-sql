@@ -1,0 +1,4 @@
+go         done   exit 0: merhaba from go
+ts-browser done   exit 0: 42
+ts-browser done   exit 1: TypeError: Cannot read properties of null (reading 'x')
+sql        failed server busy

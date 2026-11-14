@@ -1,0 +1,17 @@
+CREATE TABLE
+CREATE TABLE
+CREATE FUNCTION
+CREATE TRIGGER
+INSERT 0 2
+UPDATE 1
+DELETE 1
+SAVEPOINT
+UPDATE 1
+ROLLBACK
+SELECT 4
+    id | tbl        | op     | row_id | changes
+    ---+------------+--------+--------+------------------------------------------------
+    1  | test_cases | INSERT | 1      | {"id": 1, "title": "Giriş", "status": "failed"}
+    2  | test_cases | INSERT | 2      | {"id": 2, "title": "Çıkış", "status": "passed"}
+    3  | test_cases | UPDATE | 1      | {"status": ["failed", "passed"]}
+    4  | test_cases | DELETE | 2      | {"id": 2, "title": "Çıkış", "status": "passed"}

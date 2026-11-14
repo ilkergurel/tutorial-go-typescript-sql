@@ -1,0 +1,3 @@
+circle r=2 area=12.6
+rect 2x5 area=10.0
+asserted radius 3

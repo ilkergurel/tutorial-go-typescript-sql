@@ -1,0 +1,5 @@
+into string: can't scan into dest[0] (col: phone): cannot scan NULL into *string
+Gül  phone=""   email="" valid=false
+Ömer phone=NULL email="omer@example.com" valid=true
+sum into int64: can't scan into dest[0] (col: sum): cannot scan NULL into *int64
+with coalesce: 0 <nil>

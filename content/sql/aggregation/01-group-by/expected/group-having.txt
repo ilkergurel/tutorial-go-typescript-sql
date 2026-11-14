@@ -1,0 +1,18 @@
+CREATE TABLE
+INSERT 0 8
+SELECT 3
+    suite  | runs | timed | avg_ms
+    -------+------+-------+-------
+    auth   | 3    | 3     | 190
+    export | 2    | 1     | 900
+    search | 3    | 2     | 78
+SELECT 1
+    suite  | failures
+    -------+---------
+    search | 2
+SELECT 1
+    runs | total_ms
+    -----+---------
+    0    | NULL
+SELECT 0
+ERROR: column "test_runs.status" must appear in the GROUP BY clause or be used in an aggregate function (SQLSTATE 42803)

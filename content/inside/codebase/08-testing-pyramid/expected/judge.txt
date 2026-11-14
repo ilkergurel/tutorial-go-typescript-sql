@@ -1,0 +1,8 @@
+judge > exact ignores CRLF and whitespace at the very end
+judge > exact still sees spaces ending an inner line
+judge > exact sees a changed line
+judge > sorted-lines ignores order
+judge > contains matches trimmed lines
+judge > fails any check when the program failed, whatever it printed
+judge > has no verdict without an expected file or with check none
+Tests  7 passed (7)

@@ -1,0 +1,14 @@
+CREATE TABLE
+INSERT 0 3
+INSERT 0 2
+INSERT 0 2
+SELECT 7
+    id | sku    | name               | price  | active
+    ---+--------+--------------------+--------+-------
+    1  | TEA-01 | Rize çayı 1 kg     | 210.00 | t
+    2  | COF-01 | Türk kahvesi 250 g | 145.00 | t
+    3  | LOK-01 | Lokum 500 g        | 180.00 | t
+    4  | HEL-01 | Tahin helvası      | 120.00 | t
+    5  | KUR-01 | Kuruyemiş          | 260.00 | f
+    6  | SIM-01 | Simit              | 15.00  | t
+    7  | POG-01 | Poğaça             | 25.00  | t

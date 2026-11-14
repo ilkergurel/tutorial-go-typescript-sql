@@ -1,0 +1,9 @@
+CREATE TABLE
+INSERT 0 1
+INSERT 0 1
+SELECT 2
+    id | title                 | status | priority | assignee
+    ---+-----------------------+--------+----------+---------
+    1  | Login fails for İlker | open   | 3        | NULL
+    2  | Export is slow        | open   | 1        | NULL
+ERROR: null value in column "status" of relation "tickets" violates not-null constraint (SQLSTATE 23502)

@@ -1,0 +1,7 @@
+wg.Go:         [0 1 4 9 16]
+new(true):     true
+os.Root:       ../.env -> path escapes from parent
+json v1:       <nil> b
+json v2:       jsontext: duplicate object member name "name"
+uuid.NewV7:    36 7 true
+uuid.Parse:    f81d4fae-7dec-11d0-a765-00a0c91e6bf6

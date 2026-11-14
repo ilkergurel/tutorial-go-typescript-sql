@@ -1,0 +1,12 @@
+steady r1
+steady r2
+steady r3
+steady r4
+steady r5
+steady: took >= 5 intervals: true
+bursty r1
+bursty r2
+bursty r3
+bursty r4
+bursty r5
+bursty: took >= 2 intervals: true

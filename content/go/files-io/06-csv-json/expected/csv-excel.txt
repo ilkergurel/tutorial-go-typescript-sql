@@ -1,0 +1,6 @@
+first header: "\ufeffMüşteri"
+Ayşe Yılmaz | İstanbul | 1.250,50
+Kaya; Ltd.  | Iğdır    | 99,90
+strconv.ParseFloat: parsing "1.250,50": invalid syntax
+valid UTF-8: false, read as UTF-8: "�zmir;�ubat"
+"\ufeffŞehir;Not\r\nMuğla;\"deniz; \"\"tatil\"\"\"\r\n"

@@ -1,0 +1,15 @@
+CREATE TABLE
+INSERT 0 2
+UPDATE 1
+SELECT 2
+    id | name           | name_key       | net_cents | vat_pct | gross_cents
+    ---+----------------+----------------+-----------+---------+------------
+    1  | Iğdır kayısısı | iğdır kayısısı | 4500      | 20      | 5400
+    2  | İzmir inciri   | izmir inciri   | 12000     | 10      | 13200
+SELECT 2
+    attname     | attgenerated
+    ------------+-------------
+    gross_cents | v
+    name_key    | s
+CREATE INDEX
+ERROR: indexes on virtual generated columns are not supported (SQLSTATE 0A000)

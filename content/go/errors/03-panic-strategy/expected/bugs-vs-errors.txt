@@ -1,0 +1,7 @@
+slug ok: true
+error: error parsing regexp: missing closing ]: `[a-z`
+string: regexp: Compile(`[a-z`): error parsing regexp: missing closing ]: `[a-z`
+runtime.Error: assignment to entry in nil map
+runtime.Error: runtime error: index out of range [3] with length 3
+runtime.Error: runtime error: panic called with nil argument
+no panic

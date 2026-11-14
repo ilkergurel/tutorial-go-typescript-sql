@@ -1,0 +1,6 @@
+inserted go as 1
+inserted pgx as 2
+inserted çay as 3
+batch 1: <nil>
+batch 2: ERROR: duplicate key value violates unique constraint "tags_name_key" (SQLSTATE 23505)
+tags: [go pgx çay] <nil>

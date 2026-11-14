@@ -1,0 +1,32 @@
+CREATE TABLE
+INSERT 0 20000
+CREATE INDEX
+ANALYZE
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+SELECT 1
+    failed
+    ------
+    6
+EXPLAIN
+    QUERY PLAN
+    -----------------------------------------------------------
+    Aggregate
+      ->  Bitmap Heap Scan on test_runs
+            Recheck Cond: (test_case_id = 42)
+            Filter: (status = 'failed'::text)
+            ->  Bitmap Index Scan on test_runs_test_case_id_idx
+                  Index Cond: (test_case_id = 42)
+EXPLAIN
+    QUERY PLAN
+    -----------------------------------------
+    Aggregate
+      ->  Function Scan on runs_of_volatile
+            Filter: (status = 'failed'::text)
+EXPLAIN
+    QUERY PLAN
+    -----------------------------------------
+    Aggregate
+      ->  Function Scan on runs_of_plpgsql
+            Filter: (status = 'failed'::text)

@@ -1,0 +1,22 @@
+CREATE TABLE
+CREATE TABLE
+INSERT 0 3
+INSERT 0 3
+SELECT 1
+    title
+    --------------
+    Locked account
+INSERT 0 1
+SELECT 0
+SELECT 1
+    without_null | with_null
+    -------------+----------
+    t            | NULL
+SELECT 1
+    title
+    --------------
+    Locked account
+SELECT 1
+    title
+    --------------
+    Locked account

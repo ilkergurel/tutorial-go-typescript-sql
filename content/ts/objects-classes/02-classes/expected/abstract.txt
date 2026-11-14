@@ -1,0 +1,7 @@
+ad;şehir
+Ayşe;İzmir
+Işık;Ankara
+| ad | şehir |
+| Ayşe | İzmir |
+| Işık | Ankara |
+true

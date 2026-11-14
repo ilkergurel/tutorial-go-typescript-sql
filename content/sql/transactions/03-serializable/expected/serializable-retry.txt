@@ -1,0 +1,25 @@
+[1] A: BEGIN
+[2] B: BEGIN
+[3] A: SELECT 1
+    on_call
+    -------
+    2
+[4] B: SELECT 1
+    on_call
+    -------
+    2
+[5] A: UPDATE 1
+[6] B: UPDATE 1
+[7] A: COMMIT
+[8] B: ERROR: could not serialize access due to read/write dependencies among transactions (SQLSTATE 40001)
+[9] B: BEGIN
+[10] B: SELECT 1
+    on_call
+    -------
+    1
+[11] B: ROLLBACK
+[12] A: SELECT 2
+    name  | on_call
+    ------+--------
+    alice | f
+    bob   | t

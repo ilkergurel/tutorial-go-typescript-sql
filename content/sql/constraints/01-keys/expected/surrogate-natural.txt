@@ -1,0 +1,19 @@
+CREATE TABLE
+INSERT 0 2
+CREATE TABLE
+INSERT 0 2
+SELECT 2
+    id | email
+    ---+-----------------
+    1  | ayse@example.com
+    2  | ayse@example.com
+CREATE TABLE
+CREATE INDEX
+INSERT 0 2
+UPDATE 1
+SELECT 2
+    id | email                   | currency
+    ---+-------------------------+---------
+    1  | ayse.yilmaz@example.com | TRY
+    2  | mehmet@example.com      | TRY
+ERROR: duplicate key value violates unique constraint "users_email_lower_key" (SQLSTATE 23505)

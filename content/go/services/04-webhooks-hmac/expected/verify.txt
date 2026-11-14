@@ -1,0 +1,7 @@
+valid                  accepted
+tampered body          rejected: no valid signature
+guessed secret         rejected: no valid signature
+replayed 10 min later  rejected: timestamp outside tolerance
+replayed 1 min later   accepted
+signed with old secret accepted
+no header              rejected: malformed signature header

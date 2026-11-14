@@ -1,0 +1,3 @@
+run 1 committed: <nil>
+run 2 rolled back: a later statement failed
+test runs: 1, delivery jobs: 2, event ids among them: 1

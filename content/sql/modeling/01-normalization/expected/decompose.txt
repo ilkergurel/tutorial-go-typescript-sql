@@ -1,0 +1,25 @@
+CREATE TABLE
+INSERT 0 4
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 2
+INSERT 0 3
+INSERT 0 2
+INSERT 0 4
+INSERT 0 4
+SELECT 4
+    test_code | run_on     | req_code | req_title      | tester | result
+    ----------+------------+----------+----------------+--------+-------
+    TC-1      | 2026-11-02 | REQ-1    | Card payment   | Ayşe   | passed
+    TC-2      | 2026-11-02 | REQ-1    | Card payment   | Mehmet | failed
+    TC-1      | 2026-11-09 | REQ-1    | Card payment   | Ayşe   | passed
+    TC-3      | 2026-11-09 | REQ-2    | Invoice e-mail | Mehmet | passed
+SELECT 2
+    test_code
+    ---------
+    TC-1
+    TC-2
+ERROR: duplicate key value violates unique constraint "requirements_pkey" (SQLSTATE 23505)

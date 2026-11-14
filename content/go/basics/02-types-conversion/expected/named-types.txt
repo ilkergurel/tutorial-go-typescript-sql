@@ -1,0 +1,6 @@
+212
+3s
+2ns
+65 A
+0 strconv.Atoi: parsing "80a": invalid syntax
+strconv.ParseFloat: parsing "3,14": invalid syntax

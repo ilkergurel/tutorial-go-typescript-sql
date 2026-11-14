@@ -1,0 +1,25 @@
+CREATE TABLE
+INSERT 0 3
+SELECT 3
+    id | in_table | returned
+    ---+----------+---------
+    1  | failed   | retest
+    2  | passed   | NULL
+    3  | failed   | retest
+SELECT 3
+    id | status
+    ---+-------
+    1  | retest
+    2  | passed
+    3  | retest
+CREATE TABLE
+INSERT 0 1
+SELECT 1
+    id | how
+    ---+--------
+    2  | created
+SELECT 1
+    id | how
+    ---+------
+    1  | found
+ERROR: WITH clause containing a data-modifying statement must be at the top level (SQLSTATE 0A000)

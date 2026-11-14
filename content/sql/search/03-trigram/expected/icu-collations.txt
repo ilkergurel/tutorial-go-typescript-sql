@@ -1,0 +1,23 @@
+CREATE COLLATION
+CREATE COLLATION
+CREATE COLLATION
+CREATE COLLATION
+SELECT 5
+    a       | b       | tr_ci | und_ci | tr_ai | und_ai
+    --------+---------+-------+--------+-------+-------
+    ISPARTA | ısparta | t     | f      | t     | f
+    İZMİR   | izmir   | t     | f      | t     | t
+    IZMIR   | izmir   | f     | t      | f     | t
+    Çeşme   | cesme   | f     | f      | f     | t
+    Iğdır   | igdir   | f     | f      | f     | f
+CREATE TABLE
+INSERT 0 2
+SELECT 1
+    username
+    --------
+    ışık
+SELECT 1
+    username
+    --------
+    Deniz
+ERROR: duplicate key value violates unique constraint "users_pkey" (SQLSTATE 23505)

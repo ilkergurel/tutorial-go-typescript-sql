@@ -1,0 +1,13 @@
+CREATE TABLE
+INSERT 0 3
+CREATE FUNCTION
+CREATE TRIGGER
+UPDATE 1
+UPDATE 1
+UPDATE 1
+SELECT 3
+    id | status   | stamped_now | kept_old_stamp
+    ---+----------+-------------+---------------
+    1  | approved | t           | f
+    2  | approved | f           | t
+    3  | draft    | t           | f

@@ -1,0 +1,29 @@
+CREATE TABLE
+INSERT 0 300000
+CREATE INDEX
+ANALYZE
+SELECT 1
+    index_pages
+    -----------
+    271
+SELECT 1
+    count
+    -----
+    1000
+EXPLAIN
+    QUERY PLAN
+    --------------------------------------------------------------------------------------
+    Aggregate (actual rows=1.00 loops=1)
+      Buffers: shared hit=1023
+      ->  Bitmap Heap Scan on test_runs (actual rows=1000.00 loops=1)
+            Recheck Cond: (ran_on = '2026-06-01'::date)
+            Heap Blocks: exact=1000
+            Buffers: shared hit=1023
+            ->  Bitmap Index Scan on test_runs_status_ran_on (actual rows=1000.00 loops=1)
+                  Index Cond: (ran_on = '2026-06-01'::date)
+                  Index Searches: 7
+                  Buffers: shared hit=23
+SELECT 1
+    io_method | io_workers | effective_io_concurrency
+    ----------+------------+-------------------------
+    worker    | 3          | 16

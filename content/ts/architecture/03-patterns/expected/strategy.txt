@@ -1,0 +1,4 @@
+code units   Zaman, Çeviri, İndeksler, Şablonlar
+title        Çeviri, İndeksler, Şablonlar, Zaman
+minutes      Çeviri, Şablonlar, Zaman, İndeksler
+level, -min  Şablonlar, Zaman, İndeksler, Çeviri

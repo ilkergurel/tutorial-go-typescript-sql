@@ -1,0 +1,19 @@
+CREATE TABLE
+INSERT 0 3
+SELECT 3
+    id | on_main | wrong_level | both_tags | scalar_tag | array_has_smoke | any_failed
+    ---+---------+-------------+-----------+------------+-----------------+-----------
+    1  | t       | f           | t         | f          | t               | t
+    2  | f       | f           | f         | f          | t               | f
+    3  | t       | f           | f         | f          | f               | f
+SELECT 3
+    id | has_retry | nested_key | smoke | any_of | all_of
+    ---+-----------+------------+-------+--------+-------
+    1  | f         | f          | t     | t      | t
+    2  | f         | f          | t     | f      | f
+    3  | t         | f          | f     | f      | f
+SELECT 1
+    equal | kept_as_written
+    ------+----------------
+    t     | {"ms": 120.0}
+ERROR: operator does not exist: json @> unknown (SQLSTATE 42883)

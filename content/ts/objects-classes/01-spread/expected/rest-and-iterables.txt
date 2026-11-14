@@ -1,0 +1,6 @@
+{"id":7,"email":"ayse@example.com"}
+["amount"] false false
+["çay","kahve"]
+1 2
+4 3
+["69","307"] ["69"]

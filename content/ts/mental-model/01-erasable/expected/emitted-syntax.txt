@@ -1,0 +1,14 @@
+info
+{"0":"Low","1":"High","Low":0,"High":1}
+class Account {
+  constructor(id) {
+    this.id = id;
+  }
+  id;
+}
+class Invoice {
+  id;
+  constructor(id) {
+    this.id = id;
+  }
+}

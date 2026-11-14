@@ -1,0 +1,10 @@
+no jitter: every client retries at the same instants
+  client A    100ms   200ms   400ms   800ms    1.6s      2s
+  client B    100ms   200ms   400ms   800ms    1.6s      2s
+  client C    100ms   200ms   400ms   800ms    1.6s      2s
+full jitter: a uniformly random wait in [0, ceiling)
+  client A     77ms   123ms   314ms   637ms   375ms    82ms
+  client B     50ms    90ms    53ms   147ms  1.059s   890ms
+  client C     94ms    24ms   159ms   627ms  1.169s  1.017s
+attempt 40, unclamped: -202583h47m44.657309696s
+attempt 40, clamped:   2s

@@ -1,0 +1,4 @@
+clicked plate 35
+input event: iz
+plate 34
+keys seen: Enter

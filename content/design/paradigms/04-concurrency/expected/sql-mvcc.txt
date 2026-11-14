@@ -1,0 +1,28 @@
+[1] A: CREATE TABLE
+[2] A: INSERT 0 2
+[3] A: BEGIN
+[4] B: BEGIN
+[5] A: SELECT 1
+    left_qty
+    --------
+    1
+[6] B: SELECT 1
+    left_qty
+    --------
+    1
+[7] A: UPDATE 1
+[8] B: waiting
+[9] A: COMMIT
+[8] B: UPDATE 1
+[10] B: COMMIT
+[11] A: BEGIN
+[12] B: BEGIN
+[13] A: UPDATE 1
+[14] B: SELECT 1
+    left_qty
+    --------
+    1
+[15] B: waiting
+[16] A: COMMIT
+[15] B: UPDATE 0
+[17] B: COMMIT

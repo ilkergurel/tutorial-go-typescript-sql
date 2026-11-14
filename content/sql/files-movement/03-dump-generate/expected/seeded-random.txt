@@ -1,0 +1,21 @@
+SELECT 1
+    setseed
+    -------
+
+SELECT 100000
+SELECT 1
+    setseed
+    -------
+
+SELECT 100000
+SELECT 100000
+SELECT 1
+    same_seed_same_rows | no_reseed_same_rows | die_range
+    --------------------+---------------------+----------
+    t                   | f                   | 1..6
+SELECT 3
+    returns                  | day
+    -------------------------+-----------
+    timestamp with time zone | 2026-11-01
+    timestamp with time zone | 2026-11-02
+    timestamp with time zone | 2026-11-03

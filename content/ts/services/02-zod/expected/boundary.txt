@@ -1,0 +1,9 @@
+cast: next id = 71
+✖ Invalid input: expected number, received string
+  → at id
+✖ Invalid email address
+  → at email
+id: invalid_type
+email: invalid_format
+{"id":7,"name":"Şule","email":"sule@example.com"}
+Unrecognized key: "admin"

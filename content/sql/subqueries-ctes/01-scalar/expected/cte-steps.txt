@@ -1,0 +1,14 @@
+CREATE TABLE
+CREATE TABLE
+INSERT 0 3
+INSERT 0 7
+SELECT 2
+    title          | passes | failures
+    ---------------+--------+---------
+    Export CSV     | 1      | 1
+    Valid password | 2      | 1
+SELECT 2
+    title          | passes | failures
+    ---------------+--------+---------
+    Export CSV     | 1      | 1
+    Valid password | 2      | 1

@@ -1,0 +1,8 @@
+migrations: 6 applied, from inside the binary
+jobs: 4 workers claiming
+http: serving
+signal: shutting down in reverse order
+http: stopped; the request in flight got 200 OK
+jobs: drained
+listener (step 9): closed
+database pool: closed

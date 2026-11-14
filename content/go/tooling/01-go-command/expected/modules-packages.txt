@@ -1,0 +1,17 @@
+$ go mod init example.com/hello
+go: creating new go.mod: module example.com/hello
+go: to add module requirements and sums:
+	go mod tidy
+$ go list -m
+example.com/hello
+$ go list -f "{{.ImportPath}} is package {{.Name}}" ./...
+example.com/hello is package main
+example.com/hello/greet is package greet
+$ go run .
+Merhaba, Ayşe
+$ go doc ./greet
+package greet // import "example.com/hello/greet"
+
+Package greet builds greetings.
+
+func Hello(name string) string

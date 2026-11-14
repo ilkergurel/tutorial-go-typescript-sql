@@ -1,0 +1,5 @@
+allocations per call: += 14, Builder 1
+--- PASS: TestJoinAllocs
+iterations > 0: true, allocs/op: 1
+--- PASS: TestBenchmarkByHand
+PASS

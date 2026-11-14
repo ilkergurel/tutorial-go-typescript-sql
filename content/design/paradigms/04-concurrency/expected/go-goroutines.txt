@@ -1,0 +1,1 @@
+sold 10, refused 10, left 0

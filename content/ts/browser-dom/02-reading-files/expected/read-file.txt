@@ -1,0 +1,2 @@
+app.log: 48 bytes, 2 lines, first: 2026-11-01 INFO started
+streamed 11534336 bytes

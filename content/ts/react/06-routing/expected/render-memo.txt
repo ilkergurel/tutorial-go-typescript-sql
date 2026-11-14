@@ -1,0 +1,6 @@
+plain               4 render(s)
+memo                1 render(s)
+memo + inline fn    4 render(s)
+memo + useCallback  1 render(s)
+created inside      4 render(s)
+passed as children  1 render(s)

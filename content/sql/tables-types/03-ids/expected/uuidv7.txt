@@ -1,0 +1,17 @@
+CREATE TABLE
+CREATE TABLE
+INSERT 0 1000
+INSERT 0 1000
+SELECT 2
+    generator | id_order_is_insert_order
+    ----------+-------------------------
+    uuidv4    | f
+    uuidv7    | t
+SELECT 1
+    v7_version | v7_time_is_now | v4_version | v4_time
+    -----------+----------------+------------+--------
+    7          | t              | 4          | NULL
+SELECT 1
+    uuid_bytes | text_chars | backdated_sorts_first
+    -----------+------------+----------------------
+    16         | 36         | t

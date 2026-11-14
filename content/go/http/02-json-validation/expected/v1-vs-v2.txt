@@ -1,0 +1,15 @@
+duplicate name
+  v1 accepted: name="Mallory"
+  v2 rejected: jsontext: duplicate object member name "name"
+other case
+  v1 accepted: name="Mallory"
+  v2 rejected: unknown object member name at /NAME
+Windows-1254 ş
+  v1 accepted: name="Ay�e"
+  v2 rejected: jsontext: invalid UTF-8 within "/name" after offset 11
+trailing data
+  v1 accepted: name="Ayşe"
+  v2 rejected: jsontext: invalid character '{' after top-level value after offset 17
+unknown member
+  v1 rejected: json: unknown field "admin"
+  v2 rejected: unknown object member name at /admin

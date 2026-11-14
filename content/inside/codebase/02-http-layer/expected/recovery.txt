@@ -1,0 +1,8 @@
+panic before writing
+  log: handler panicked: assignment to entry in nil map
+  -> 500 [application/problem+json] {"detail":"internal server error","status":500}
+panic after writing
+  log: handler panicked: encoder bug
+  net/http gets panic(net/http: abort Handler) and drops the connection
+deliberate abort
+  net/http gets panic(net/http: abort Handler) and drops the connection

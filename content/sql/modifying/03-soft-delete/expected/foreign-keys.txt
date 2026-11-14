@@ -1,0 +1,22 @@
+CREATE TABLE
+CREATE TABLE
+INSERT 0 2
+INSERT 0 3
+UPDATE 1
+INSERT 0 1
+SELECT 2
+    name      | orders | revenue
+    ----------+--------+--------
+    Ayşe Kaya | 1      | 250.00
+    Can Demir | 3      | 854.00
+UPDATE 1
+SELECT 2
+    id | name      | email            | deleted
+    ---+-----------+------------------+--------
+    1  | Ayşe Kaya | ayse@example.com | f
+    2  | NULL      | NULL             | t
+DELETE 1
+SELECT 1
+    id | customer_id | total
+    ---+-------------+-------
+    10 | 1           | 250.00

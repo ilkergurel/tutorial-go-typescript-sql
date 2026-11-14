@@ -1,0 +1,4 @@
+counter module evaluated
+live: 2, snapshot: 0
+same instance: true, count: 2
+TypeError: namespace is read-only

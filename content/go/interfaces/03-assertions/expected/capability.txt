@@ -1,0 +1,6 @@
+(*strings.Builder cannot flush)
+ok: 3
+failed: 0
+(*bufio.Writer can flush)
+ok: 5
+failed: 1

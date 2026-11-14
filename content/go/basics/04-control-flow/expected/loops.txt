@@ -1,0 +1,4 @@
+[0 1 2]
+n = 243
+negative value in row 1
+[0 1 2]

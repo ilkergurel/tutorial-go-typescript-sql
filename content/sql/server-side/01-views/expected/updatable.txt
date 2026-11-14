@@ -1,0 +1,18 @@
+CREATE TABLE
+INSERT 0 3
+CREATE VIEW
+UPDATE 1
+SELECT 3
+    id | project_id | status
+    ---+------------+-------
+    1  | 1          | retest
+    2  | 1          | passed
+    3  | 2          | failed
+INSERT 0 1
+SELECT 1
+    visible_through_view
+    --------------------
+    0
+CREATE VIEW
+UPDATE 1
+ERROR: new row violates check option for view "project1_cases" (SQLSTATE 44000)

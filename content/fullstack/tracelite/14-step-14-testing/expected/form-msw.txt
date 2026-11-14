@@ -1,0 +1,4 @@
+passes the server's 409 problem on, field pointer included
+makes a problem out of the proxy's 502 page
+refuses a 201 whose body broke the contract
+Tests  3 passed (3)

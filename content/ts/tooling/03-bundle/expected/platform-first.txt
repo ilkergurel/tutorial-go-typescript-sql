@@ -1,0 +1,8 @@
+date:      13 Kasım 2026 Cuma 16:45
+relative:  3 gün önce
+money:     ₺1.234,50 0,075
+list:      Go, TypeScript ve PostgreSQL
+sorted:    Çağla, Ilgın, İlker, Şule, Zeynep
+upper:     İSTANBUL ILIK vs ISTANBUL ILIK
+groupBy:   architecture=2 tooling=1
+clone:     true true true

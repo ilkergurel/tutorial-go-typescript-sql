@@ -1,0 +1,6 @@
+1
+loop done
+deferred 2
+deferred 1
+deferred 0
+recovered: runtime error: range function continued iteration after function for loop body returned false

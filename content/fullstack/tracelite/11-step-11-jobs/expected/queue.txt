@@ -1,0 +1,4 @@
+w1 claimed ci and w2 claimed chat without waiting for w1
+06:03:30 claim: no rows in result set
+06:04:31 w3 claimed ci attempt 2
+w1 comes back, finishes: lease lost: the job was claimed again | w3 finishes: <nil>

@@ -1,0 +1,5 @@
+2026-11-01T09:00:00Z INFO server started port=8080
+2026-11-01T09:00:05Z WARN slow query took=1200ms
+2026-11-01T09:01:10Z ERROR db connection lost
+2026-11-01T09:01:12Z INFO reconnected attempts=2
+2026-11-01T09:02:31Z ERROR payment failed order=111042

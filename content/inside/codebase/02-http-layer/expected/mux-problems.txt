@@ -1,0 +1,6 @@
+GET /api/notes/go.basics.defer
+  -> 404 [text/plain; charset=utf-8] allow="" no note for go.basics.defer
+DELETE /api/notes/go.basics.defer
+  -> 405 [application/problem+json] allow="GET, HEAD, PUT" {"detail":"DELETE is not allowed; allowed: GET, HEAD, PUT","status":405}
+GET /api/lessons/go.basics.defer
+  -> 404 [application/problem+json] allow="" {"detail":"no route for GET /api/lessons/go.basics.defer","status":404}

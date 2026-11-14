@@ -1,0 +1,9 @@
+"2026/kasım/fatura.txt" IsLocal=true
+  os.ReadFile(Join): "tutar=1.250,50"
+  root.ReadFile:     "tutar=1.250,50" <nil>
+"../secret.env" IsLocal=false
+  os.ReadFile(Join): "DB_PASSWORD=hunter2"
+  root.ReadFile:     "" openat ../secret.env: path escapes from parent
+"2026/../../secret.env" IsLocal=false
+  os.ReadFile(Join): "DB_PASSWORD=hunter2"
+  root.ReadFile:     "" openat 2026/../../secret.env: path escapes from parent

@@ -1,0 +1,10 @@
+  orders failed at 10 ms
+all        rejected: orders failed
+race       rejected: orders failed
+  prefs succeeded at 30 ms
+any        fulfilled: "prefs"
+  profile succeeded at 50 ms
+allSettled fulfilled: ["profile","orders failed","prefs"]
+  mirror-2 failed at 10 ms
+  mirror-1 failed at 20 ms
+any rejected: mirror-1 failed, mirror-2 failed

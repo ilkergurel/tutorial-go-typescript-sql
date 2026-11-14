@@ -1,0 +1,2 @@
+production:    completed: go.basics.defer
+test fake:     completed: design.patterns.classic

@@ -1,0 +1,31 @@
+CREATE TABLE
+INSERT 0 7
+SELECT 6
+    code  | times_reached
+    ------+--------------
+    STK-1 | 1
+    SYS-1 | 1
+    SYS-2 | 3
+    SYS-3 | 3
+    TC-10 | 4
+    TC-11 | 3
+SELECT 8
+    hops | code  | is_cycle | path
+    -----+-------+----------+----------------------------------
+    0    | STK-1 | f        | {(STK-1)}
+    1    | SYS-1 | f        | {(STK-1),(SYS-1)}
+    2    | TC-10 | f        | {(STK-1),(SYS-1),(TC-10)}
+    1    | SYS-2 | f        | {(STK-1),(SYS-2)}
+    2    | SYS-3 | f        | {(STK-1),(SYS-2),(SYS-3)}
+    3    | SYS-2 | t        | {(STK-1),(SYS-2),(SYS-3),(SYS-2)}
+    2    | TC-10 | f        | {(STK-1),(SYS-2),(TC-10)}
+    2    | TC-11 | f        | {(STK-1),(SYS-2),(TC-11)}
+SELECT 6
+    code
+    -----
+    STK-1
+    SYS-1
+    SYS-2
+    SYS-3
+    TC-10
+    TC-11

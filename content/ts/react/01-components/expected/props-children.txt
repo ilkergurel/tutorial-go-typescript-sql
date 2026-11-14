@@ -1,0 +1,6 @@
+<section aria-label="sipariş iptali">
+<h2>SİPARİŞ İPTALİ</h2>
+<p>Bu işlem geri alınamaz.</p>
+<button type="button" data-tone="danger">İptal et</button>
+</section>
+<p>0</p>

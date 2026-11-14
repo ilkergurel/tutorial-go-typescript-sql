@@ -1,0 +1,31 @@
+[1] A: SELECT 2
+[2] A: CREATE INDEX
+[3] B: INSERT 0 1
+[4] B: SELECT 2
+    requirement | runs | passed
+    ------------+------+-------
+    REQ-EXPORT  | 1    | 1
+    REQ-LOGIN   | 2    | 1
+[5] A: BEGIN
+[6] A: REFRESH MATERIALIZED VIEW
+[7] B: waiting
+[8] A: COMMIT
+[7] B: SELECT 2
+    requirement | runs | passed
+    ------------+------+-------
+    REQ-EXPORT  | 1    | 1
+    REQ-LOGIN   | 3    | 2
+[9] B: INSERT 0 1
+[10] A: BEGIN
+[11] A: REFRESH MATERIALIZED VIEW
+[12] B: SELECT 2
+    requirement | runs | passed
+    ------------+------+-------
+    REQ-EXPORT  | 1    | 1
+    REQ-LOGIN   | 3    | 2
+[13] A: COMMIT
+[14] B: SELECT 2
+    requirement | runs | passed
+    ------------+------+-------
+    REQ-EXPORT  | 2    | 1
+    REQ-LOGIN   | 3    | 2

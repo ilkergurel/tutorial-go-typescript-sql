@@ -1,0 +1,26 @@
+[1] A: BEGIN
+[2] A: SELECT 1
+    balance
+    -------
+    100
+[3] B: BEGIN
+[4] B: UPDATE 1
+[5] B: COMMIT
+[6] A: SELECT 1
+    balance
+    -------
+    60
+[7] A: COMMIT
+[8] A: BEGIN
+[9] A: SELECT 1
+    balance
+    -------
+    60
+[10] B: BEGIN
+[11] B: UPDATE 1
+[12] B: COMMIT
+[13] A: SELECT 1
+    balance
+    -------
+    60
+[14] A: COMMIT

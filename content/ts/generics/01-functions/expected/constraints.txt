@@ -1,0 +1,3 @@
+Çay 85
+Çay 85, Ilık su 10, İrmik 30, Şeker 45
+Ilık su, Çay, İrmik, Şeker

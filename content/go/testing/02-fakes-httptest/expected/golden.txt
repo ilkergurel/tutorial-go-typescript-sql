@@ -1,0 +1,3 @@
+03_golden_test.go:59: matches testdata/TestReceipt.golden (122 bytes)
+--- PASS: TestReceipt
+PASS

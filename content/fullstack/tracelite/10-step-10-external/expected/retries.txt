@@ -1,0 +1,10 @@
+  attempt: 503
+  attempt: timeout
+  attempt: 200
+lookup: "Authentication information", err: <nil>
+  attempt: 429
+lookup: "", err: asked to wait 2m0s, past our deadline: may go away: 429
+  attempt: 502
+  attempt: 502
+  attempt: 502
+lookup: "", err: gave up after 3 attempts: may go away: 502

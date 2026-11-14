@@ -1,0 +1,11 @@
+{"Name":"Ayşe","City":"İzmir"}
+{Name:Ayşe City:İzmir password:s3cret}
+field Name     exported=true
+field City     exported=true
+field password exported=false
+Total  exported=true
+total  exported=false
+İlçe   exported=true
+ılçe   exported=false
+_Total exported=false
+日本     exported=false

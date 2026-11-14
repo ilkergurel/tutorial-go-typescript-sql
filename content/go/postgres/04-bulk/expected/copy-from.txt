@@ -1,0 +1,8 @@
+copied: 100000 <nil>
+copied: 0 ERROR: duplicate key value violates unique constraint "readings_pkey" (SQLSTATE 23505)
+  Ankara 20000 19.85
+  Diyarbakır 20000 20.15
+  İstanbul 20000 20.05
+  İzmir 20000 19.75
+  Muğla 20000 19.95
+<nil>

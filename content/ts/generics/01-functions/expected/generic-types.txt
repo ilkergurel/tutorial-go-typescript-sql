@@ -1,0 +1,6 @@
+12.5
+Error: not a price: on iki
+range
+tr
+string 80801
+not a number: "8080"

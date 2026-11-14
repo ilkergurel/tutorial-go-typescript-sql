@@ -1,0 +1,16 @@
+consumer without deduplication:
+  m1: charge order 1
+  m2: charge order 2
+  consumer crashes before acking m2
+  m3: charge order 3
+  visibility timeout: unacked messages are delivered again
+  m2: charge order 2
+  charges: map[order 1:1 order 2:2 order 3:1]
+consumer that deduplicates by message ID:
+  m1: charge order 1
+  m2: charge order 2
+  consumer crashes before acking m2
+  m3: charge order 3
+  visibility timeout: unacked messages are delivered again
+  m2 seen before: ack without charging
+  charges: map[order 1:1 order 2:1 order 3:1]

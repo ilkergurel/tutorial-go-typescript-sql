@@ -1,0 +1,6 @@
+class: Defer: 10 min
+class: [sql] Joins: 13 min
+class: Final: 4 min
+union: Defer: 10 min
+union: [sql] Joins: 13 min
+union: Final: 60 min

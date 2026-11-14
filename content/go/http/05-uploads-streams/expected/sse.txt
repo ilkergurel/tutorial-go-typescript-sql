@@ -1,0 +1,5 @@
+text/event-stream, length -1, transfer encoding [chunked]
+client: id: 1 | event: progress | data: {"done":25}
+client: id: 2 | event: progress | data: {"done":50}
+client: id: 3 | event: progress | data: {"done":75}
+server: stopped after 3 events: context canceled

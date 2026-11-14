@@ -1,0 +1,21 @@
+CREATE TABLE
+INSERT 0 5
+SELECT 2
+    suite  | runs | suite_ms
+    -------+------+---------
+    auth   | 3    | 600
+    export | 2    | 1200
+SELECT 5
+    suite  | test_case        | duration_ms | runs | suite_ms | pct_of_suite | all_ms
+    -------+------------------+-------------+------+----------+--------------+-------
+    auth   | Giriş            | 120         | 3    | 600      | 20.0         | 1800
+    auth   | Çıkış            | 80          | 3    | 600      | 13.3         | 1800
+    auth   | Şifre sıfırlama  | 400         | 3    | 600      | 66.7         | 1800
+    export | CSV dışa aktarım | 900         | 2    | 1200     | 75.0         | 1800
+    export | PDF rapor        | 300         | 2    | 1200     | 25.0         | 1800
+SELECT 2
+    suite  | test_case        | duration_ms | suite_avg
+    -------+------------------+-------------+----------
+    auth   | Şifre sıfırlama  | 400         | 200
+    export | CSV dışa aktarım | 900         | 600
+ERROR: window functions are not allowed in WHERE (SQLSTATE 42P20)

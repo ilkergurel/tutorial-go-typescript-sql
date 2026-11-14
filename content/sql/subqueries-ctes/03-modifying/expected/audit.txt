@@ -1,0 +1,14 @@
+CREATE TABLE
+CREATE TABLE
+INSERT 0 3
+SELECT 2
+    test_case_id | old_status | new_status
+    -------------+------------+-----------
+    1            | failed     | passed
+    3            | retest     | passed
+SELECT 3
+    id | status
+    ---+-------
+    1  | passed
+    2  | passed
+    3  | passed

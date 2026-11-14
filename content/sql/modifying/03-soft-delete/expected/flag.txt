@@ -1,0 +1,13 @@
+CREATE TABLE
+INSERT 0 2
+UPDATE 1
+SELECT 2
+    email
+    -----------------
+    selin@example.com
+    umut@example.com
+SELECT 1
+    email
+    ----------------
+    umut@example.com
+ERROR: duplicate key value violates unique constraint "users_email_key" (SQLSTATE 23505)

@@ -1,0 +1,13 @@
+SELECT 1
+    as_json                  | as_jsonb
+    -------------------------+-----------------
+    {"b": 1, "a": 2, "a": 3} | {"a": 3, "b": 1}
+CREATE TABLE
+INSERT 0 3
+SELECT 2
+    sku      | weight_json | origin
+    ---------+-------------+----------
+    tea-earl | 250         | Sri Lanka
+    tea-rize | 1000        | Rize
+INSERT 0 1
+ERROR: invalid input syntax for type integer: "yarım kilo" (SQLSTATE 22P02)

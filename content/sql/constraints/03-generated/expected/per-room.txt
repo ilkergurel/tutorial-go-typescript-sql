@@ -1,0 +1,12 @@
+CREATE EXTENSION
+CREATE TABLE
+INSERT 0 2
+UPDATE 1
+INSERT 0 1
+SELECT 3
+    id | room      | during                                        | cancelled
+    ---+-----------+-----------------------------------------------+----------
+    2  | Bosphorus | ["2026-11-13 09:00:00","2026-11-13 10:00:00") | f
+    1  | Galata    | ["2026-11-13 09:00:00","2026-11-13 10:00:00") | t
+    3  | Galata    | ["2026-11-13 09:30:00","2026-11-13 10:30:00") | f
+ERROR: conflicting key value violates exclusion constraint "bookings_room_no_overlap" (SQLSTATE 23P01)

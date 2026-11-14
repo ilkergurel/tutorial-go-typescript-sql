@@ -1,0 +1,4 @@
+the app, via Vite        200 ran
+another site's form      403 cross-origin request rejected
+a client without headers 415 request body must be application/json
+DNS rebinding            403 this server only answers requests addressed to localhost

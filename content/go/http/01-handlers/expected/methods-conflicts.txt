@@ -1,0 +1,11 @@
+GET    200 "item 1"
+HEAD   200 ""
+DELETE 204 ""
+PUT    405 "Method Not Allowed\n" Allow: DELETE, GET, HEAD
+get    405 "Method Not Allowed\n" Allow: DELETE, GET, HEAD
+--- registering on a fresh mux
+GET /          <nil>
+/index.html    /index.html matches more methods than GET /, but has a more specific path pattern
+GET /u/{id}    <nil>
+GET /u/{name}  GET /u/{name} matches the same requests as GET /u/{id}
+/u_{id}        parsing "/u_{id}": at offset 1: bad wildcard segment (must start with '{')

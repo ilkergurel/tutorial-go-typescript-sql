@@ -1,0 +1,12 @@
+CREATE TABLE
+CREATE TABLE
+CREATE VIEW
+COMMENT
+SELECT 5
+    Name             | Type     | Owner      | Description
+    -----------------+----------+------------+---------------------
+    big_orders       | view     | playground | NULL
+    customers        | table    | playground | NULL
+    customers_id_seq | sequence | playground | NULL
+    orders           | table    | playground | One row per checkout
+    orders_id_seq    | sequence | playground | NULL

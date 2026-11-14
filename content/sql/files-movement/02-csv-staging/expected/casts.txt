@@ -1,0 +1,24 @@
+SET
+SELECT 1
+    read_as    | 31.12 ok
+    -----------+---------
+    2026-03-04 | f
+SET
+SELECT 1
+    read_as    | 31.12 ok
+    -----------+---------
+    2026-04-03 | t
+SELECT 4
+    v     | ok | message
+    ------+----+----------------------------------------------
+    12.5  | t  | NULL
+    12,5  | f  | invalid input syntax for type numeric: "12,5"
+    1.250 | t  | NULL
+    12500 | f  | numeric field overflow
+SELECT 3
+    v     | lower_default | lower_tr
+    ------+---------------+---------
+    GEÇTİ | geçti         | geçti
+    KALDI | kaldi         | kaldı
+    Kaldı | kaldı         | kaldı
+ERROR: invalid input syntax for type numeric: "12,5" (SQLSTATE 22P02)

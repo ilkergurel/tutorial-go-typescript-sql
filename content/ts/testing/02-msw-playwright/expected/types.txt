@@ -1,0 +1,6 @@
+client types > the path decides the response type
+client types > data exists only after checking ok
+client types > pick keeps exactly the named keys
+client types > toExtend allows extra properties, toEqualTypeOf does not
+Tests  4 passed (4)
+Type Errors  no errors

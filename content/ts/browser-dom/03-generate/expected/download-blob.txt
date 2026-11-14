@@ -1,0 +1,4 @@
+37 code units -> 45 bytes: ef bb bf 4d
+text() drops the BOM: true
+browser would save "siparişler.csv" from a blob: URL
+browser would save "export.json" from a blob: URL

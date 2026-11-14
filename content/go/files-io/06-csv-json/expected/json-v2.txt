@@ -1,0 +1,12 @@
+marshal v1: {"name":"çay","tags":null}
+marshal v2: {"name":"çay","tags":[],"stock":0}
+"{\"name\":\"çay\",\"name\":\"kahve\"}"
+  v1: "kahve" <nil>
+  v2 + RejectUnknownMembers: error: duplicate member name
+"{\"name\":\"\xddzmir\"}"
+  v1: "�zmir" <nil>
+  v2 + RejectUnknownMembers: syntax error at /name
+"{\"name\":\"su\",\"price\":5}"
+  v1: "su" <nil>
+  v2 + RejectUnknownMembers: error: unknown member
+{"bir":1,"iki":2,"üç":3} <nil>

@@ -1,0 +1,5 @@
+--- PASS: TestPriceHandler/converts
+--- PASS: TestPriceHandler/source_down
+--- PASS: TestPriceHandler/bad_amount
+--- PASS: TestPriceHandler
+PASS

@@ -1,0 +1,4 @@
+level=INFO msg=login request_id=r-42 method=POST user.id=7 token=REDACTED
+level=DEBUG msg="cache lookup" request_id=r-42 method=POST hit=false
+level=INFO msg=charged request_id=r-42 method=POST payment.amount=120 payment.currency=TRY
+level=INFO msg="odd arguments" request_id=r-42 method=POST !BADKEY=user

@@ -1,0 +1,8 @@
+--- PASS: TestParseKurus/whole_lira
+--- PASS: TestParseKurus/one_decimal
+--- PASS: TestParseKurus/thousands
+--- PASS: TestParseKurus/only_kuruş
+--- PASS: TestParseKurus/empty
+--- PASS: TestParseKurus/english_decimal_point
+--- PASS: TestParseKurus/negative
+PASS

@@ -1,0 +1,4 @@
+[req-7f3a] SELECT name FROM users WHERE id = 42
+[] SELECT name FROM users WHERE id = 43
+ayşe audit-bot
+<nil>

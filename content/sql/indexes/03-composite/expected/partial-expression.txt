@@ -1,0 +1,35 @@
+CREATE TABLE
+INSERT 0 20000
+ANALYZE
+CREATE INDEX
+CREATE INDEX
+SELECT 1
+    full_pages | partial_pages
+    -----------+--------------
+    19         | 2
+EXPLAIN
+    QUERY PLAN
+    -----------------------------------------------------
+    Limit
+      ->  Index Scan using tickets_open_opened on tickets
+SELECT 1
+    default_rules | turkish_rules
+    --------------+--------------
+    isparta       | ısparta
+CREATE INDEX
+ANALYZE
+EXPLAIN
+    QUERY PLAN
+    -------------------------------------------------------
+    Index Scan using tickets_city_tr on tickets
+      Index Cond: (lower((city)::text) = 'ısparta-8'::text)
+SELECT 1
+    id | city
+    ---+----------
+    8  | ISPARTA-8
+EXPLAIN
+    QUERY PLAN
+    -------------------------------------------
+    Seq Scan on tickets
+      Filter: (lower(city) = 'ısparta-8'::text)
+SELECT 0

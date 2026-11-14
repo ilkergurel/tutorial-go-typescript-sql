@@ -1,0 +1,5 @@
+function describe(u) {
+  return `${u.name} (${u.age})`;
+}
+string 411
+string 80801

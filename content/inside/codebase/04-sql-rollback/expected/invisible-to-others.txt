@@ -1,0 +1,14 @@
+[1] A: BEGIN
+[2] A: CREATE TABLE
+[3] A: INSERT 0 2
+[4] B: SELECT 1
+    scratch
+    -------
+    NULL
+[5] B: waiting
+[6] A: ROLLBACK
+[5] B: CREATE TABLE
+[7] A: SELECT 1
+    rows_from_a
+    -----------
+    0

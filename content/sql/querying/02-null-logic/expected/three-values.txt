@@ -1,0 +1,17 @@
+CREATE TABLE
+INSERT 0 3
+SELECT 1
+    name
+    ----
+    ada
+SELECT 2
+    name
+    ----
+    ada
+    brin
+SELECT 3
+    name | email
+    -----+----------------
+    ada  | ada@example.com
+    brin | (no email)
+    cay  | cay@example.com

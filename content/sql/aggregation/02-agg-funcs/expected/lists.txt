@@ -1,0 +1,16 @@
+CREATE TABLE
+INSERT 0 5
+SELECT 2
+    suite  | owners_text      | owners_array          | distinct_owners
+    -------+------------------+-----------------------+----------------
+    auth   | Zeynep, Can, Can | {Zeynep,Can,NULL,Can} | {Can,Zeynep}
+    export | Ilgaz            | {Ilgaz}               | {Ilgaz}
+SELECT 1
+    by_code_point                                       | turkish
+    ----------------------------------------------------+----------------------------------------------------
+    Giriş, Çıkış, İki adımlı doğrulama, Şifre sıfırlama | Çıkış, Giriş, İki adımlı doğrulama, Şifre sıfırlama
+SELECT 1
+    raw  | or_empty
+    -----+---------
+    NULL | {}
+ERROR: in an aggregate with DISTINCT, ORDER BY expressions must appear in argument list (SQLSTATE 42P10)

@@ -1,0 +1,28 @@
+CREATE EXTENSION
+CREATE TABLE
+INSERT 0 2
+CREATE TABLE
+INSERT 0 2
+SELECT 2
+    uuid_version | ran                     | duration_ms | duration_s
+    -------------+-------------------------+-------------+-----------
+    7            | [2026-03-10,2026-03-11) | 1500        | 1.50
+    7            | [2026-05-31,2026-06-02) | 2250        | 2.25
+SELECT 10
+    tbl                  | conname                                      | contype | key_index
+    ---------------------+----------------------------------------------+---------+----------
+    requirement_versions | requirement_versions_pkey                    | p       | gist
+    requirement_versions | requirement_versions_requirement_id_not_null | n       | NULL
+    requirement_versions | requirement_versions_title_not_null          | n       | NULL
+    requirement_versions | requirement_versions_valid_not_null          | n       | NULL
+    test_runs            | test_runs_duration_ms_not_null               | n       | NULL
+    test_runs            | test_runs_id_not_null                        | n       | NULL
+    test_runs            | test_runs_pkey                               | p       | btree
+    test_runs            | test_runs_ran_not_null                       | n       | NULL
+    test_runs            | test_runs_requirement_id_not_null            | n       | NULL
+    test_runs            | test_runs_requirement_id_ran_fkey            | f       | NULL
+SELECT 1
+    attname    | attgenerated
+    -----------+-------------
+    duration_s | v
+ERROR: conflicting key value violates exclusion constraint "requirement_versions_pkey" (SQLSTATE 23P01)

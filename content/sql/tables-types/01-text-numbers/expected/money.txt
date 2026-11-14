@@ -1,0 +1,15 @@
+SELECT 1
+    literal_type | numeric_equal | float_equal | float_sum
+    -------------+---------------+-------------+--------------------
+    numeric      | t             | f           | 0.30000000000000004
+CREATE TABLE
+INSERT 0 10
+SELECT 1
+    exact_total | float_total        | float_total_is_one
+    ------------+--------------------+-------------------
+    1.00        | 0.9999999999999999 | f
+SELECT 1
+    stored_as | numeric_round | float_round
+    ----------+---------------+------------
+    20.00     | 3             | 2
+ERROR: numeric field overflow (SQLSTATE 22003)

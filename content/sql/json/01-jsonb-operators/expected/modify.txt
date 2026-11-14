@@ -1,0 +1,22 @@
+CREATE TABLE
+INSERT 0 1
+SELECT 1
+    shallow_merge
+    ----------------------------------------------------------
+    {"lang": "tr", "theme": "dark", "notify": {"slack": true}}
+UPDATE 1
+    prefs
+    -------------------------------------------------------------------------
+    {"lang": "tr", "theme": "dark", "notify": {"email": true, "slack": true}}
+UPDATE 1
+    prefs
+    ---------------------------------------------------------------------------------------
+    {"lang": "tr", "theme": "dark", "notify": {"sms": false, "email": true, "slack": true}}
+UPDATE 1
+    prefs
+    ----------------------------------------------------------
+    {"theme": "dark", "notify": {"sms": false, "slack": true}}
+SELECT 1
+    set_null | lax_default                                              | lax_delete
+    ---------+----------------------------------------------------------+------------------------------------------
+    NULL     | {"theme": null, "notify": {"sms": false, "slack": true}} | {"notify": {"sms": false, "slack": true}}

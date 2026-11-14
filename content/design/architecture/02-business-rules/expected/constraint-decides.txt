@@ -1,0 +1,12 @@
+[1] A: BEGIN
+[2] B: BEGIN
+[3] A: UPDATE 1
+[4] A: INSERT 0 1
+[5] B: waiting
+[6] A: COMMIT
+[5] B: ERROR: new row for relation "courses" violates check constraint "courses_not_overbooked" (SQLSTATE 23514)
+[7] B: ROLLBACK
+[8] A: SELECT 1
+    id | seats | booked | bookings
+    ---+-------+--------+---------
+    1  | 1     | 1      | 1

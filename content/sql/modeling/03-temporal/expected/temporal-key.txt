@@ -1,0 +1,22 @@
+CREATE EXTENSION
+CREATE TABLE
+INSERT 0 3
+SELECT 2
+    requirement_id | owner
+    ---------------+-------
+    1              | Ayşe
+    2              | Zeynep
+UPDATE 1
+INSERT 0 1
+SELECT 4
+    requirement_id | owner  | valid_at
+    ---------------+--------+------------------------
+    1              | Ayşe   | [2026-01-01,2026-06-01)
+    1              | Mehmet | [2026-06-01,)
+    2              | Zeynep | [2026-03-01,2026-10-01)
+    2              | Can    | [2026-10-01,)
+SELECT 1
+    index_name              | method
+    ------------------------+-------
+    requirement_owners_pkey | gist
+ERROR: conflicting key value violates exclusion constraint "requirement_owners_pkey" (SQLSTATE 23P01)

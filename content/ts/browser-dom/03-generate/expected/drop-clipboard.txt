@@ -1,0 +1,5 @@
+drop allowed: true
+dropped siparis.csv, header: Müşteri;Tutar
+skipped 1 other file(s)
+copied: "Müşteri\tTutar\nŞule\t12,5"
+clipboard.writeText: NotAllowedError

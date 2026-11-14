@@ -1,0 +1,4 @@
+LISTEN is active: Resync()
+three links, one statement: Publish(01937b6e-0000-7000-8000-00000000000a, trace-links)
+a test run, whose project is found through test_cases: Publish(01937b6e-0000-7000-8000-00000000000a, test-runs)
+the listener's connection was killed: Resync()

@@ -1,0 +1,4 @@
+row by row:      301 statements
+arrays:          1 statement (the read is reused)
+set-based:       1 statement
+rows that differ: 0

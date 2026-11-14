@@ -1,0 +1,5 @@
+log     started strategy
+badge   strategy: geçti
+badge   observer: kaldı
+target  adapter
+done

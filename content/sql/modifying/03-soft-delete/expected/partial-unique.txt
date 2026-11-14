@@ -1,0 +1,18 @@
+CREATE TABLE
+CREATE INDEX
+CREATE VIEW
+INSERT 0 2
+UPDATE 1
+INSERT 0 1
+SELECT 3
+    id | email             | deleted
+    ---+-------------------+--------
+    1  | selin@example.com | t
+    2  | umut@example.com  | f
+    3  | selin@example.com | f
+SELECT 2
+    id | email
+    ---+------------------
+    2  | umut@example.com
+    3  | selin@example.com
+ERROR: duplicate key value violates unique constraint "users_email_live" (SQLSTATE 23505)

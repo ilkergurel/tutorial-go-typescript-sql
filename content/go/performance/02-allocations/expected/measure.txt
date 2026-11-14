@@ -1,0 +1,9 @@
+s += id                    8
+strings.Builder            4
+Builder after Grow         1
+strings.Join               1
+append, no capacity        4
+append into make(0, n)     1
+fmt.Sprintf                2
+strconv.AppendInt, reused  0
+m[string(key)]             0

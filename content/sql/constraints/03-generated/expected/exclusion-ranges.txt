@@ -1,0 +1,8 @@
+CREATE TABLE
+INSERT 0 2
+SELECT 2
+    id | who    | during
+    ---+--------+----------------------------------------------
+    1  | Ayşe   | ["2026-11-13 09:00:00","2026-11-13 10:00:00")
+    2  | Mehmet | ["2026-11-13 10:00:00","2026-11-13 11:30:00")
+ERROR: conflicting key value violates exclusion constraint "bookings_no_overlap" (SQLSTATE 23P01)

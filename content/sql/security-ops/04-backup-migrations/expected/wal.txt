@@ -1,0 +1,13 @@
+CREATE TABLE
+CREATE TABLE
+CREATE FUNCTION
+SELECT 1
+    logged | unlogged
+    -------+---------
+    2003   | 0
+SELECT 2
+    relname        | relpersistence | audit_rows | scratch_rows
+    ---------------+----------------+------------+-------------
+    audit_log      | p              | 1000       | 1000
+    import_scratch | u              | 1000       | 1000
+ERROR: permission denied for function pg_create_restore_point (SQLSTATE 42501)

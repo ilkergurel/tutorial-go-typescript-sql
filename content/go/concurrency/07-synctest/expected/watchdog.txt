@@ -1,0 +1,3 @@
+--- PASS: TestWatchdog
+declared dead at 50s of fake time
+PASS

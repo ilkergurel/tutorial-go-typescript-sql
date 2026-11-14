@@ -1,0 +1,18 @@
+CREATE TABLE
+INSERT 0 4
+SELECT 1
+    req_code | titles
+    ---------+---------------------------
+    REQ-1    | Card payment | Pay by card
+INSERT 0 1
+SELECT 1
+    rows | runs
+    -----+-----
+    5    | 4
+DELETE 1
+SELECT 3
+    req_code | req_title
+    ---------+---------------
+    REQ-1    | Card payment
+    REQ-1    | Pay by card
+    REQ-3    | Refund to card

@@ -1,0 +1,5 @@
+anemic   balance=500  err=<nil>
+anemic   balance=-50  err=<nil>
+account  balance=100  err=withdraw -400: amount must be positive
+account  balance=100  err=insufficient funds
+account  balance=70   err=<nil>

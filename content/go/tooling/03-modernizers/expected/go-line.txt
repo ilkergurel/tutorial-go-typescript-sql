@@ -1,0 +1,13 @@
+^\$ GOTOOLCHAIN=local go run \.
+# example\.com/tc
+\./main\.go:6:17: cannot range over 3 \(untyped int constant\): requires go1\.22 or later \(-lang was set to go1\.21; check go\.mod\)
+\(exit status 1\)
+\$ GOTOOLCHAIN=local go run \.
+012
+\$ GOTOOLCHAIN=local go run \.
+go: go\.mod requires go >= 1\.99 \(running go 1\.[0-9.]+; GOTOOLCHAIN=local\)
+\(exit status 1\)
+\$ GOTOOLCHAIN=auto go run \.
+go: downloading go1\.99\.0 \([a-z0-9]+/[a-z0-9]+\)
+go: download go1\.99\.0 for [a-z0-9]+/[a-z0-9]+: toolchain not available
+\(exit status 1\)$

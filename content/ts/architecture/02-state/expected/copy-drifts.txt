@@ -1,0 +1,2 @@
+start   dashboard 1 | sidebar 1
+marked  dashboard 1 | sidebar 2

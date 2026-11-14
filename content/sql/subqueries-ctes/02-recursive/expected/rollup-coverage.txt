@@ -1,0 +1,11 @@
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 6
+INSERT 0 3
+INSERT 0 4
+SELECT 2
+    code   | links | tests | failing
+    -------+-------+-------+--------
+    AUTH   | 4     | 3     | 1
+    EXPORT | 0     | 0     | 0

@@ -1,0 +1,6 @@
+https://api.example.com/payments broke the contract:
+✖ Invalid discriminator value. Expected 'paid' | 'failed'
+  → at [2].status
+skipped: {"status":"refunded","id":"p3","kurus":123450}
+p1: ₺1.234,50
+p2: failed, kart reddedildi

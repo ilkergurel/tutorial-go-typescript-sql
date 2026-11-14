@@ -1,0 +1,8 @@
+İZMİR, but zod's toUpperCase() gives IZMIR
+guests: number, note: ""
+createdAt: 2026-11-13T07:00:00.123Z
+✖ Too small: expected number to be >=1
+  → at guests
+✖ must be after from
+  → at to
+z.iso.datetime() without offset: false

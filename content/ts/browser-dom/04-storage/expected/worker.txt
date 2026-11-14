@@ -1,0 +1,4 @@
+worker: 2 rows, 1.334,4 ₺, document: undefined
+Map kept: true, Money kept: false
+functions: DataCloneError
+after transfer: sender 0 bytes, receiver 1024

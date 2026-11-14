@@ -1,0 +1,4 @@
+200 text/plain; charset=utf-8 Merhaba, Ayşe!
+200 text/plain; charset=utf-8 Merhaba, İzmir!
+201 application/json          {"id":7}
+404 text/plain; charset=utf-8 404 page not found

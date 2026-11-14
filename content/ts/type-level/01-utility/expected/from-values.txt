@@ -1,0 +1,2 @@
+REQ-RESET: İncelemede, failing: TC-11
+Taslak=1 İncelemede=2 Onaylandı=0

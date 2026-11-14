@@ -1,0 +1,7 @@
+cast:   files.length threw TypeError
+guard:  false
+✖ Invalid input: expected array, received null
+  → at diagnostics
+✖ Invalid input: expected array, received null
+  → at files
+lenient: 0 files, exit 0, stdout "hi\n"

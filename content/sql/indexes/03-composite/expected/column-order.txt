@@ -1,0 +1,58 @@
+CREATE TABLE
+INSERT 0 20000
+ANALYZE
+SELECT 1
+    count
+    -----
+    61
+CREATE INDEX
+EXPLAIN
+    QUERY PLAN
+    ---------------------------------------------------------------------------------------------------------
+    Index Scan using orders_day_shop on orders
+      Index Cond: ((placed_on >= '2026-03-01'::date) AND (placed_on <= '2026-04-30'::date) AND (shop_id = 7))
+EXPLAIN
+    QUERY PLAN
+    ---------------------------------------------------------------------------------------------------------
+    Index Scan using orders_day_shop on orders (actual rows=61.00 loops=1)
+      Index Cond: ((placed_on >= '2026-03-01'::date) AND (placed_on <= '2026-04-30'::date) AND (shop_id = 7))
+      Index Searches: 1
+      Buffers: shared hit=43 read=17
+    Planning:
+      Buffers: shared hit=3
+DROP INDEX
+CREATE INDEX
+EXPLAIN
+    QUERY PLAN
+    ---------------------------------------------------------------------------------------------------------------
+    Bitmap Heap Scan on orders
+      Recheck Cond: ((shop_id = 7) AND (placed_on >= '2026-03-01'::date) AND (placed_on <= '2026-04-30'::date))
+      ->  Bitmap Index Scan on orders_shop_day
+            Index Cond: ((shop_id = 7) AND (placed_on >= '2026-03-01'::date) AND (placed_on <= '2026-04-30'::date))
+EXPLAIN
+    QUERY PLAN
+    ---------------------------------------------------------------------------------------------------------------
+    Bitmap Heap Scan on orders (actual rows=61.00 loops=1)
+      Recheck Cond: ((shop_id = 7) AND (placed_on >= '2026-03-01'::date) AND (placed_on <= '2026-04-30'::date))
+      Heap Blocks: exact=39
+      Buffers: shared hit=39 read=2
+      ->  Bitmap Index Scan on orders_shop_day (actual rows=61.00 loops=1)
+            Index Cond: ((shop_id = 7) AND (placed_on >= '2026-03-01'::date) AND (placed_on <= '2026-04-30'::date))
+            Index Searches: 1
+            Buffers: shared read=2
+EXPLAIN
+    QUERY PLAN
+    ---------------------------------------------------------
+    Limit
+      ->  Index Scan Backward using orders_shop_day on orders
+            Index Cond: (shop_id = 7)
+EXPLAIN
+    QUERY PLAN
+    ------------------------------------------------------
+    Limit
+      ->  Sort
+            Sort Key: total DESC
+            ->  Bitmap Heap Scan on orders
+                  Recheck Cond: (shop_id = 7)
+                  ->  Bitmap Index Scan on orders_shop_day
+                        Index Cond: (shop_id = 7)

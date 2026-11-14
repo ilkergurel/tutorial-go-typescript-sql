@@ -1,0 +1,22 @@
+CREATE TABLE
+SELECT 5
+    Column     | Type                     | Nullable | Default
+    -----------+--------------------------+----------+-----------------------------
+    id         | integer                  | not null | generated always as identity
+    email      | character varying(80)    | not null | NULL
+    total      | numeric(10,2)            | not null | NULL
+    tags       | text[]                   | not null | '{}'::text[]
+    created_at | timestamp with time zone | not null | now()
+SELECT 2
+    conname            | definition
+    -------------------+--------------------------------
+    orders_pkey        | PRIMARY KEY (id)
+    orders_total_check | CHECK ((total >= (0)::numeric))
+SELECT 5
+    column_name | data_type                | is_nullable
+    ------------+--------------------------+------------
+    id          | integer                  | NO
+    email       | character varying        | NO
+    total       | numeric                  | NO
+    tags        | ARRAY                    | NO
+    created_at  | timestamp with time zone | NO

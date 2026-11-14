@@ -1,0 +1,3 @@
+/raw      no response: net/http recovered and dropped the connection
+/users/7  404 not found
+/users/0  500 internal error

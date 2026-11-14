@@ -1,0 +1,6 @@
+  stored AUTH-LOGIN, title "Parola ile giriş": 16 characters, 17 bytes
+AUTH-LOGIN: <nil>
+AUTH-LOGİN: [{#/code use A-Z, 0-9 and single hyphens, like AUTH-LOGIN} {#/title must be 1-200 characters, got 0}]
+  stored LONG, title "şşşşşşşşşşşşşşşşşşşş": 200 characters, 400 bytes
+LONG: <nil>
+AUTH-2FA: [{#/parentId no such requirement in this project}]

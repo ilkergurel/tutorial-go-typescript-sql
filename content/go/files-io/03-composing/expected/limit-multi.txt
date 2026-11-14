@@ -1,0 +1,5 @@
+Ankara      6 bytes -> "Ankara" <nil>
+Kastamonu   9 bytes -> "Kastamonu" <nil>
+Eskişehir  10 bytes -> "" input too large
+first 3 bytes of Şırnak: "Ş\xc4", valid UTF-8: false
+"id;city\n1;Muğla\n2;Çorum\n" <nil>

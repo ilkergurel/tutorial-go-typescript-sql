@@ -1,0 +1,38 @@
+LISTEN
+SELECT 1
+    listening
+    ---------
+    test_runs
+BEGIN
+LISTEN
+SELECT 1
+    listening
+    ---------
+    test_runs
+COMMIT
+SELECT 2
+    listening
+    ------------
+    requirements
+    test_runs
+BEGIN
+UNLISTEN
+ROLLBACK
+SELECT 1
+    still_listening
+    ---------------
+    2
+NOTIFY
+SELECT 1
+    pg_notify
+    ---------
+
+SELECT 1
+    bytes_3999 | bytes_4000
+    -----------+-----------
+    7998       | 8000
+SELECT 1
+    pg_notify
+    ---------
+
+ERROR: payload string too long (SQLSTATE 22023)

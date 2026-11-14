@@ -1,0 +1,5 @@
+Serve returned: http: Server closed
+new connections refused: true
+/events: 200 stream closed: server shutting down
+/report: 200 report done
+Shutdown returned: <nil>

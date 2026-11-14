@@ -1,0 +1,44 @@
+CREATE TABLE
+EXPLAIN
+    QUERY PLAN
+    --------------------------------------------
+    Index Scan using test_runs_pkey on test_runs
+      Index Cond: (id = 4)
+      Filter: (NOT passed)
+EXPLAIN
+    QUERY PLAN
+    ------------------------------
+    CTE Scan on failed
+      Filter: (id = 4)
+      CTE failed
+        ->  Seq Scan on test_runs
+              Filter: (NOT passed)
+EXPLAIN
+    QUERY PLAN
+    -----------------------------------------------
+    Merge Join
+      Merge Cond: (a.test_case_id = b.test_case_id)
+      Join Filter: (b.id > a.id)
+      CTE failed
+        ->  Seq Scan on test_runs
+              Filter: (NOT passed)
+      ->  Sort
+            Sort Key: a.test_case_id
+            ->  CTE Scan on failed a
+      ->  Sort
+            Sort Key: b.test_case_id
+            ->  CTE Scan on failed b
+EXPLAIN
+    QUERY PLAN
+    -----------------------------------------------------------------
+    Merge Join
+      Merge Cond: (test_runs.test_case_id = test_runs_1.test_case_id)
+      Join Filter: (test_runs_1.id > test_runs.id)
+      ->  Sort
+            Sort Key: test_runs.test_case_id
+            ->  Seq Scan on test_runs
+                  Filter: (NOT passed)
+      ->  Sort
+            Sort Key: test_runs_1.test_case_id
+            ->  Seq Scan on test_runs test_runs_1
+                  Filter: (NOT passed)

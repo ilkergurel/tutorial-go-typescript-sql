@@ -1,0 +1,7 @@
+tab A GET If-Match=     -> 200 OK ETag="1"
+tab B GET If-Match=     -> 200 OK ETag="1"
+tab A PUT If-Match="1"  -> 204 No Content ETag="2"
+tab B PUT If-Match="1"  -> 412 Precondition Failed ETag=
+tab B PUT If-Match=     -> 428 Precondition Required ETag=
+tab B GET If-Match=     -> 200 OK ETag="2"
+tab B PUT If-Match="2"  -> 204 No Content ETag="3"

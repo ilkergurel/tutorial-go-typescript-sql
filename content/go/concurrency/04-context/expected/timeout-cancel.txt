@@ -1,0 +1,6 @@
+query: context deadline exceeded
+is DeadlineExceeded: true
+cause: query budget of 20ms used up
+query: context canceled
+is Canceled: true
+42 rows <nil>

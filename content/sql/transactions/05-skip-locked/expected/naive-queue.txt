@@ -1,0 +1,15 @@
+[1] A: BEGIN
+[2] A: SELECT 1
+    id | kind
+    ---+---------
+    1  | report 1
+[3] B: BEGIN
+[4] B: waiting
+[5] A: UPDATE 1
+[6] A: COMMIT
+[4] B: SELECT 1
+    id | kind
+    ---+---------
+    2  | report 2
+[7] B: UPDATE 1
+[8] B: COMMIT

@@ -1,0 +1,2 @@
+before: detail "" -> the learner reads "Not Implemented"
+fixed: detail "ts-test lessons run only in local mode" -> the learner reads "ts-test lessons run only in local mode"

@@ -1,0 +1,25 @@
+CREATE TABLE
+INSERT 0 3
+ALTER TABLE
+ALTER TABLE
+CREATE POLICY
+SELECT 1
+    rolsuper | rolbypassrls
+    ---------+-------------
+    f        | f
+SELECT 1
+    set_config
+    ----------
+    2
+SELECT 1
+    tenant_id | id | code
+    ----------+----+------
+    2         | 3  | REQ-1
+UPDATE 0
+INSERT 0 1
+SELECT 2
+    tenant_id | id | code
+    ----------+----+------
+    2         | 3  | REQ-1
+    2         | 4  | REQ-2
+ERROR: new row violates row-level security policy for table "requirements" (SQLSTATE 42501)

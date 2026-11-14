@@ -1,0 +1,40 @@
+$ go fix -diff .
+@@ -2,13 +2,10 @@
+ 
+ import "fmt"
+ 
+-func Show(v interface{}) { fmt.Println(v) }
++func Show(v any) { fmt.Println(v) }
+ 
+ func Smaller(a, b int) int {
+-	m := a
+-	if b < m {
+-		m = b
+-	}
++	m := min(b, a)
+ 	return m
+ }
+ 
+(exit status 1)
+$ go fix .
+$ go get go@1.22.0
+go: upgraded go 1.21 => 1.22.0
+$ go fix -diff .
+@@ -10,7 +10,7 @@
+ }
+ 
+ func Squares(n int) (out []int) {
+-	for i := 0; i < n; i++ {
++	for i := range n {
+ 		out = append(out, i*i)
+ 	}
+ 	return out
+@@ -18,7 +18,6 @@
+ 
+ func PrintAll(names []string) {
+ 	for _, n := range names {
+-		n := n
+ 		defer func() { fmt.Println(n) }()
+ 	}
+ }
+(exit status 1)

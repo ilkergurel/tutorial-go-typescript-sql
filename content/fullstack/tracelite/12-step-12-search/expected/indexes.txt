@@ -1,0 +1,45 @@
+CREATE EXTENSION
+CREATE EXTENSION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE TABLE
+CREATE INDEX
+CREATE INDEX
+INSERT 0 30000
+ANALYZE
+EXPLAIN
+    QUERY PLAN
+    ---------------------------------------------------------------------------------------------------------------------
+    Bitmap Heap Scan on requirements
+      Recheck Cond: ((project_id = $1) AND (code >= upper(($2)::text)) AND (code < (upper(($2)::text) || '~'::text)))
+      ->  Bitmap Index Scan on requirements_code_key
+            Index Cond: ((project_id = $1) AND (code >= upper(($2)::text)) AND (code < (upper(($2)::text) || '~'::text)))
+EXPLAIN
+    QUERY PLAN
+    ----------------------------------------------------
+    Bitmap Heap Scan on requirements
+      Recheck Cond: (project_id = $1)
+      Filter: (code ~~ (upper(($2)::text) || '%'::text))
+      ->  Bitmap Index Scan on requirements_code_key
+            Index Cond: (project_id = $1)
+EXPLAIN
+    QUERY PLAN
+    ------------------------------------------------------------------------------------------------
+    Bitmap Heap Scan on requirements
+      Recheck Cond: (search @@ plainto_tsquery('turkish'::regconfig, (lower(($1)::text))::text))
+      ->  Bitmap Index Scan on requirements_search
+            Index Cond: (search @@ plainto_tsquery('turkish'::regconfig, (lower(($1)::text))::text))
+EXPLAIN
+    QUERY PLAN
+    ---------------------------------------------------------
+    Bitmap Heap Scan on requirements
+      Filter: (search_key($1) <% search_key(title))
+      ->  Bitmap Index Scan on requirements_title_key
+            Index Cond: (search_key(title) %> search_key($1))
+EXPLAIN
+    QUERY PLAN
+    -----------------------------------------------------------
+    Limit
+      ->  Sort
+            Sort Key: ((search_key($1) <<-> search_key(title)))
+            ->  Seq Scan on requirements

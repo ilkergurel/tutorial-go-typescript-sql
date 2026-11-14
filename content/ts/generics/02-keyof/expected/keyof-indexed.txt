@@ -1,0 +1,5 @@
+85.00 number
+["ÇAY","SİMİT"] içecek
+id, name, price, tags, stock
+name ılık su
+price 10

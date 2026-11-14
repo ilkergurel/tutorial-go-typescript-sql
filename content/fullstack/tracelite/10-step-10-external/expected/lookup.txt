@@ -1,0 +1,6 @@
+200  -> "Authentication information"
+slow -> retry, Retry-After 0s
+503  -> retry, Retry-After 0s
+429  -> retry, Retry-After 2m0s
+404  -> final: no such clause
+400  -> final: status 400

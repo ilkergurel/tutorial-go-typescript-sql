@@ -1,0 +1,7 @@
+/assets/             200 text/html; charset=utf-8 Last-Modified=""
+/assets/app.css      200 text/css; charset=utf-8  Last-Modified=""
+/assets/index.html   200 text/html; charset=utf-8 Last-Modified=""
+    redirected to /assets/
+/assets/_draft.html  404 text/plain; charset=utf-8 Last-Modified=""
+/assets/img/         200 text/html; charset=utf-8 Last-Modified=""
+    a directory listing: "<!doctype html>\n<meta name=\"viewport\" content=\"width=device-width\">\n<pre>\n<a href=\"logo.svg\">logo.svg</a>\n</pre>\n"

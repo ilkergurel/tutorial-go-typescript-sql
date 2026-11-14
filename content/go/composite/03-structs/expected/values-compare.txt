@@ -1,0 +1,6 @@
+{0 0} {3 4} {100 4}
+true
+map[{3 4}:3]
+İzmir-Ankara [{9 9} {5 5}]
+[{in:i bytes:1} {in:İ bytes:2}]
+true

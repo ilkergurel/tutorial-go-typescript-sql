@@ -1,0 +1,3 @@
+{"level":"INFO","msg":"cache warmed","entries":1024}
+{"level":"WARN","msg":"disk almost full","free_pct":4}
+{"level":"INFO","msg":"legacy code still calls log.Printf: 3 retries"}

@@ -1,0 +1,16 @@
+SELECT 1
+    schema            | statement_timeout | lock_timeout
+    ------------------+-------------------+-------------
+    run_<nanos>_<hex> | 5s                | 2s
+SELECT 1
+    has_xid | began_before_this_statement
+    --------+----------------------------
+    t       | t
+CREATE TABLE
+INSERT 0 1
+SELECT 1
+    in_run_schema | public_notes
+    --------------+-------------
+    t             | NULL
+BEGIN
+    WARNING: there is already a transaction in progress

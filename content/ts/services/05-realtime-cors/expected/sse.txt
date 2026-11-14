@@ -1,0 +1,4 @@
+decoded chunk by chunk: ��zmir
+order #41: "{\"id\":41,\"city\":\"İzmir\"}"
+message #41: "first line\nsecond line"
+ping #42: ""

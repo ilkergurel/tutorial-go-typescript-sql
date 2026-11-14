@@ -1,0 +1,49 @@
+CREATE TABLE
+CREATE TABLE
+CREATE TABLE
+INSERT 0 100
+INSERT 0 10000
+INSERT 0 200000
+SELECT 1
+    pad    | pad    | pad
+    -------+--------+-------
+    row 42 | row 42 | row 42
+EXPLAIN
+    QUERY PLAN
+    ---------------------------------------------------------------
+    Index Scan using small_pkey on small (actual rows=1.00 loops=1)
+      Index Cond: (id = 42)
+      Index Searches: 1
+      Buffers: shared hit=2
+EXPLAIN
+    QUERY PLAN
+    -----------------------------------------------------------------
+    Index Scan using medium_pkey on medium (actual rows=1.00 loops=1)
+      Index Cond: (id = 42)
+      Index Searches: 1
+      Buffers: shared hit=3
+EXPLAIN
+    QUERY PLAN
+    ---------------------------------------------------------------
+    Index Scan using large_pkey on large (actual rows=1.00 loops=1)
+      Index Cond: (id = 42)
+      Index Searches: 1
+      Buffers: shared hit=4
+EXPLAIN
+    QUERY PLAN
+    ---------------------------------------------------
+    Bitmap Heap Scan on large
+      Recheck Cond: ((id >= 1000) AND (id <= 1999))
+      ->  Bitmap Index Scan on large_pkey
+            Index Cond: ((id >= 1000) AND (id <= 1999))
+EXPLAIN
+    QUERY PLAN
+    -------------------------------------------------------------------
+    Bitmap Heap Scan on large (actual rows=1000.00 loops=1)
+      Recheck Cond: ((id >= 1000) AND (id <= 1999))
+      Heap Blocks: exact=6
+      Buffers: shared hit=12
+      ->  Bitmap Index Scan on large_pkey (actual rows=1000.00 loops=1)
+            Index Cond: ((id >= 1000) AND (id <= 1999))
+            Index Searches: 1
+            Buffers: shared hit=6

@@ -1,0 +1,20 @@
+CREATE SCHEMA
+CREATE SCHEMA
+CREATE TABLE
+CREATE TABLE
+INSERT 0 2
+INSERT 0 1
+SET
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+SELECT 1
+    minutes_late | minutes_bound | minutes_pinned
+    -------------+---------------+---------------
+    21           | 21            | 21
+SET
+SELECT 1
+    minutes_late | minutes_bound | minutes_pinned
+    -------------+---------------+---------------
+    1            | 21            | 21
+ERROR: cannot drop table catalog_live.lessons because other objects depend on it (SQLSTATE 2BP01)

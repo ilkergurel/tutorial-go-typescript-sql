@@ -1,0 +1,6 @@
+02_upstream_test.go:52: upstream got GET rates.example.com/v1/rates/USD
+02_upstream_test.go:52: upstream got GET rates.example.com/v1/rates/XYZ
+02_upstream_test.go:52: upstream got GET rates.example.com/v1/rates/EUR
+02_upstream_test.go:75: Rate(EUR) error: rate EUR: upstream 503 Service Unavailable
+--- PASS: TestHTTPRates
+PASS

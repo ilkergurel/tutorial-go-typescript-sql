@@ -1,0 +1,5 @@
+linux/amd64    ELF    CGO_ENABLED=0 -trimpath=true -ldflags recorded: false
+linux/arm64    ELF    CGO_ENABLED=0 -trimpath=true -ldflags recorded: false
+darwin/arm64   Mach-O CGO_ENABLED=0 -trimpath=true -ldflags recorded: false
+windows/amd64  PE     CGO_ENABLED=0 -trimpath=true -ldflags recorded: false
+go run here: stacklab v1.4.2

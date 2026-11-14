@@ -1,0 +1,264 @@
+---
+id: ts.tooling.bundle
+title: "Bundle-size awareness; the TS 7 native compiler and what changed since 5/6"
+track: ts
+module: tooling
+order: 3
+level: advanced
+minutes: 15
+since: ts7.0
+prerequisites: [ts.tooling.vite, ts.objects-classes.modules]
+compare_with: [go.performance.cross-compile, go.timeline.1-21-to-1-27, ts.mental-model.tsconfig, ts.tooling.lint]
+tags: [bundle-size, code-splitting, tree-shaking, intl, typescript-7, tsc]
+summary: >
+  Every kilobyte in the first chunk is downloaded, parsed and run before the page works:
+  measure it, delete what the platform already provides, and split the rest with import().
+  TypeScript 7 is the same type checker as 6.0, rewritten in Go: far faster, with 6.0's
+  deprecations removed and no compiler API until 7.1.
+examples:
+  - id: lazy-chunks
+    file: examples/01_lazy_chunks.ts
+    title: "Static imports vs import(): when a chunk is loaded, evaluated and cached"
+    runtime: ts-browser
+    check: exact
+    annotations:
+      - lines: "3-8"
+        note: >
+          The [static] line prints before "main starts": static imports are
+          fetched and evaluated before the importing module runs at all. Every
+          static import in the entry module's graph is in the first chunk's
+          critical path.
+      - lines: "10-17"
+        note: >
+          The chunk is a separate module with its own top-level work (2000
+          strings here, a code editor in a real app). Nothing about it is
+          fetched or run until the import() expression executes.
+      - lines: "19-24"
+        note: >
+          The second click logs no "[chunk] evaluating": module records are
+          cached by URL, so import() of an already-loaded chunk resolves without
+          fetching or evaluating again. Lazy-loading costs a delay once, not on
+          every use.
+      - lines: "26-28"
+        note: >
+          Two concurrent import() calls for one URL share one fetch and one
+          instance. That is why splitting never duplicates module state such as
+          a store or a cache.
+      - lines: "30-38"
+        note: >
+          A lazy boundary is an async boundary, so it needs a loading and an
+          error state (lesson ts.architecture.explicit-states). After a deploy
+          deletes old chunk files, a page loaded earlier fails exactly here.
+  - id: platform-first
+    file: examples/02_platform_first.ts
+    title: "The cheapest dependency: what Intl and the standard library already do"
+    runtime: ts-browser
+    check: exact
+    annotations:
+      - lines: "8-14"
+        note: >
+          Time zones and Turkish month and day names come from the browser's
+          own ICU data. A fixed instant and an explicit timeZone make the output
+          independent of the machine's clock and time zone setting.
+      - lines: "19-25"
+        note: >
+          Currency uses the lira sign and Turkish separators (1.234,50);
+          ListFormat knows "ve". Both are data the browser already ships.
+      - lines: "27-30"
+        note: >
+          The Collator orders Ç after C, I before İ and Ş after S.
+          toLocaleUpperCase("tr") maps i to İ; plain toUpperCase() maps it to I
+          and turns "istanbul" into a different word.
+      - lines: "32-41"
+        note: >
+          Object.groupBy (ES2024) and structuredClone cover the common uses of
+          lodash's groupBy and cloneDeep. structuredClone keeps Dates and Sets,
+          which a JSON round-trip would not.
+use_cases:
+  - "Reviewing a dependency before adding it: what does it add to the first chunk, and does the platform already do it?"
+  - "Moving rarely used screens (editors, charts, admin pages) behind import() so they cost nothing until opened"
+  - "Explaining a 'chunk larger than 500 kB' warning from vite build: attribute the bytes to sources first"
+  - "Upgrading a project from TypeScript 5.x/6.0 to 7.0: clear the 6.0 deprecations, keep TS 6 for tools that need the compiler API"
+strengths:
+  - "Unlike a Go binary, where unused code costs disk space, unused JavaScript costs download and parse time on every cold load, so the payoff of removing it is direct"
+  - "import() is part of the language: Vite turns each one into a chunk without configuration, and the browser caches modules by URL"
+  - "Intl covers dates, time zones, numbers, currencies, plurals, lists, collation and relative time for Turkish and every other locale with no bundle cost"
+  - "tsc 7 type-checks this repo in about 0.26 s against 1.5 s for tsc 6, and the TypeScript team reports roughly 8 to 12 times faster full builds on large projects"
+weaknesses:
+  - "Each lazy chunk adds a network round trip and an async boundary that needs loading and error states"
+  - "Tree-shaking keeps any top-level code with side effects, so a module imported 'for one function' can still bring its whole setup along"
+  - "TypeScript 7.0 ships no compiler API: typescript-eslint, ts-morph and similar tools keep running on 6.0 until 7.1"
+  - "Options removed in 7.0 are hard errors with no ignoreDeprecations escape hatch, so legacy configs must be migrated first"
+pitfalls:
+  - title: "Statically importing data you only need on one page"
+    detail: "A generated JSON or TS module of content, translations or fixtures imported at the top of the app lands in the first chunk. Load it per page with import() or fetch it."
+    bad: "import bundleData from './lessons.bundle.generated';"
+    good: "const trackLessons = await import(`./lessons/${track}.generated.ts`);"
+  - title: "Lazy chunks without an error path"
+    detail: "After a deploy removes old chunk files, import() rejects for users still on the old page. Vite fires a vite:preloadError event on window; reload the page there and serve index.html with Cache-Control: no-cache."
+  - title: "Reading gzip size as the whole cost"
+    detail: "Compression shrinks the transfer, not the work: the engine parses and compiles the uncompressed bytes. Watch both columns in the build report."
+  - title: "Keeping legacy options through the switch"
+    detail: "ignoreDeprecations: \"6.0\" silences target es5, moduleResolution node10 and baseUrl in TypeScript 6.0. TypeScript 7.0 rejects them regardless. Migrate (baseUrl to paths, node10 to bundler or nodenext) before switching."
+    bad: "\"baseUrl\": \".\",\n\"ignoreDeprecations\": \"6.0\""
+    good: "\"paths\": { \"@/*\": [\"./src/*\"] }"
+quiz:
+  - q: "A route component is imported statically in main.tsx, but users rarely open that route. What changes if you load it with import() instead?"
+    options: ["Nothing: Vite bundles all modules into one file anyway", "Its code moves to a separate chunk fetched and evaluated the first time the route renders", "It is fetched on page load but evaluated later"]
+    answer: 1
+    why: "Each import() target becomes its own chunk. The browser requests it only when the expression runs, and caches the module afterwards."
+  - q: "A module has `console.log('registered')` at the top level and one export you never use. You import it with `import './plugin'`. What does a production build keep?"
+    options: ["Nothing, the export is unused", "The top-level console.log, but not the unused export", "The whole module"]
+    answer: 1
+    why: "Tree-shaking removes unused exports but must keep side effects. The lesson's scratch build kept exactly the console.log and dropped the export."
+  - q: "A tsconfig sets `baseUrl` and `\"ignoreDeprecations\": \"6.0\"`. What happens with tsc 6.0 and tsc 7.0?"
+    options: ["Both accept it", "6.0 accepts it; 7.0 fails with TS5102 'Option baseUrl has been removed'", "Both fail"]
+    answer: 1
+    why: "ignoreDeprecations only applies to 6.0's deprecation errors. In 7.0 the option no longer exists; the error suggests paths instead."
+  - q: "Why does a project on TypeScript 7 still install TypeScript 6.0?"
+    options: ["tsc 7 cannot emit JavaScript", "Tools that call the compiler's JavaScript API, such as typescript-eslint, need it until 7.1", "Vite needs TypeScript 6 to strip types"]
+    answer: 1
+    why: "7.0 ships the native tsc but no stable API. This repo keeps typescript@6.0 for typescript-eslint and calls node_modules/typescript7/bin/tsc for type-checking (ADR-0006)."
+further_reading:
+  - title: "MDN: import() (dynamic import)"
+    url: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import"
+  - title: "MDN: Intl"
+    url: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl"
+  - title: "React: lazy"
+    url: "https://react.dev/reference/react/lazy"
+  - title: "TypeScript 6.0 release notes: defaults, deprecations and the path to 7.0"
+    url: "https://www.typescriptlang.org/docs/handbook/release-notes/typescript-6-0.html"
+---
+
+## Concept
+
+**Bundle size** has two costs. The transfer is measured compressed (the `gzip` column in
+Vite's build report); the parse, compile and run is paid on the uncompressed bytes, on every
+cold load, on the user's CPU. The first chunk matters most, because nothing works until it
+has run. Three levers, in order of payoff:
+
+1. **Don't ship it.** The platform covers dates, time zones, money, plurals, lists,
+   collation, deep copies and grouping (second example). Check before adding a library.
+2. **Let tree-shaking remove it.** With static ES imports the bundler sees which exports are
+   used and drops the rest. It must keep top-level code with side effects, so a module that
+   does work at import time brings that work along; a package's `"sideEffects": false` in
+   `package.json` lets the bundler drop its unused modules without proving them pure.
+3. **Split it.** Every `import()` becomes a separate chunk, fetched and evaluated the first
+   time the expression runs (first example). `React.lazy` wraps the same mechanism for
+   components; routes are the natural seams.
+
+**TypeScript 7.0** (released 2026-07-08) is the TypeScript compiler ported to Go. You still
+install `typescript` and run `tsc`; the npm package is a small launcher plus a per-platform
+package with a native binary (`@typescript/typescript-win32-x64`, a 24.5 MB `tsc.exe`, on
+this machine). It type-checks in parallel (`--checkers`, default 4; `--singleThreaded` turns
+that off). What changed for users came mostly in two steps:
+
+- **6.0 changed defaults and deprecated the past**: `strict` true, `module` esnext, `target`
+  the newest ES version, `types` `[]`, `rootDir` the tsconfig's directory; deprecated
+  `target: es5`, `downlevelIteration`, `moduleResolution: node`/`node10`, `baseUrl`, and more.
+- **7.0 removed what 6.0 deprecated**, made `stableTypeOrdering` permanent, reworked JSDoc
+  checking of JavaScript, and ships **no compiler API**; a new, different API is planned
+  for 7.1.
+
+## Coming from C/C++/Java/Python/JS
+
+- **C/C++:** tree-shaking is the linker's dead-code elimination (`--gc-sections`), with one
+  difference: a JavaScript module's top level is code that runs on import, like a static
+  initializer, so the bundler must keep it. Lazy chunks are `dlopen` for the web.
+- **Go:** the linker removes unreachable functions and the binary loads once. In the browser
+  the "binary" is downloaded and compiled on every cold visit, which is why its size gets
+  attention a Go binary's doesn't. Go's toolchain was always native; TypeScript 7 moves
+  tsc from Node to a Go binary, the same speed story in reverse.
+- **Java:** a fat JAR loads classes lazily on first use; a JavaScript bundle evaluates every
+  statically imported module up front. `import()` gives back the lazy class loading.
+- **Python:** heavy imports moved inside a function to speed up startup are the same
+  technique as `import()`.
+- **JS:** moment.js, lodash and numeral.js were sensible before `Intl` and modern built-ins
+  were everywhere; in a new codebase each needs a reason.
+
+## How it works
+
+This app is the case study. Building it into a scratch directory
+(`vite build --outDir <scratch> --sourcemap`, Vite 7.3.7, 2026-11-13) printed, in excerpt
+and with the output path shortened to `...`:
+
+```
+✓ 1613 modules transformed.
+...assets/esbuild.worker-Da5M7R_F.js     70.31 kB
+...assets/index-lINU84IR.css             20.81 kB │ gzip:   4.55 kB
+...assets/index-B52vhmod.js           2,267.25 kB │ gzip: 734.91 kB │ map: 3,616.10 kB
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+```
+
+Attributing the main chunk's bytes to sources through its source map (the decoding from
+lesson ts.tooling.vite, run over every segment) gives:
+
+```
+  1894 kB  83.5% src/features/lessons/lessons.bundle.generated.ts
+   131 kB   5.8% react-dom
+    92 kB   4.1% react-router
+    50 kB   2.2% src/features/curriculum/curriculum.generated.ts
+```
+
+Five sixths of the JavaScript was lesson text and example code, imported statically by
+`src/features/lessons/types.ts`, and it grew with every lesson written. On 2026-11-14 the
+app took the third lever: a light index of every lesson stays in the first chunk, and each
+lesson's content is a JSON file of its own, listed with `import.meta.glob` and loaded with
+`import()` when the lesson opens. With all 229 lessons written, the same build went from
+
+```
+index-DuDG42j7.js   4,685.04 kB │ gzip: 1,529.43 kB      (before the split)
+index-5QpmjKlJ.js     478.29 kB │ gzip:   151.92 kB      (after)
+```
+
+plus 229 lesson chunks, 19 kB at the median and 44 kB the largest. Other heavy parts were
+lazy already: `esbuild.wasm` (14 MB, fetched by the worker on the first TypeScript run)
+and `lesson-libs/bundle.js` (2.9 MB, fetched the first time a lesson imports one of its
+libraries). A smaller scratch build showed the
+tree-shaking rules: an unused export disappeared from the bundle, while a module imported
+only for its side effect kept its top-level `console.log` and lost its unused export.
+
+On the compiler side, the same `tsconfig` with legacy options, checked by both versions:
+
+```
+tsc 6.0.3:
+tsconfig.json(3,15): error TS5107: Option 'target=ES5' is deprecated and will stop functioning in TypeScript 7.0. Specify compilerOption '"ignoreDeprecations": "6.0"' to silence this error.
+tsconfig.json(5,25): error TS5107: Option 'moduleResolution=node10' is deprecated and will stop functioning in TypeScript 7.0. Specify compilerOption '"ignoreDeprecations": "6.0"' to silence this error.
+  Visit https://aka.ms/ts6 for migration information.
+tsconfig.json(6,5): error TS5101: Option 'baseUrl' is deprecated and will stop functioning in TypeScript 7.0. Specify compilerOption '"ignoreDeprecations": "6.0"' to silence this error.
+  Visit https://aka.ms/ts6 for migration information.
+
+tsc 7.0.2:
+tsconfig.json(3,15): error TS5108: Option 'target=ES5' has been removed. Please remove it from your configuration.
+tsconfig.json(5,25): error TS5108: Option 'moduleResolution=node10' has been removed. Please remove it from your configuration.
+tsconfig.json(6,5): error TS5102: Option 'baseUrl' has been removed. Please remove it from your configuration.
+  Use '"paths": {"*": ["./*"]}' instead.
+```
+
+With `"ignoreDeprecations": "6.0"` added, 6.0.3 exits cleanly and 7.0.2 prints the same
+three errors. On this repo's `tsconfig.app.json`, `--extendedDiagnostics` reports a total of
+1.32 s for 6.0.3 and 0.144 s for 7.0.2 (0.272 s with `--singleThreaded`). The permanent
+stable type ordering is visible in messages: for a union declared as
+`"title" | "level" | "minutes"`, tsc 6 prints it in that order and tsc 7 prints
+`"level" | "minutes" | "title"` (lesson ts.architecture.patterns).
+
+## Design notes
+
+For this app, the attribution pointed at the step that was then taken: keep an index in the
+first chunk and load lesson bodies on demand. Per lesson rather than per track, because a
+lesson page needs exactly one lesson. The price is a loading state on the lesson page and
+one request per lesson opened, cheap for a local app served from 127.0.0.1, and the index
+still grows with the curriculum, by about 0.46 KB per lesson. The same pass removed
+something the report couldn't show: `@monaco-editor/react`'s loader fetched Monaco 0.55.1
+from cdn.jsdelivr.net at run time, while the installed `monaco-editor` (0.57.0) was used
+only for types. `loader.config({ monaco })` with the installed package, plus Vite `?worker`
+imports for its editor and TypeScript workers, put the editor into a lazy 4.1 MB chunk of
+the build and took it off the network.
+
+For TypeScript 7: clear every 6.0 deprecation first (this repo already replaced `baseUrl`
+with `paths`, see the comment in `tsconfig.app.json`), then switch `tsc`, and keep 6.0 for
+tools that load the compiler API, as ADR-0006 does. Expect identical diagnostics on code
+that compiles cleanly under 6.0 with stable type ordering; differences show up in message
+and declaration-emit ordering and in JavaScript files checked through JSDoc.

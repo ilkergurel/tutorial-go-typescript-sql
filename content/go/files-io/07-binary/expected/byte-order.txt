@@ -1,0 +1,9 @@
+device id, big-endian:    123456
+device id, little-endian: 1088553216
+{Magic:[83 76] Version:1 Flags:0 DeviceID:123456 TempDeci:-125 Humidity:620}
+-12.5 °C, 62.0 % humidity, 12 bytes on the wire
+53 4c 01 00 00 01 e2 40 00 d7 02 6c
+7 of 12 bytes: unexpected EOF true
+uvarint 5 -> 05
+uvarint 300 -> ac 02
+uvarint 4294967296 -> 80 80 80 80 10

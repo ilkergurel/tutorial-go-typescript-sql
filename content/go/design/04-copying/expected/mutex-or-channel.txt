@@ -1,0 +1,2 @@
+*main.ChanCounter: map[go:500 sql:500]
+*main.MutexCounter: map[go:500 sql:500]

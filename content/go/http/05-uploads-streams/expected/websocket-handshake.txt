@@ -1,0 +1,4 @@
+plain GET: 426 Upgrade Required Upgrade: websocket
+upgrade:   101 Switching Protocols
+accept:    s3pPLMBiTxaQ9kYGzzhZRbK+xOo= true
+frame:     FIN=true opcode=1 length=14 bytes text="Merhaba dünya" (13 characters)

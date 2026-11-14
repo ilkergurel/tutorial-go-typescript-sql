@@ -1,0 +1,6 @@
+CPU work on the event loop:
+  /report start -> /report end -> /health start -> /health end
+waiting on I/O (a timer here):
+  /report start -> /health start -> /health end -> /report end
+CPU work in a worker thread:
+  /report start -> /health start -> /health end -> /report end

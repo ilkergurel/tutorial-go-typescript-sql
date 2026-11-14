@@ -1,0 +1,8 @@
+{"city":"İzmir"} bodyUsed=true
+second read: TypeError
+parsed İzmir, logged {"city":"İzmir"}
+204 with json(): SyntaxError
+undefined
+200 text/html; charset=utf-8 is not JSON: <!doctype html><titl…
+text(): �ule
+TextDecoder("windows-1254"): Şule

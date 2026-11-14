@@ -1,0 +1,14 @@
+920 bytes as CSV UTF-8, 515 as CSV (Comma delimited)
+CSV UTF-8, labelled utf-8:
+  line 3 title: must be 1-200 characters, got 0
+  line 5 title: must be 1-200 characters, got 201
+CSV (Comma delimited), labelled windows-1254:
+  line 3 title: must be 1-200 characters, got 0
+  line 5 title: must be 1-200 characters, got 201
+CSV (Comma delimited), mislabelled utf-8:
+  line 2 title: not UTF-8; is the file windows-1254?
+  line 3 title: must be 1-200 characters, got 0
+  line 4 title: not UTF-8; is the file windows-1254?
+  line 5 title: not UTF-8; is the file windows-1254?
+a quote that never closes:
+  stopped: record on line 2; parse error on line 3, column 15: extraneous or missing " in quoted-field

@@ -1,0 +1,8 @@
+1 sync:  the module body starts
+2 sync:  an async function runs synchronously up to its first await
+3 sync:  the module body ends; the microtask queue drains next
+4 micro: a then() callback
+5 micro: queueMicrotask
+6 micro: the code after await resumes as a microtask
+7 micro: queued by a microtask, still first
+8 task:  setTimeout(fn, 0) waits for its turn

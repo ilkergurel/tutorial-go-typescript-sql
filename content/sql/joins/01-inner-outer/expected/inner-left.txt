@@ -1,0 +1,27 @@
+CREATE TABLE
+CREATE TABLE
+INSERT 0 3
+INSERT 0 4
+SELECT 3
+    requirement    | test
+    ---------------+-------------------
+    Login          | Valid password
+    Login          | İ in the user name
+    Password reset | Reset link expires
+SELECT 4
+    requirement    | test
+    ---------------+-------------------
+    Login          | Valid password
+    Login          | İ in the user name
+    Password reset | Reset link expires
+    Export CSV     | NULL
+SELECT 1
+    requirement | automated_test
+    ------------+---------------
+    Login       | Valid password
+SELECT 3
+    requirement    | automated_test
+    ---------------+---------------
+    Login          | Valid password
+    Password reset | NULL
+    Export CSV     | NULL

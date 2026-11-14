@@ -1,0 +1,6 @@
+main.Requirement: 0 problem(s)
+main.editedRequirement: 4 problem(s)
+  missing parentId
+  missing description
+  undocumented parent_id
+  status "Approved" is not one of [draft approved obsolete]

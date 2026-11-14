@@ -1,0 +1,57 @@
+CREATE TABLE
+CREATE TABLE
+CREATE INDEX
+INSERT 0 1000
+INSERT 0 10000
+ANALYZE
+SELECT 3
+    id | title
+    ---+----------
+    1  | gönderi 1
+    2  | gönderi 2
+    3  | gönderi 3
+SELECT 1
+    count
+    -----
+    10
+SELECT 1
+    count
+    -----
+    10
+SELECT 1
+    count
+    -----
+    10
+PREPARE
+SELECT 3
+    post_id | comments
+    --------+---------
+    1       | 10
+    2       | 10
+    3       | 10
+SELECT 3
+    id | title     | comments
+    ---+-----------+---------
+    1  | gönderi 1 | 10
+    2  | gönderi 2 | 10
+    3  | gönderi 3 | 10
+EXPLAIN
+    QUERY PLAN
+    ----------------------------------------------------------------------------------------
+    Limit (actual rows=3.00 loops=1)
+      Buffers: shared hit=39
+      ->  Index Only Scan using posts_pkey on posts p (actual rows=3.00 loops=1)
+            Heap Fetches: 3
+            Index Searches: 1
+            Buffers: shared hit=39
+            SubPlan 1
+              ->  Aggregate (actual rows=1.00 loops=3)
+                    Buffers: shared hit=36
+                    ->  Bitmap Heap Scan on comments c (actual rows=10.00 loops=3)
+                          Recheck Cond: (post_id = p.id)
+                          Heap Blocks: exact=30
+                          Buffers: shared hit=36
+                          ->  Bitmap Index Scan on comments_post (actual rows=10.00 loops=3)
+                                Index Cond: (post_id = p.id)
+                                Index Searches: 3
+                                Buffers: shared hit=6

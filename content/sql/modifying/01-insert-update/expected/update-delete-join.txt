@@ -1,0 +1,15 @@
+CREATE TABLE
+INSERT 0 5
+CREATE TABLE
+INSERT 0 3
+CREATE TABLE
+INSERT 0 2
+UPDATE 2
+DELETE 2
+SELECT 3
+    sku    | price
+    -------+--------
+    BAK-01 | 1250.00
+    LOK-01 | 195.00
+    TEA-01 | 235.00
+ERROR: null value in column "price" of relation "products" violates not-null constraint (SQLSTATE 23502)

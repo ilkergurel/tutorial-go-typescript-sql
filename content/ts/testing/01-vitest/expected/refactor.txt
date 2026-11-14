@@ -1,0 +1,3 @@
+shopping list, useState version > adds trimmed items once each and clears the field
+shopping list, useReducer + ref version > adds trimmed items once each and clears the field
+Tests  2 passed (2)

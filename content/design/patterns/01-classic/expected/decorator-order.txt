@@ -1,0 +1,8 @@
+logged(cached(upper))
+  reached: istanbul
+  reached: ılık
+  reached: istanbul
+cached(logged(upper))
+  reached: istanbul
+  reached: ılık
+İĞNE İĞNE computed: 1 0

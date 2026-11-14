@@ -1,0 +1,31 @@
+CREATE TABLE
+INSERT 0 8
+SELECT 5
+    suite  | title                | duration_ms
+    -------+----------------------+------------
+    auth   | İki adımlı doğrulama | 500
+    auth   | Giriş                | 300
+    export | CSV dışa aktarım     | 900
+    export | PDF rapor            | 400
+    search | Arama                | 50
+SELECT 6
+    suite  | title                | duration_ms | pos
+    -------+----------------------+-------------+----
+    auth   | İki adımlı doğrulama | 500         | 1
+    auth   | Çıkış                | 300         | 2
+    auth   | Giriş                | 300         | 2
+    export | CSV dışa aktarım     | 900         | 1
+    export | PDF rapor            | 400         | 2
+    search | Arama                | 50          | 1
+ANALYZE
+EXPLAIN
+    QUERY PLAN
+    -----------------------------------------------------------------------------------------------------------------------------
+    Subquery Scan on ranked
+      ->  WindowAgg
+            Window: w1 AS (PARTITION BY test_cases.suite ORDER BY test_cases.duration_ms, test_cases.id ROWS UNBOUNDED PRECEDING)
+            Run Condition: (row_number() OVER w1 <= 2)
+            ->  Sort
+                  Sort Key: test_cases.suite, test_cases.duration_ms DESC, test_cases.id
+                  ->  Seq Scan on test_cases
+ERROR: column "rn" does not exist (SQLSTATE 42703)

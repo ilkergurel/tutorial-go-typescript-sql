@@ -1,0 +1,48 @@
+CREATE TABLE
+INSERT 0 3
+CREATE TABLE
+CREATE FUNCTION
+CREATE TRIGGER
+CREATE TABLE
+CREATE TABLE
+CREATE PROCEDURE
+SELECT 1
+    set_config
+    ----------
+    mehmet
+UPDATE 1
+INSERT 0 1
+CALL
+SELECT 1
+    set_config
+    ----------
+
+UPDATE 2
+CALL
+ALTER TABLE
+CALL
+SAVEPOINT
+DELETE 1
+INSERT 0 1
+ROLLBACK
+CALL
+TRUNCATE TABLE
+CALL
+SELECT 5
+    step                         | by_trigger | by_app
+    -----------------------------+------------+-------
+    service: move                | 1          | 1
+    psql: bulk UPDATE            | 3          | 1
+    migration: ADD COLUMN        | 3          | 1
+    service: delete, rolled back | 3          | 1
+    admin: TRUNCATE              | 3          | 1
+SELECT 3
+    actor         | code       | op     | changes
+    --------------+------------+--------+------------------------------------------------------------------------------------------------
+    mehmet        | AUTH-RESET | UPDATE | {"parent_id": ["01937b6e-0000-7000-8000-000000000001", "01937b6e-0000-7000-8000-000000000002"]}
+    db:playground | AUTH-LOGIN | UPDATE | {"status": ["draft", "approved"]}
+    db:playground | AUTH-RESET | UPDATE | {"status": ["draft", "approved"]}
+SELECT 1
+    actor  | kind              | subject    | data
+    -------+-------------------+------------+-------------------------------------
+    mehmet | requirement.moved | AUTH-RESET | {"to": "AUTH-LOGIN", "from": "AUTH"}

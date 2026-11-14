@@ -1,0 +1,5 @@
+true false object
+{"nickname":null} [null]
+true false
+Merhaba, misafir | Merhaba, misafir | Merhaba, null
+no phone | null

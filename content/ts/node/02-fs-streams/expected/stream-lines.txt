@@ -1,0 +1,4 @@
+closed: true
+ERROR 2
+INFO  2
+WARN  1

@@ -1,0 +1,3 @@
+"1\tTC-1\t1.25\tayşe\n2\tTC-2\t2.50\tayşe\n3\tTC-3\t3.75\t\\N\n" <nil>
+COPY 50000 <nil> <nil>
+identical: true <nil>

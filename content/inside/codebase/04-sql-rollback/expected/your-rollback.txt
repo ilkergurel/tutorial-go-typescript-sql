@@ -1,0 +1,9 @@
+CREATE TABLE
+SAVEPOINT
+DROP TABLE
+ROLLBACK
+SELECT 1
+    drafts_is_back
+    --------------
+    t
+ERROR: COMMIT, ROLLBACK and END are refused here: the sql runtime runs the whole script in one transaction and rolls it back at the end

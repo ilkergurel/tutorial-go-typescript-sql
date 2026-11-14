@@ -1,0 +1,19 @@
+CREATE TABLE
+INSERT 0 3
+UPDATE 1
+SELECT 1
+    tester | labs
+    -------+-------------
+    Ayşe   | android, ios
+CREATE TABLE
+CREATE TABLE
+INSERT 0 3
+INSERT 0 3
+UPDATE 1
+SELECT 3
+    test_code | tester | lab
+    ----------+--------+----
+    TC-1      | Mehmet | ios
+    TC-1      | Ayşe   | web
+    TC-2      | Ayşe   | web
+ERROR: insert or update on table "assignments" violates foreign key constraint "assignments_tester_lab_fkey" (SQLSTATE 23503)

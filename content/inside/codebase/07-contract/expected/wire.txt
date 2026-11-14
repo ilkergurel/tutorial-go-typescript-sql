@@ -1,0 +1,6 @@
+go ok    {"stdout":"hi\n","exitCode":0,"diagnostics":null}
+go err   {"stdout":"","exitCode":1,"diagnostics":[{"line":3,"message":"undefined: x"}]}
+sql      {"stdout":"","exitCode":0,"diagnostics":null,"sql":{"schema":"run_1"}}
+fixed    {"stdout":"hi\n","exitCode":0,"diagnostics":[]}
+lax:     {Runtime:go TimeoutS:0}, err=<nil>
+strict: json: unknown field "timeoutSecs"

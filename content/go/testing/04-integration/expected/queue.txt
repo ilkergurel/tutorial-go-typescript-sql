@@ -1,0 +1,3 @@
+50 jobs, 4 workers: every job claimed exactly once
+--- PASS: TestClaimHandsEachJobOutOnce
+PASS

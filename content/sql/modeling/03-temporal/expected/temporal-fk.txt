@@ -1,0 +1,12 @@
+CREATE EXTENSION
+CREATE TABLE
+INSERT 0 3
+CREATE TABLE
+INSERT 0 2
+SELECT 3
+    member | project       | during
+    -------+---------------+------------------------
+    Ayşe   | Checkout      | [2026-03-01,2026-07-01)
+    Ayşe   | Payments      | [2026-07-01,2026-09-01)
+    Can    | Legacy import | [2026-02-01,2026-04-01)
+ERROR: insert or update on table "memberships" violates foreign key constraint "memberships_project_id_valid_at_fkey" (SQLSTATE 23503)

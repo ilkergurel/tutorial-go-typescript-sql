@@ -1,0 +1,7 @@
+in-process: order 1 invoiced
+in-process: order 2 invoiced
+in-process: order 3 invoiced
+over HTTP: order 1 invoiced
+over HTTP: order 2: timeout; invoiced or not? unknown
+over HTTP: order 3 invoiced
+billing service's ledger: [1 2 3]

@@ -1,0 +1,7 @@
+02_helpers_test.go:52: journal opened
+02_helpers_test.go:48: logged from a function without t.Helper
+02_helpers_test.go:59: test body done
+02_helpers_test.go:54: cleanup: registered last, runs first
+02_helpers_test.go:38: cleanup: closing journal; t.Context().Err() = context canceled
+--- PASS: TestJournal
+PASS

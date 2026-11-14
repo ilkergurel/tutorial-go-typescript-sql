@@ -1,0 +1,20 @@
+$ go build ./...
+$ go vet ./...
+greet.go:6:34: fmt.Sprintf format %d has arg name of wrong type string
+-> exit status 1
+$ go test ./...
+# example.com/greet
+# [example.com/greet]
+./greet.go:6:34: fmt.Sprintf format %d has arg name of wrong type string
+FAIL	example.com/greet [build failed]
+FAIL
+-> exit status 1
+$ go test -vet=off ./...
+--- FAIL: TestHello
+    greet_test.go:7: got "Merhaba, %!d(string=Ayşe)"
+FAIL
+FAIL	example.com/greet
+FAIL
+-> exit status 1
+$ go fmt ./...
+greet.go

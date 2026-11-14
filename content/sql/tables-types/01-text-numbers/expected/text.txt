@@ -1,0 +1,19 @@
+CREATE TABLE
+INSERT 0 3
+SELECT 3
+    handle | chars | bytes
+    -------+-------+------
+    ada    | 3     | 3
+    ipekç  | 5     | 6
+    şükrü  | 5     | 8
+SELECT 3
+    default_rules | turkish_rules
+    --------------+--------------
+    ADA           | ADA
+    IPEKÇ         | İPEKÇ
+    ŞÜKRÜ         | ŞÜKRÜ
+SELECT 1
+    cast_result
+    -----------
+    kahram
+ERROR: value too long for type character varying(6) (SQLSTATE 22001)

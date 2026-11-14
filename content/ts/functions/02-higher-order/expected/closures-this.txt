@@ -1,0 +1,4 @@
+1 2 1
+forEach(basket.add) threw TypeError
+simit, peynir, zeytin
+3 items

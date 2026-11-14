@@ -1,0 +1,26 @@
+CREATE TABLE
+INSERT 0 8
+SELECT 3
+    suite  | passed | failed | skipped | total
+    -------+--------+--------+---------+------
+    auth   | 2      | 1      | 0       | 3
+    export | 1      | 0      | 1       | 2
+    search | 0      | 2      | 1       | 3
+SELECT 3
+    suite  | passed | failed
+    -------+--------+-------
+    auth   | 2      | 1
+    export | 1      | 0
+    search | 0      | 2
+SELECT 3
+    suite  | int_ratio | pass_pct
+    -------+-----------+---------
+    auth   | 0         | 66.7
+    export | 0         | 50.0
+    search | 0         | 0.0
+SELECT 3
+    suite  | failed_runs | failed_ms | failed_ms_or_0
+    -------+-------------+-----------+---------------
+    auth   | 1           | 340       | 340
+    export | 0           | NULL      | 0
+    search | 2           | 155       | 155

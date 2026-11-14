@@ -1,0 +1,4 @@
+95,80 | caller now has 95,80,70
+95,80 | caller still has 70,95,80
+lat 41.0082, lon 28.9784
+go=12 ts=13

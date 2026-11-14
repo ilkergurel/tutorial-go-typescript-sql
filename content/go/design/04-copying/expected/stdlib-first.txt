@@ -1,0 +1,8 @@
+go.basics.defer [420 380] max: 420
+sql.joins.lateral [95] max: 95
+ts.react.query [1210] max: 1210
+slowest: ts.react.query
+unique: [go.basics.defer sql.joins.lateral ts.react.query]
+batch: [go.basics.defer sql.joins.lateral]
+batch: [ts.react.query]
+go | basics.defer | min: 1 | default: unnamed

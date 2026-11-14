@@ -1,0 +1,8 @@
+per lesson: 16.2 KB of bundle, 2.66 examples
+
+                          lessons    bundle (MB)   verify (minutes)
+last bundle                   122            2.0                  9
+curriculum                    229            3.7                 17
+10x curriculum               2290           37.1                169
+
+run slots: 2, so at most 120 server runs per minute at 1.0 s each

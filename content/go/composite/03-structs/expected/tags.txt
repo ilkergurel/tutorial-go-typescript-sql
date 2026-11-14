@@ -1,0 +1,4 @@
+{"id":1,"name":"Ayşe Yılmaz","joined":"0001-01-01T00:00:00Z"}
+2 Can
+ID -> column customer_id
+Name -> column full_name

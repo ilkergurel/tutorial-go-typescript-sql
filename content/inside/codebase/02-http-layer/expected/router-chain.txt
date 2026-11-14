@@ -1,0 +1,8 @@
+level=INFO msg="http request" method=GET path=/api/notes/go.basics.defer status=200
+  -> 200 [application/json] allow="" {"lesson":"go.basics.defer"}
+level=INFO msg="http request" method=PUT path=/api/notes/go.basics.defer status=400
+  -> 400 [application/problem+json] allow="" {"detail":"invalid request body","status":400,"title":"Bad Request","type":"about:blank"}
+level=INFO msg="http request" method=DELETE path=/api/notes/go.basics.defer status=405
+  -> 405 [text/plain; charset=utf-8] allow="GET, HEAD, PUT" Method Not Allowed
+level=INFO msg="http request" method=GET path=/api/lessons/go.basics.defer status=404
+  -> 404 [text/plain; charset=utf-8] allow="" 404 page not found

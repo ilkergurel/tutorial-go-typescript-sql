@@ -1,0 +1,4 @@
+201 /api/requirements/00000000-0000-0000-0000-000000000001 {"id":"00000000-0000-0000-0000-000000000001","parentId":null,"code":"AUTH","title":"Kimlik doğrulama"}
+400  {"type":"about:blank","title":"Bad Request","status":400}
+400  {"type":"about:blank","title":"Bad Request","status":400}
+404  {"type":"about:blank","title":"Not Found","status":404}

@@ -1,0 +1,6 @@
+bad:  err == nil? false
+      %v=<nil> %T=*main.ValidationError
+good: err == nil? true
+      %v=<nil> %T=<nil>
+any holding a nil *int == nil? false
+the pointer inside == nil?    true

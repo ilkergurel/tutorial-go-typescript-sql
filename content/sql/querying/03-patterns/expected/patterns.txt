@@ -1,0 +1,21 @@
+CREATE TABLE
+INSERT 0 4
+SELECT 2
+    title
+    --------------------
+    Istanbul meetup
+    istanbul study group
+SELECT 4
+    title                | label
+    ---------------------+------------
+    Deploy window        | maintenance
+    Istanbul meetup      | community
+    istanbul study group | community
+    Quiet day            | NULL
+SELECT 4
+    title                | when
+    ---------------------+-----------------
+    Deploy window        | Thu 12 Nov 09:00
+    Istanbul meetup      | Thu 12 Nov 18:30
+    istanbul study group | Fri 13 Nov 19:00
+    Quiet day            | Sat 14 Nov 12:00

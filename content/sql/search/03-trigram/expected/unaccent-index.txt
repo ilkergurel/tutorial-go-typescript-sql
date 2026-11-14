@@ -1,0 +1,33 @@
+CREATE EXTENSION
+CREATE EXTENSION
+SELECT 1
+    unaccented
+    -----------------------------------------
+    Sanliurfa, Igdir, Izmir, Gumushane, Cesme
+CREATE FUNCTION
+CREATE TABLE
+INSERT 0 12
+INSERT 0 10000
+CREATE INDEX
+ANALYZE
+SELECT 6
+    typed     | key       | nearest   | sim
+    ----------+-----------+-----------+-----
+    IZMIR     | izmir     | İzmir     | 1.00
+    Istambul  | istambul  | İstanbul  | 0.50
+    eskisehir | eskisehir | Eskişehir | 1.00
+    igdir     | igdir     | Iğdır     | 1.00
+    sanliurfa | sanliurfa | Şanlıurfa | 1.00
+    ızmır     | izmir     | İzmir     | 1.00
+EXPLAIN
+    QUERY PLAN
+    ----------------------------------------------------------
+    Bitmap Heap Scan on places
+      Recheck Cond: (search_key(name) % 'sanliurfa'::text)
+      ->  Bitmap Index Scan on places_name_key
+            Index Cond: (search_key(name) % 'sanliurfa'::text)
+SELECT 1
+    kır = kir | ılık = ilik
+    ----------+------------
+    t         | t
+ERROR: functions in index expression must be marked IMMUTABLE (SQLSTATE 42P17)

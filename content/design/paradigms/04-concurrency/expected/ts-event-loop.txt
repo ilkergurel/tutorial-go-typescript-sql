@@ -1,0 +1,2 @@
+racy:  sold 20, refused 0, left -10
+fixed: sold 10, refused 10, left 0

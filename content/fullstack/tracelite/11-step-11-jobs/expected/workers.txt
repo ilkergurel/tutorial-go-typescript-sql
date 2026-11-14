@@ -1,0 +1,3 @@
+Ödeme     queued attempts 0 'interrupted by shutdown'
+Raporlama done   attempts 1 ''
+Arşiv     queued attempts 0 ''

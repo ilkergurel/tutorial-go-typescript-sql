@@ -1,0 +1,26 @@
+CREATE TABLE
+INSERT 0 20000
+ANALYZE
+CREATE FUNCTION
+SELECT 3
+    condition                                  | estimated | actual
+    -------------------------------------------+-----------+-------
+    city = 'İstanbul'                          | 4000      | 4000
+    district = 'Kadıköy'                       | 2000      | 2000
+    city = 'İstanbul' AND district = 'Kadıköy' | 400       | 2000
+CREATE STATISTICS
+ANALYZE
+SELECT 1
+    estimated | actual
+    ----------+-------
+    2000      | 2000
+INSERT 0 5000
+SELECT 1
+    estimated | actual
+    ----------+-------
+    1         | 5000
+ANALYZE
+SELECT 1
+    estimated | actual
+    ----------+-------
+    5000      | 5000

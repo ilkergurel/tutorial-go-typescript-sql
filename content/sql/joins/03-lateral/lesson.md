@@ -1,0 +1,169 @@
+---
+id: sql.joins.lateral
+title: "LATERAL joins"
+track: sql
+module: joins
+order: 3
+level: advanced
+minutes: 13
+since: pg9.4
+prerequisites: [sql.joins.many-to-many, sql.tables-types.jsonb-arrays]
+compare_with: [sql.windows.frames, sql.subqueries-ctes.scalar, ts.functions.higher-order]
+tags: [joins, lateral, top-n, set-returning-functions, unnest, generate-series]
+summary: >
+  A LATERAL subquery or function in FROM can read columns of the items before
+  it, so it runs per row and may return any number of rows and columns: top-N
+  per group, expanding arrays and series, and naming intermediate expressions.
+examples:
+  - id: top-n
+    file: examples/01_top_n.sql
+    title: "The latest two runs per test case with LEFT JOIN LATERAL"
+    runtime: sql
+    check: exact
+    annotations:
+      - lines: "9"
+        note: >
+          This index matches the subquery's WHERE and ORDER BY. On a large
+          table, each per-test lookup can then read just the newest two index
+          entries and stop, however many runs the test has.
+      - lines: "19-28"
+        note: >
+          For each test case t, the subquery runs with t.id bound and returns
+          up to two rows of two columns. A scalar subquery in the SELECT list
+          could return one value at most, and a plain join can't apply a LIMIT
+          per group.
+      - lines: "21"
+        note: >
+          LEFT JOIN LATERAL ... ON true: the correlation lives inside the
+          subquery, so ON has nothing left to test, and true keeps Export CSV
+          with NULLs. CROSS JOIN LATERAL would drop it.
+      - lines: "30-37"
+        note: >
+          Without LATERAL, each FROM item is evaluated on its own and can't
+          refer to its neighbours, so t.id is an invalid reference
+          (SQLSTATE 42P01).
+  - id: expand-rows
+    file: examples/02_expand_rows.sql
+    title: "Expanding each row: unnest WITH ORDINALITY and generate_series"
+    runtime: sql
+    check: exact
+    annotations:
+      - lines: "11-16"
+        note: >
+          unnest is a set-returning function. In FROM, functions may always use
+          columns of earlier items, so LATERAL is optional for them; it is
+          written here for clarity. WITH ORDINALITY (PG 9.4) adds a bigint
+          position starting at 1, so the array's order survives as data.
+      - lines: "18-22"
+        note: >
+          An empty array produces no rows, so REQ-3 vanished above. LEFT JOIN
+          ... ON true keeps it with a NULL tag.
+      - lines: "28-31"
+        note: >
+          Each sprint expands into one row per day, computed from its own
+          starts and ends. generate_series has no date variant, so the dates
+          are promoted to a timestamp type and d::date converts back.
+  - id: let-binding
+    file: examples/03_let_binding.sql
+    title: "LATERAL as a let binding for computed values"
+    runtime: sql
+    check: exact
+    annotations:
+      - lines: "15-17"
+        note: >
+          A subquery without FROM computes one row from r's columns. m.ms is
+          now a name that SELECT, WHERE and ORDER BY can all use, instead of
+          the same expression written three times.
+      - lines: "16"
+        note: >
+          extract(epoch FROM interval) gives seconds; times 1000 and the cast
+          give whole milliseconds.
+      - lines: "19"
+        note: >
+          ORDER BY may use an output column name (over_budget_ms) because it
+          is evaluated after the SELECT list. WHERE is evaluated before it.
+      - lines: "21-24"
+        note: >
+          Hence the error: the alias ms doesn't exist yet when WHERE runs
+          (SQLSTATE 42703). Repeating the expression, a subquery or CTE, or
+          the LATERAL above are the ways around it.
+use_cases:
+  - "Top-N per group: latest runs per test case, last three orders per customer"
+  - "Expanding arrays, jsonb arrays (jsonb_array_elements) and generated series per row"
+  - "Calling a set-returning function with arguments taken from each row"
+  - "Naming an intermediate computation once and using it in WHERE and ORDER BY"
+strengths:
+  - "Returns several columns and several rows per outer row, which a scalar subquery can't"
+  - "Top-N per group with ORDER BY ... LIMIT inside can read a few index entries per group, where a window function ranks every row first"
+  - "Combines with LEFT JOIN ... ON true to keep outer rows that produce nothing"
+weaknesses:
+  - "It is a per-row loop: with many outer rows and no supporting index, the subquery runs that many times"
+  - "CROSS JOIN LATERAL silently drops outer rows whose subquery or function returns nothing"
+  - "When nothing depends on the current row, a plain join or a window function says the same thing more simply"
+pitfalls:
+  - title: "Correlating in ON instead of inside the subquery"
+    detail: "With the condition in ON, the subquery's ORDER BY ... LIMIT 2 picks the newest two runs of the whole table, and ON then keeps only the ones belonging to t. Most test cases get nothing. Put the correlation inside and write ON true."
+    bad: "LEFT JOIN LATERAL (SELECT * FROM test_runs ORDER BY finished_at DESC LIMIT 2) r ON r.test_case_id = t.id"
+    good: "LEFT JOIN LATERAL (SELECT * FROM test_runs r WHERE r.test_case_id = t.id ORDER BY finished_at DESC LIMIT 2) r ON true"
+  - title: "LIMIT without ORDER BY"
+    detail: "Inside the subquery, LIMIT 2 without ORDER BY returns two arbitrary rows. 'Latest' needs an ORDER BY, ideally backed by an index."
+  - title: "CROSS JOIN LATERAL where rows may produce nothing"
+    detail: "Empty arrays, test cases without runs and NULL arguments make the outer row disappear. Use LEFT JOIN LATERAL ... ON true when every outer row must stay."
+quiz:
+  - q: "Why `ON true` in `LEFT JOIN LATERAL (SELECT ... WHERE r.test_case_id = t.id ...) last ON true`?"
+    options: ["LATERAL requires it", "The correlation is inside the subquery, and true keeps outer rows without matches", "It turns the join into a cross join"]
+    answer: 1
+    why: "LEFT JOIN needs an ON clause; the matching already happened inside, so ON true just preserves outer rows that got no inner rows."
+  - q: "A requirement has tags '{}'. What does `CROSS JOIN LATERAL unnest(r.tags)` produce for it?"
+    options: ["One row with NULL", "No rows", "An error"]
+    answer: 1
+    why: "unnest of an empty array returns no rows, and a cross join with nothing is nothing. LEFT JOIN ... ON true would keep it."
+  - q: "Do you need the LATERAL keyword for `FROM requirements r, unnest(r.tags)`?"
+    options: ["Yes", "No, function calls in FROM may reference earlier items anyway"]
+    answer: 1
+    why: "For functions the keyword is optional; for subqueries it is required."
+  - q: "Why does `SELECT x * 2 AS y FROM t WHERE y > 10` fail?"
+    options: ["y is a reserved word", "WHERE is evaluated before the SELECT list defines y", "Aliases need double quotes"]
+    answer: 1
+    why: "Output aliases exist only after SELECT is computed; ORDER BY can use them, WHERE can't."
+further_reading:
+  - title: "PostgreSQL docs: LATERAL Subqueries"
+    url: "https://www.postgresql.org/docs/current/queries-table-expressions.html#QUERIES-LATERAL"
+  - title: "PostgreSQL docs: Set Returning Functions"
+    url: "https://www.postgresql.org/docs/current/functions-srf.html"
+  - title: "PostgreSQL docs: SELECT (the FROM clause)"
+    url: "https://www.postgresql.org/docs/current/sql-select.html"
+---
+
+## Concept
+
+A subquery in FROM is normally evaluated independently: it can't see the other items in
+the FROM list. Marked `LATERAL`, it may reference columns of the items to its left, so
+it is evaluated once for each of their rows, and whatever it returns, zero rows or many,
+each with several columns, is joined to that row. Function calls in FROM behave this way
+without the keyword.
+
+Three patterns cover most uses: top-N per group (`ORDER BY ... LIMIT n` inside), expanding
+a row into several (`unnest`, `generate_series`, `jsonb_array_elements`), and naming a
+computed value so later clauses can use it.
+
+## Coming from C/C++/Java/Python/JS
+
+- JS/TS: `CROSS JOIN LATERAL` is `flatMap`:
+  `cases.flatMap(t => runs.filter(r => r.caseId === t.id).sort(byNewest).slice(0, 2))`.
+  `LEFT JOIN LATERAL ... ON true` is the same `flatMap` that emits one padded row when the
+  inner list is empty.
+- Go: it is the nested loop with a query per row, except it runs as one statement in one
+  round trip instead of N+1 queries.
+- Python: a nested comprehension where the inner iterable depends on the outer variable:
+  `[(t, r) for t in cases for r in latest_runs(t, 2)]`.
+
+## Design notes
+
+Reach for LATERAL when the right-hand side depends on the current row and must return
+more than one value. For a single value per row, a scalar subquery reads more simply.
+For ranking or running totals over the whole set, window functions (a later module) are
+the tool; LATERAL wins for top-N when an index lets each group stop after N rows.
+
+Keep the correlation inside the subquery and the ON clause `true`. A condition moved
+into ON is applied after the subquery's LIMIT, which silently changes the answer.

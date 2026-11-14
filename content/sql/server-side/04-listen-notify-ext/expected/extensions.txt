@@ -1,0 +1,35 @@
+SELECT 7
+    name               | trusted
+    -------------------+--------
+    btree_gist         | t
+    pg_trgm            | t
+    tcn                | t
+    unaccent           | t
+    file_fdw           | f
+    pg_stat_statements | f
+    postgres_fdw       | f
+CREATE EXTENSION
+CREATE EXTENSION
+SELECT 2
+    extname  | owner      | in_this_schema | member_objects
+    ---------+------------+----------------+---------------
+    pg_trgm  | playground | t              | 47
+    unaccent | playground | t              | 6
+CREATE TABLE
+INSERT 0 3
+SELECT 3
+    code  | plain                        | similarity
+    ------+------------------------------+-----------
+    REQ-2 | Sifre sifirlama e-postasi    | 0.57
+    REQ-1 | Kullanici girisi sifre ile   | 0.18
+    REQ-3 | Raporu CSV olarak disa aktar | 0.00
+CREATE INDEX
+SET
+EXPLAIN
+    QUERY PLAN
+    --------------------------------------------------
+    Bitmap Heap Scan on requirements
+      Recheck Cond: (title ~~* '%şifre%'::text)
+      ->  Bitmap Index Scan on requirements_title_trgm
+            Index Cond: (title ~~* '%şifre%'::text)
+ERROR: permission denied to create extension "file_fdw" (SQLSTATE 42501)

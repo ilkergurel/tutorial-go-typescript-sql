@@ -1,0 +1,30 @@
+CREATE TABLE
+INSERT 0 20000
+SELECT 1
+    title              | body                                 | search
+    -------------------+--------------------------------------+--------------------------------------------------------------------------
+    Audit log export 5 | Users can export the results as CSV. | '5':4A 'audit':1A 'csv':11B 'export':3A,7B 'log':2A 'result':9B 'user':5B
+CREATE INDEX
+ANALYZE
+EXPLAIN
+    QUERY PLAN
+    ---------------------------------------------------------------------------------------------------------
+    Limit
+      ->  Sort
+            Sort Key: (ts_rank(requirements.search, '''audit'' & ''export'''::tsquery)) DESC, requirements.id
+            ->  Bitmap Heap Scan on requirements
+                  Recheck Cond: (search @@ '''audit'' & ''export'''::tsquery)
+                  ->  Bitmap Index Scan on requirements_search
+                        Index Cond: (search @@ '''audit'' & ''export'''::tsquery)
+SELECT 1
+    matches
+    -------
+    4000
+SELECT 5
+    id | title               | rank
+    ---+---------------------+-------
+    5  | Audit log export 5  | 0.9931
+    25 | Audit log export 25 | 0.9931
+    45 | Audit log export 45 | 0.9931
+    65 | Audit log export 65 | 0.9931
+    85 | Audit log export 85 | 0.9931

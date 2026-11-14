@@ -1,0 +1,28 @@
+CREATE TABLE
+CREATE TABLE
+INSERT 0 2
+INSERT 0 3
+CREATE FUNCTION
+CREATE TRIGGER
+CREATE FUNCTION
+CREATE TRIGGER
+DELETE 0
+SELECT 2
+    code      | status  | deleted
+    ----------+---------+--------
+    REQ-LOGIN | failing | f
+    REQ-OLD   | passing | t
+UPDATE 3
+    NOTICE: roll_up for test case 10
+    NOTICE: roll_up for test case 11
+    NOTICE: roll_up for test case 12
+SELECT 2
+    code      | status
+    ----------+--------
+    REQ-LOGIN | passing
+    REQ-OLD   | passing
+SELECT 2
+    on_table     | trigger_name             | action_timing | event
+    -------------+--------------------------+---------------+-------
+    requirements | requirements_soft_delete | BEFORE        | DELETE
+    test_cases   | test_cases_roll_up       | AFTER         | UPDATE

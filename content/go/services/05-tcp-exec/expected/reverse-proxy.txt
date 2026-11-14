@@ -1,0 +1,6 @@
+200 Cache-Control="no-store"
+backend: GET /api/orders/42
+  X-Forwarded-For: "127.0.0.1"
+  X-Gateway:       "edge-1"
+502 Cache-Control=""
+upstream unavailable

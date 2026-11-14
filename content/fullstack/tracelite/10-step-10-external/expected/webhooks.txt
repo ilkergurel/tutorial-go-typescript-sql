@@ -1,0 +1,4 @@
+attempt 1 (its answer never arrives)   200 processed test-run.failed
+attempt 2: the same bytes, signed now  200 seen before, nothing done
+signed with a guessed secret           401 bad or old signature
+a request signed 10 minutes ago        401 bad or old signature

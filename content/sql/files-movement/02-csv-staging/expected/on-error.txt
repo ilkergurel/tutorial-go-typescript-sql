@@ -1,0 +1,12 @@
+ON_ERROR ignore, LOG_VERBOSITY verbose
+  NOTICE: skipping row due to data type incompatibility at line 4 for column "run_on": "13.11.2026"
+  NOTICE: skipping row due to data type incompatibility at line 5 for column "seconds": "0,75"
+  NOTICE: 2 rows were skipped due to data type incompatibility
+  COPY 3
+ON_ERROR ignore, REJECT_LIMIT 1
+  ERROR: skipped more than REJECT_LIMIT (1) rows due to data type incompatibility (SQLSTATE 22P02)
+ON_ERROR ignore
+  ERROR: new row for relation "runs" violates check constraint "runs_seconds_check" (SQLSTATE 23514)
+ON_ERROR ignore
+  ERROR: missing data for column "seconds" (SQLSTATE 22P04)
+loaded: TC-1 2026-11-09 1.50, TC-2 2026-09-11 2.00, TC-5 2026-11-10 3.00

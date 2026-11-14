@@ -1,0 +1,5 @@
+"120"                            wait=2m0s hint=true
+"Fri, 13 Nov 2026 10:00:30 GMT"  wait=30s  hint=true
+"Friday, 13-Nov-26 10:00:30 GMT" wait=30s  hint=true
+"Fri, 13 Nov 2026 09:59:00 GMT"  wait=0s   hint=true
+"-5"                             wait=0s   hint=false

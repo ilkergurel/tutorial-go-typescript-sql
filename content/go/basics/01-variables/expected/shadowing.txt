@@ -1,0 +1,3 @@
+inner: value-of-a <nil>
+outer after bug: "" <nil>
+outer after fix: "value-of-b" <nil>

@@ -1,0 +1,28 @@
+CREATE TABLE
+INSERT 0 2
+SELECT 2
+    id | balance | ctid  | written_by_me | xmax
+    ---+---------+-------+---------------+-----
+    a  | 100     | (0,1) | t             | 0
+    b  | 0       | (0,2) | t             | 0
+UPDATE 1
+SELECT 2
+    id | balance | ctid  | xmax
+    ---+---------+-------+-----
+    a  | 60      | (0,3) | 0
+    b  | 0       | (0,2) | 0
+SAVEPOINT
+UPDATE 1
+SELECT 1
+    id | balance | ctid
+    ---+---------+------
+    a  | 55      | (0,4)
+ROLLBACK
+SELECT 1
+    id | balance | ctid  | xmax_set
+    ---+---------+-------+---------
+    a  | 60      | (0,3) | t
+UPDATE 1
+    id | balance | ctid
+    ---+---------+------
+    a  | 59      | (0,5)

@@ -1,0 +1,4 @@
+flat 20.11MB  cum 20.11MB  main.render
+flat 0.06MB   cum 0.09MB   main.parse
+flat 0.01MB   cum 20.21MB  main.main
+line 29: 20.11MB  out += "lesson " + strconv.Itoa(id) + "\n"

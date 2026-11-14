@@ -1,0 +1,5 @@
+ayran  not listed
+kahve  no offers
+simit  cheapest 1250
+su     cheapest 0
+without the bools: 0 0 0

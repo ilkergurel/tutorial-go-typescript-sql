@@ -1,0 +1,18 @@
+CREATE TABLE
+INSERT 0 2
+SELECT 2
+    id | number_jsonb | branch_text  | agent_os | first_test | last_status | first_tag
+    ---+--------------+--------------+----------+------------+-------------+----------
+    1  | 108          | main         | linux    | Giriş      | failed      | nightly
+    2  | 9            | feature/kvkk | NULL     | Giriş      | passed      | NULL
+SELECT 2
+    id | arrow | arrow_is_null | text_is_null | has_key | json_type
+    ---+-------+---------------+--------------+---------+----------
+    1  | null  | f             | t            | t       | null
+    2  | NULL  | t             | t            | f       | NULL
+SELECT 2
+    id | as_text | as_int | as_jsonb
+    ---+---------+--------+---------
+    1  | t       | t      | t
+    2  | t       | f      | f
+ERROR: operator does not exist: text = integer (SQLSTATE 42883)

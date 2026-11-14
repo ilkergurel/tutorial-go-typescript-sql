@@ -1,0 +1,4 @@
+Cities > lists the cities the API returns
+Cities > shows an error when the API fails
+Cities > fails loudly on a request nobody mocked
+Tests  3 passed (3)

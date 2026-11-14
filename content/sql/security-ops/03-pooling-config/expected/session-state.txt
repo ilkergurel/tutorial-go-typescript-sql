@@ -1,0 +1,21 @@
+SET
+SELECT 1
+    set_config
+    ----------
+    1
+PREPARE
+CREATE TABLE
+SELECT 1
+    pg_advisory_lock
+    ----------------
+
+LISTEN
+SELECT 1
+    work_mem_set | tenant | prepared | temp_table | advisory_locks | listening
+    -------------+--------+----------+------------+----------------+----------
+    t            | 1      | 1        | t          | 1              | 1
+DISCARD ALL
+SELECT 1
+    work_mem_set | tenant | prepared | temp_table | advisory_locks | listening
+    -------------+--------+----------+------------+----------------+----------
+    f            |        | 0        | f          | 0              | 0

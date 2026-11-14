@@ -1,0 +1,6 @@
+no key on folders    editable "app → features → shared"
+no key just switched editable "app → features → shared"
+no key loaded        editable "URL mi, sunucu mu?"
+key    on folders    editable "app → features → shared"
+key    just switched disabled ""
+key    loaded        editable "URL mi, sunucu mu?"

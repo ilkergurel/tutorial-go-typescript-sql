@@ -1,0 +1,6 @@
+text: COPY 3 <nil>
+  "TC-1\tgeçti\t\\N\t1.50\nTC-2\tkaldı\ttab\\t\"tırnak\"\t12.25\nTC-3\tgeçti\t\t0.75\n"
+csv: COPY 3 <nil>
+  "case_code,result,note,seconds\nTC-1,geçti,,1.50\nTC-2,kaldı,\"tab\t\"\"tırnak\"\"\",12.25\nTC-3,geçti,\"\",0.75\n"
+excel: COPY 3 <nil>
+  "\ufeffTest;Sonuç;Süre (sn)\nTC-1;geçti;1,50\nTC-2;kaldı;12,25\nTC-3;geçti;0,75\n"

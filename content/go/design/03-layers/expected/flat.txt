@@ -1,0 +1,4 @@
+PUT /bookmarks/sql.joins.lateral -> 204
+PUT /bookmarks/go.basics.defer -> 204
+PUT /bookmarks/go.basics.defer -> 204
+GET /bookmarks -> 200 ["go.basics.defer","sql.joins.lateral"]

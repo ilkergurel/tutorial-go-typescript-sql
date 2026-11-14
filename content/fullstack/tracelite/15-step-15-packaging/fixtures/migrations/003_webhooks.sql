@@ -1,0 +1,2 @@
+-- +goose Up
+-- Abridged: step 10 has the whole file.

@@ -1,0 +1,9 @@
+$ go test -v -count=1 -short ./...
+--- PASS: TestParse
+    store_test.go:9: slow: skipped with -short
+--- SKIP: TestReport
+$ go test -v -count=1 -tags=integration ./...
+    store_integration_test.go:12: TEST_DATABASE_URL not set
+--- SKIP: TestUsersOnPostgres
+--- PASS: TestParse
+--- PASS: TestReport

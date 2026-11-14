@@ -1,0 +1,2 @@
+["auth-login","Parola ile giriş"] -> code: already used
+["auth-login-sso","Kurumsal giriş"] -> AUTH-LOGIN-SSO eklendi
