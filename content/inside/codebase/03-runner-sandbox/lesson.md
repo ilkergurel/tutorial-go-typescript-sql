@@ -124,11 +124,12 @@ strengths:
   - "Every limit is a constant at the top of `gorun.go` or `runexec.go`, readable in one screen, and exercised by `gorun_test.go` (timeout, tree kill, output cap)"
   - "One package, `runexec`, serves both modes: the Docker runner and the in-process backend can't disagree about timeouts or caps"
   - "Compile errors, panics and timeouts come back as data (`exitCode`, `timedOut`, `truncated`, `diagnostics`), never as HTTP errors"
-  - "Unlike a Java `Process.destroy()`, which ends only the direct child, every run's end kills descendants on both operating systems: on timeout, on a cancelled request, and after a normal exit"
+  - "Unlike a Java `Process.destroy()`, which ends only the direct child, every run's end kills descendants on both operating systems: on timeout, on a cancelled request, and after a normal exit. The `go build` and `go vet` steps get the same treatment"
+  - "On Windows even a crashed backend takes the lesson's processes with it: the run's Job Object is kill-on-close, and the backend holds its only handle"
 weaknesses:
   - "Local mode has no isolation at all: lesson code runs as the owner, can read and delete any of the owner's files, reach the network and the `stacklab` database on 127.0.0.1:5432, and inherits the backend's environment variables"
   - "A process that leaves the tree escapes the kill: `setsid` on Unix; on Windows one started through WMI, or in the instant between the program's start and its assignment to the Job Object. runProcess then stops reading its output after 2 s"
-  - "The compile step (`goBuild`, `goVet`) uses plain `exec.CommandContext`: on its 20 s timeout only the `go` command itself is killed, not the compiler processes it started"
+  - "If the backend itself dies mid-run, Linux kills only the lesson's direct child (its parent-death signal, `proc_linux.go`): what that program started keeps running. macOS kills nothing"
   - "Docker mode's real limits (memory, pids, CPU, read-only root, no internet) live in `docker-compose.yml`; nothing in Go checks they are there"
 pitfalls:
   - title: "Trusting exec.CommandContext to stop a program"
@@ -191,15 +192,19 @@ In Go code, so in **both modes**:
   rejects `C:x`, `\x` and device names like `NUL`. ts-test runs under `.lesson-runs/` in
   the project instead, so Node finds the app's `node_modules`.
 - **Timeouts**: `compileTimeout` 20 s; run `defaultRunTTL` 5 s, at most `maxRunTTL` 15 s
-  (`runapi.Validate` rejects more); go-test gets 35 s; ts-test takes `timeout_s` the
-  same way, but 15 s when it is unset, because starting Vitest or Edge is part of the
-  run; the whole request `runBudget` 40 s in runexec.
+  (`runapi.Validate` rejects more); go-test and ts-test take `timeout_s` the same way,
+  but 15 s when it is unset, because starting Vitest or Edge, or running a table of
+  cases, is part of the run. go-test hands it to `go test -timeout`, so a hanging test
+  ends in Go's own "test timed out" panic with a goroutine dump; the 20 s build
+  allowance comes on top, and the outer kill only 3 s after that. The whole request:
+  `runBudget` 40 s in runexec.
 - **Output caps**: `OutputCap` 64 KB per stream with `[output truncated]`, cut back to a
   whole character so Turkish text doesn't end in half a letter, and `truncated` in the
   result.
 - **Tree kill whenever a run ends**: on timeout, on a cancelled request, and after a
   normal exit that left processes behind (`processTree` in `proc_unix.go` and
-  `proc_windows.go`).
+  `proc_windows.go`), for the `go build` and `go vet` steps too. If the backend itself
+  dies, Windows still ends the whole job; Linux only the direct child (`proc_linux.go`).
 - **Two concurrent runs**: runexec's `slots` channel, 10 s queue wait, then 503.
 - **Offline builds**: `GOPROXY=off`, so `go build` can't download anything.
 
@@ -224,8 +229,9 @@ In `docker-compose.yml`, so in **Docker mode only**: `user: "65532:65532"`,
 
 ## How it works
 
-`gorun.runProcess` is the one function every server runtime goes through, Go programs,
-`go test`, Node for ts-node and Vitest or Playwright for ts-test:
+`gorun.runProcess` is the one function every server runtime goes through: Go programs
+and their `go build` (and `go vet`) step, `go test`, Node for ts-node and Vitest or
+Playwright for ts-test:
 
 ```go
 runCtx, cancel := context.WithTimeout(ctx, ttl)
@@ -251,9 +257,20 @@ soon as the program exits, the leftovers are killed right then, and the copies r
 On Windows the kill is `TerminateJobObject`: the program joins a fresh Job Object right
 after it starts, and every process it starts later joins it too. `taskkill /T` finds
 descendants through their parent, so it can't reach the children of a program that has
-already exited; it remains only as the fallback when no job can be created. The three
-kernel32 functions come from the standard library's `syscall.NewLazyDLL`, so the
-dependency ADR-0008 wanted to avoid (`golang.org/x/sys`) is still not needed.
+already exited; it remains only as the fallback when no job can be created. The job is
+also kill-on-close (`JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE`, set with
+`SetInformationJobObject`), and the backend holds its only handle until the run is over.
+If the backend crashes, Windows closes that handle and the job's processes end with it.
+The four kernel32 functions come from the standard library's `syscall.NewLazyDLL`, so the
+dependency ADR-0008 wanted to avoid (`golang.org/x/sys`) is still not needed; the one
+structure `SetInformationJobObject` takes is declared in `proc_windows.go`, field by
+field from Microsoft's documentation.
+
+On Linux, `SysProcAttr.Pdeathsig` asks the kernel to SIGKILL the program when the
+backend dies. It reaches the direct child only. And the "parent" is the thread that
+forked, not the process, so the Go docs warn that the signal can come early, when that
+thread exits (go.dev/issue/27505). The runtime ends a thread when a goroutine locked to
+it with `runtime.LockOSThread` exits; nothing that calls gorun locks threads.
 
 ## Design notes
 
@@ -271,7 +288,8 @@ practice deserves to be said plainly:
   `playground-db`. And the playground role there is created by the postgres image from
   `POSTGRES_USER`, which the image documents as a superuser, so the "non-superuser role"
   of ADR-0003 holds only in local mode (`scripts/setup-local-db.sql`).
-- **A small gap worth closing:** give `goBuild` and `goVet` the same `processTree`, so a
-  compile that times out takes the compiler processes with it.
+- **A gap left on Linux:** a backend crash kills the lesson program but not what it
+  started. A PID namespace per run would close it, since the kernel ends a namespace's
+  processes when its first process dies; Docker mode gets that from the container.
 - **If the app ever leaves 127.0.0.1, none of this is a sandbox.** ADR-0003 already says
   so: rebuild the runner on gVisor, Firecracker or a separate host.

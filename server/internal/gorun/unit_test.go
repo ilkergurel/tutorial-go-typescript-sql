@@ -1,9 +1,12 @@
-// unit_test.go: gorun's pure helpers (output cap, ts-test limits and
-// environment). No build tag: they need no toolchain, so go test ./... runs
-// them; everything that starts a process is in the integration files.
+// unit_test.go: gorun's pure helpers (output cap, the test runtimes' limits,
+// ts-test's environment) and the failures that stop a run before any process
+// starts (no go on PATH, an expired deadline). No build tag: they need no
+// toolchain, so go test ./... runs them; everything that starts a process is
+// in the integration files.
 package gorun
 
 import (
+	"context"
 	"slices"
 	"strings"
 	"testing"
@@ -60,12 +63,62 @@ func TestTruncateKeepsCharactersWhole(t *testing.T) {
 	}
 }
 
-// ts-test honors timeout_s like the go runtime; without it, the maximum.
-func TestTSTestTTL(t *testing.T) {
+// The test runtimes honor timeout_s like the go runtime; without it, the
+// maximum.
+func TestTestTTL(t *testing.T) {
 	for timeoutS, want := range map[int]time.Duration{0: maxRunTTL, 3: 3 * time.Second, 15: maxRunTTL, 99: maxRunTTL} {
 		if got := testTTL(Request{TimeoutS: timeoutS}); got != want {
 			t.Errorf("testTTL(timeout_s %d) = %v, want %v", timeoutS, got, want)
 		}
+	}
+}
+
+// go-test: the build allowance stays apart from the run budget, which goes
+// to go test as -timeout, and the outer kill comes after both. Without
+// timeout_s the total is the 35 s go-test always had, plus the grace.
+func TestGoTestLimits(t *testing.T) {
+	for timeoutS, want := range map[int]time.Duration{0: maxRunTTL, 2: 2 * time.Second, 15: maxRunTTL} {
+		testTimeout, total := goTestLimits(Request{TimeoutS: timeoutS})
+		if testTimeout != want || total != compileTimeout+want+testTimeoutGrace {
+			t.Errorf("timeout_s %d: -timeout %v, outer deadline %v; want %v and %v", timeoutS, testTimeout, total, want, compileTimeout+want+testTimeoutGrace)
+		}
+	}
+	if _, total := goTestLimits(Request{}); total != 35*time.Second+testTimeoutGrace {
+		t.Errorf("default go-test deadline %v", total)
+	}
+}
+
+// A go that can't be started is reported, in the words runProcess uses for
+// any program, by every step that runs go. Before, the build step returned
+// exit 1 with an empty stderr. No process starts here, so no toolchain is
+// needed: PATH points at an empty directory.
+func TestMissingGoIsReported(t *testing.T) {
+	t.Setenv("PATH", t.TempDir())
+	const want = `gorun: exec: "go": executable file not found in `
+	req := Request{Files: map[string]string{"main.go": "package main\n\nfunc main() {}\n"}}
+
+	res, err := Run(context.Background(), req)
+	if err != nil || res.ExitCode != 1 || res.TimedOut || !strings.Contains(res.Stderr, want) {
+		t.Errorf("Run = %+v, %v; want exit 1 and %q in stderr", res, err, want)
+	}
+	res, err = RunTests(context.Background(), req)
+	if err != nil || res.ExitCode == 0 || !strings.Contains(res.Stderr, want) {
+		t.Errorf("RunTests = %+v, %v; want %q in stderr", res, err, want)
+	}
+	if vet := goVet(context.Background(), t.TempDir()); vet.ExitCode == 0 || !strings.Contains(vet.Stderr, want) {
+		t.Errorf("goVet = %+v; want %q in stderr", vet, want)
+	}
+}
+
+// A build that runs out of time is a timeout result, as a program that runs
+// out of time is, and says which step it was. An expired context fails the
+// build before go starts, so this needs no toolchain either.
+func TestBuildTimeoutIsTimeout(t *testing.T) {
+	ctx, cancel := context.WithDeadline(context.Background(), time.Now().Add(-time.Second))
+	defer cancel()
+	res, err := Run(ctx, Request{Files: map[string]string{"main.go": "package main\n\nfunc main() {}\n"}})
+	if err != nil || !res.TimedOut || res.ExitCode != -1 || !strings.Contains(res.Stderr, "gorun: go build timed out (limit 20s)") {
+		t.Fatalf("Run = %+v, %v; want a timeout result naming go build", res, err)
 	}
 }
 

@@ -11,6 +11,10 @@
 // the group is empty it fails with ESRCH, which is ignored. A process that
 // leaves the group on purpose (setsid, as daemons do) escapes; runProcess then
 // stops reading its output after pipeGrace.
+//
+// All of that needs a living backend. If the backend dies mid-run, Linux
+// still kills the direct child (setParentDeathSignal, proc_linux.go); other
+// Unixes don't (proc_otherunix.go).
 
 package gorun
 
@@ -32,6 +36,7 @@ type processTree struct {
 func newProcessTree(cmd *exec.Cmd) *processTree {
 	t := &processTree{cmd: cmd}
 	cmd.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
+	setParentDeathSignal(cmd.SysProcAttr)
 	cmd.Cancel = t.kill
 	return t
 }

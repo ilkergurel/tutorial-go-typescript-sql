@@ -8,7 +8,6 @@ import (
 	"path/filepath"
 	"slices"
 	"strings"
-	"time"
 )
 
 // ErrNoNodeProject means ts-test lessons can't run here: they need the app's
@@ -67,18 +66,6 @@ func RunNodeTests(ctx context.Context, req Request, projectDir string) (Result, 
 	res := runProcess(ctx, workDir, testTTL(req), "", env, "node", args...)
 	res.Files = listWritten(workDir, req, scaffold)
 	return res, nil
-}
-
-// testTTL bounds a ts-test run. timeout_s works as in the go runtime, up to
-// the same maxRunTTL. Without it the run gets that maximum, not the go
-// runtime's 5 s default: most of a test run is tool start-up (Node, Vitest
-// and jsdom, or Edge for Playwright), which a Go program doesn't have to pay
-// for at run time.
-func testTTL(req Request) time.Duration {
-	if req.TimeoutS > 0 {
-		return runTTL(req)
-	}
-	return maxRunTTL
 }
 
 // withoutEnv drops the named variables from env, comparing names without

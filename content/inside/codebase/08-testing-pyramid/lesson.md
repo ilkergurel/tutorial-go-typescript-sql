@@ -152,7 +152,8 @@ rules), `go vet ./...` (CLAUDE.md asks for it with `GOOS=linux` as well, because
 has per-OS files) and contentcheck (`scripts/build-lessons.mjs`: lesson schema, ids,
 prerequisites, LEARN markers, official-docs links).
 
-**Go unit tests**, no build tag, `go test ./...`: thirty tests in eleven files.
+**Go unit tests**, no build tag, `go test ./...`: thirty-five tests in twelve files, two
+of them (in `proc_windows_test.go`) on Windows only.
 
 - `sqlrun/split_test.go`: the statement splitter (twenty named cases, among them
   SQL-standard `BEGIN ATOMIC` bodies that must stay one statement while a plain `BEGIN;`
@@ -163,8 +164,12 @@ prerequisites, LEARN markers, official-docs links).
 - `gorun/scaffold_test.go`: the pgx lesson module pins the same versions as
   `server/go.mod`; `UsesPgx` detection.
 - `gorun/unit_test.go`: the output cap cuts on a character boundary (a `ğ` or `İ` split
-  across two writes included), ts-test's time limit, and the color variables it drops
-  from the inherited environment.
+  across two writes included), the test runtimes' time limits (go-test's `-timeout`
+  inside its outer deadline), the color variables ts-test drops from the inherited
+  environment, and the failures that stop a run before any process starts: no `go` on
+  `PATH` is reported in stderr, an expired deadline during the build is a timeout.
+- `gorun/proc_windows_test.go`: the Job Object limit structure has the offsets C gives
+  it, and the kernel accepts it and keeps the kill-on-close flag.
 - `runexec/runexec_test.go`: an unknown runtime is a 501 refusal, not a 502.
 - `httpapi/middleware_test.go`: the logging and recovery middleware keep
   `http.ResponseController` working (an `httptest` server with a short `WriteTimeout`);
@@ -184,11 +189,13 @@ prerequisites, LEARN markers, official-docs links).
   `-- +goose Up` line, and logged connection strings hide their passwords.
 
 **Go integration tests**, `//go:build integration`, `go test -tags integration ./...`:
-41 tests in six files, against real tools. `gorun` builds and runs real programs
+42 tests in six files, against real tools. `gorun` builds and runs real programs
 (the whole process tree dies on timeout, on a cancelled request and after a normal exit
-that left a child behind, 64 KB output caps that keep UTF-8 whole, path escapes,
-`go test` mode, Node type stripping, offline `x/sync`); its tree tests start the test
-binary itself as the lesson program, so they need no compiler and run on Linux too;
+that left a child behind, and the program dies when the backend is killed; a cancelled
+build takes the tool `go` started with it; 64 KB output caps that keep UTF-8 whole, path
+escapes, `go test` mode and its `-timeout` panic, Node type stripping, offline
+`x/sync`); its tree tests start the test binary itself as the lesson program, so they
+need no compiler and run on Linux too;
 `nodetest_test.go` runs Vitest, MSW, a typecheck and Playwright in Edge, without colors
 and within `timeout_s`; `sqlrun` and `multisession` run against PostgreSQL through
 `TEST_DATABASE_URL` (rollback, NULL vs `''`, `BEGIN ATOMIC` functions, `VACUUM` in

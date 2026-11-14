@@ -47,8 +47,9 @@ Firecracker, or a separate host).
 
 ## Update (2026-11-14)
 
-- The whole process tree is now killed whenever a run ends (timeout, cancellation or
-  normal exit), not only on timeout; on Windows through a Job Object (ADR-0008's update).
+- The whole process tree is now killed whenever a run or a build step ends (timeout,
+  cancellation or normal exit), not only on timeout; on Windows through a kill-on-close
+  Job Object, which also covers a backend crash (ADR-0008's update).
 - Not as stated above: `docker-compose.yml` creates the playground role through the
   postgres image's `POSTGRES_USER`, which makes it a superuser. Local mode's role is not
   (ADR-0008). Docker mode is untested since ADR-0008.

@@ -9,8 +9,10 @@
 // In Docker mode the container (no network, read-only rootfs, cpu/mem/pids
 // limits) is the real boundary. In local mode (ADR-0008) this package's per-run
 // hygiene is all there is: fresh temp dir, compile/run timeouts, output caps,
-// and killing the whole process tree when a run ends, whether by timeout,
-// cancellation or a normal exit (proc_unix.go, proc_windows.go).
+// and killing the whole process tree when a run or a build step ends, whether
+// by timeout, cancellation or a normal exit (proc_unix.go, proc_windows.go),
+// and, on Windows and for the direct child on Linux, when the backend itself
+// dies (proc_windows.go, proc_linux.go).
 //
 // Rejected alternative: running `go run` — it conflates compile and run timeouts
 // and hides compile errors from the diagnostics parser. We build, then run.
@@ -38,6 +40,11 @@ const (
 	compileTimeout = 20 * time.Second
 	defaultRunTTL  = 5 * time.Second
 	maxRunTTL      = 15 * time.Second
+	// testTimeoutGrace is how much later than go test's own -timeout the
+	// outer kill comes: time for the timed-out test binary to print its
+	// goroutine dump and for go test to report FAIL, so the learner reads
+	// Go's "test timed out" panic instead of a bare kill.
+	testTimeoutGrace = 3 * time.Second
 	// pipeGrace bounds how long a run keeps reading output once the program
 	// has exited and its process tree is dead: a process that left the tree
 	// and still holds stdout open must not hang the run forever.
@@ -166,23 +173,40 @@ func Run(ctx context.Context, req Request) (Result, error) {
 	defer os.RemoveAll(workDir)
 
 	bin := filepath.Join(workDir, binName)
-	if err := goBuild(ctx, workDir, bin); err != nil {
-		return Result{
-			Diagnostics: parseDiagnostics(err.Error()),
-			Stderr:      truncate(err.Error()),
+	if build := goBuild(ctx, workDir, bin); build.ExitCode != 0 {
+		// A compile error is a result, not a runner failure, and so is a go
+		// that can't start or a build that runs out of time.
+		out := build.Stdout + build.Stderr
+		res := Result{
+			Diagnostics: parseDiagnostics(out),
+			Stderr:      truncate(out),
 			ExitCode:    1,
+			DurationMs:  build.DurationMs,
 			Files:       []WrittenFile{},
-		}, nil // a compile error is a result, not a runner failure
+		}
+		if build.TimedOut {
+			res.TimedOut, res.ExitCode = true, -1
+		}
+		return res, nil
 	}
 	var vetDiags []Diagnostic
+	vetNote := ""
 	if req.Vet {
-		if err := goVet(ctx, workDir); err != nil {
-			vetDiags = parseDiagnostics(err.Error())
+		vet := goVet(ctx, workDir)
+		out := vet.Stdout + vet.Stderr
+		vetDiags = parseDiagnostics(out)
+		if vet.ExitCode != 0 && len(vetDiags) == 0 {
+			// vet failed without a finding to mark (it couldn't start, ran out
+			// of time or crashed): say so rather than pass for a clean vet.
+			vetNote = "\ngorun: go vet failed:\n" + truncate(out)
 		}
 	}
 
 	res := runProcess(ctx, workDir, runTTL(req), req.Stdin, withEnv(nil, req.Env), bin)
 	res.Diagnostics = append(res.Diagnostics, vetDiags...)
+	if vetNote != "" {
+		res.Stderr = strings.TrimSpace(res.Stderr + vetNote)
+	}
 	res.Files = listWritten(workDir, req, scaffold)
 	return res, nil
 }
@@ -191,6 +215,14 @@ func Run(ctx context.Context, req Request) (Result, error) {
 // GOPROXY=off keeps the sandbox hermetic (stdlib, or pgx from the module
 // cache). Everything the test process prints lands in stdout; the go test
 // harness's own lines (RUN/PASS/FAIL) make the output self-explanatory.
+//
+// The build gets compileTimeout, as in Run, and the tests testTTL
+// (timeout_s, 15 s without it). go test builds and runs in one command, so
+// the budget reaches the test binary as -timeout: a hanging test ends in
+// Go's own "test timed out" panic, which names the running tests and dumps
+// every goroutine, and go test reports FAIL. The outer kill (goTestLimits) comes later and
+// catches what -timeout can't see: a build that hangs, or a TestMain that
+// blocks before m.Run starts the clock.
 func RunTests(ctx context.Context, req Request) (Result, error) {
 	scaffold := goScaffoldFor(req)
 	workDir, err := newWorkDir(req, scaffold)
@@ -199,10 +231,21 @@ func RunTests(ctx context.Context, req Request) (Result, error) {
 	}
 	defer os.RemoveAll(workDir)
 
+	testTimeout, total := goTestLimits(req)
 	env := withEnv(append(os.Environ(), "GOPROXY=off", "GOFLAGS=-mod=mod"), req.Env)
-	res := runProcess(ctx, workDir, compileTimeout+maxRunTTL, "", env, "go", "test", "-v", "./...")
+	res := runProcess(ctx, workDir, total, "", env, "go", "test", "-v", "-timeout="+testTimeout.String(), "./...")
 	res.Files = listWritten(workDir, req, scaffold)
 	return res, nil
+}
+
+// goTestLimits returns go test's -timeout, the tests' run budget, and the
+// deadline for the whole go test command: the build allowance, the budget
+// and testTimeoutGrace, so Go's own timeout always fires first. A build that
+// takes longer than compileTimeout eats into that grace and then into the
+// budget instead of failing at once, as Run's separate build would.
+func goTestLimits(req Request) (testTimeout, total time.Duration) {
+	testTimeout = testTTL(req)
+	return testTimeout, compileTimeout + testTimeout + testTimeoutGrace
 }
 
 // RunNode executes a TypeScript (or JavaScript) entry file with Node's type
@@ -256,6 +299,19 @@ func runTTL(req Request) time.Duration {
 		return min(time.Duration(req.TimeoutS)*time.Second, maxRunTTL)
 	}
 	return defaultRunTTL
+}
+
+// testTTL is the run budget of the test runtimes (go-test, ts-test).
+// timeout_s works as in the go runtime, up to the same maxRunTTL. Without it
+// the run gets that maximum, not the go runtime's 5 s default: a test run
+// pays for start-up a lesson program doesn't have (Node, Vitest and jsdom,
+// or Edge for Playwright; the go test harness) and often runs a whole table
+// of cases. For go-test the build comes on top (goTestLimits).
+func testTTL(req Request) time.Duration {
+	if req.TimeoutS > 0 {
+		return runTTL(req)
+	}
+	return maxRunTTL
 }
 
 // newWorkDir creates a fresh temp dir holding the request's files, fixtures
@@ -408,34 +464,29 @@ func (c *capture) finish(grace context.Context) bool {
 	return eof
 }
 
-func goBuild(ctx context.Context, dir, bin string) error {
-	ctx, cancel := context.WithTimeout(ctx, compileTimeout)
-	defer cancel()
-	cmd := exec.CommandContext(ctx, "go", "build", "-o", bin, ".")
-	cmd.Dir = dir
-	cmd.Env = append(os.Environ(), "GOPROXY=off", "GOFLAGS=-mod=mod")
-	var out bytes.Buffer
-	cmd.Stdout = &out
-	cmd.Stderr = &out
-	if err := cmd.Run(); err != nil {
-		return fmt.Errorf("%s", out.String())
-	}
-	return nil
+// goBuild compiles the lesson program; a non-zero ExitCode is a failed build.
+func goBuild(ctx context.Context, dir, bin string) Result {
+	return goTool(ctx, dir, append(os.Environ(), "GOPROXY=off", "GOFLAGS=-mod=mod"), "build", "-o", bin, ".")
 }
 
-func goVet(ctx context.Context, dir string) error {
-	ctx, cancel := context.WithTimeout(ctx, compileTimeout)
-	defer cancel()
-	cmd := exec.CommandContext(ctx, "go", "vet", "./...")
-	cmd.Dir = dir
-	cmd.Env = append(os.Environ(), "GOPROXY=off")
-	var out bytes.Buffer
-	cmd.Stdout = &out
-	cmd.Stderr = &out
-	if err := cmd.Run(); err != nil {
-		return fmt.Errorf("%s", out.String())
+// goVet vets the lesson package; a non-zero ExitCode means findings or a vet
+// that couldn't run.
+func goVet(ctx context.Context, dir string) Result {
+	return goTool(ctx, dir, append(os.Environ(), "GOPROXY=off"), "vet", "./...")
+}
+
+// goTool runs one go command of the build step through runProcess, with the
+// lesson program's hygiene: a timeout or a cancelled request ends the
+// compiler, linker or vet tool that go started too (exec's default Cancel
+// would kill go alone and leave them running), and a go that can't start
+// says why in Stderr (runProcess adds `gorun: exec: "go": ...`) instead of
+// failing with empty output. go prints its errors on stderr.
+func goTool(ctx context.Context, dir string, env []string, args ...string) Result {
+	res := runProcess(ctx, dir, compileTimeout, "", env, "go", args...)
+	if res.TimedOut {
+		res.Stderr = strings.TrimSpace(res.Stderr + "\ngorun: go " + args[0] + " timed out (limit " + compileTimeout.String() + ")")
 	}
-	return nil
+	return res
 }
 
 func seed(workDir string, req Request, scaffold map[string]string) error {

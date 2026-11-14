@@ -216,9 +216,10 @@ StackLab applies the proverb as policy. CLAUDE.md asks before any dependency out
 an allow-list. ADR-0008 rejected Windows Job Objects because they need
 `golang.org/x/sys`; `taskkill /T` "is boring and ships with Windows". When the runner
 later also had to kill what a program leaves running after it exits, which `taskkill`
-can't find, gorun took Job Objects after all, without the dependency: three kernel32
-functions loaded through the standard library's `syscall.NewLazyDLL`, a little copying
-in place of `golang.org/x/sys/windows`. ADR-0001 chose
+can't find, gorun took Job Objects after all, without the dependency: four kernel32
+functions loaded through the standard library's `syscall.NewLazyDLL` and one structure
+declared field by field from Microsoft's documentation, a little copying in place of
+`golang.org/x/sys/windows`. ADR-0001 chose
 the standard library router over a framework, and the config package reads
 environment variables without a config library. The counter-examples are just as
 deliberate: StackLab depends on pgx and goose, because nobody should copy a

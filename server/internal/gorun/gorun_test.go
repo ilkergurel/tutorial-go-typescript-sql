@@ -15,6 +15,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"runtime"
 	"strings"
 	"testing"
 	"time"
@@ -135,12 +136,22 @@ func main() {
 // TestHelperProcess is not a test. The tree tests below run this test binary
 // as the lesson program (the pattern os/exec's own tests use), so they need
 // no compiler and run unchanged on Windows and Linux. GORUN_HELPER picks the
-// role; GORUN_MARKER is where a surviving child leaves proof of life.
+// role; GORUN_MARKER is where a surviving child leaves proof of life, and
+// GORUN_STARTED, if set, where it says at once that it runs.
 func TestHelperProcess(t *testing.T) {
 	switch os.Getenv("GORUN_HELPER") {
 	case "child":
+		if started := os.Getenv("GORUN_STARTED"); started != "" {
+			_ = os.WriteFile(started, nil, 0o600)
+		}
 		time.Sleep(1500 * time.Millisecond)
 		_ = os.WriteFile(os.Getenv("GORUN_MARKER"), []byte("alive"), 0o600)
+	case "backend":
+		// Stands in for the backend: runs a child as its lesson program and
+		// is killed by TestProcessTreeDiesWithBackend while the child runs.
+		self, _ := os.Executable()
+		env := append(os.Environ(), "GORUN_HELPER=child")
+		runProcess(context.Background(), filepath.Dir(os.Getenv("GORUN_MARKER")), time.Minute, "", env, self, "-test.run=^TestHelperProcess$")
 	case "parent-exits", "parent-hangs":
 		self, _ := os.Executable() // not os.Args[0]: it may be relative to another directory
 		child := exec.Command(self, "-test.run=^TestHelperProcess$")
@@ -209,6 +220,106 @@ func TestRunProcessCancelKillsTree(t *testing.T) {
 		t.Errorf("run took %dms after a cancel at 500ms", res.DurationMs)
 	}
 	assertChildDied(t, marker)
+}
+
+// waitForFile reports whether path appears within 10 s.
+func waitForFile(path string) bool {
+	for deadline := time.Now().Add(10 * time.Second); time.Now().Before(deadline); time.Sleep(20 * time.Millisecond) {
+		if _, err := os.Stat(path); err == nil {
+			return true
+		}
+	}
+	return false
+}
+
+// The backend dies (here: is killed) while a lesson program runs. Nothing in
+// the backend is left to kill the tree, so the OS must: on Windows the job's
+// kill-on-close flag, when the dead backend's job handle closes; on Linux
+// the child's parent-death signal. Without them the child writes its marker.
+func TestProcessTreeDiesWithBackend(t *testing.T) {
+	if runtime.GOOS != "windows" && runtime.GOOS != "linux" {
+		t.Skip("only Windows (kill-on-close job) and Linux (Pdeathsig) end the program when the backend dies")
+	}
+	dir := t.TempDir()
+	started, marker := filepath.Join(dir, "started"), filepath.Join(dir, "child-survived")
+	self, err := os.Executable()
+	if err != nil {
+		t.Fatal(err)
+	}
+	backend := exec.Command(self, "-test.run=^TestHelperProcess$")
+	backend.Env = append(os.Environ(), "GORUN_HELPER=backend", "GORUN_STARTED="+started, "GORUN_MARKER="+marker)
+	if err := backend.Start(); err != nil {
+		t.Fatal(err)
+	}
+	if !waitForFile(started) {
+		_ = backend.Process.Kill()
+		t.Fatal("the lesson program never started")
+	}
+	// The child is in its job as soon as its runtime runs at all; the pause
+	// only keeps a slow machine from turning that into a race.
+	time.Sleep(200 * time.Millisecond)
+	_ = backend.Process.Kill()
+	_ = backend.Wait()
+	assertChildDied(t, marker)
+}
+
+// The build step runs under the same tree handling as the program: when the
+// request is cancelled during `go build`, the tool go started dies too, not
+// only go. A -toolexec wrapper stands in for the compiler: it is this test
+// binary as a child that takes 1.5 s, started by go on its first tool call.
+func TestGoToolCancelKillsToolTree(t *testing.T) {
+	dir, marks := t.TempDir(), t.TempDir()
+	if err := seed(dir, hello(map[string]string{"main.go": helloMain}), goScaffold); err != nil {
+		t.Fatal(err)
+	}
+	started, marker := filepath.Join(marks, "started"), filepath.Join(marks, "child-survived")
+	self, err := os.Executable()
+	if err != nil {
+		t.Fatal(err)
+	}
+	env := append(os.Environ(), "GOPROXY=off", "GORUN_HELPER=child", "GORUN_STARTED="+started, "GORUN_MARKER="+marker)
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+	go func() {
+		waitForFile(started)
+		cancel()
+	}()
+	toolexec := `-toolexec="` + self + `" -test.run=^TestHelperProcess$`
+	res := goTool(ctx, dir, env, "build", toolexec, "-o", filepath.Join(dir, binName), ".")
+	if _, err := os.Stat(started); err != nil {
+		t.Fatalf("go never started the wrapped tool: %+v", res)
+	}
+	if res.ExitCode == 0 || res.TimedOut {
+		t.Fatalf("want a cancelled build, got %+v", res)
+	}
+	assertChildDied(t, marker)
+}
+
+// timeout_s reaches go test as -timeout: a hanging test ends in Go's own
+// panic, which names the test and dumps the goroutines, and go test reports
+// FAIL. The outer kill must not come first: it would leave a bare timedOut.
+func TestRunTestsTimeoutIsGoTestPanic(t *testing.T) {
+	src := `package lesson
+
+import (
+	"testing"
+	"time"
+)
+
+func TestHangs(t *testing.T) { time.Sleep(time.Hour) }
+`
+	res, err := RunTests(context.Background(), Request{Files: map[string]string{"hang_test.go": src}, TimeoutS: 2})
+	if err != nil {
+		t.Fatalf("run tests: %v", err)
+	}
+	for _, want := range []string{"panic: test timed out after 2s", "TestHangs", "goroutine ", "FAIL\tlesson"} {
+		if !strings.Contains(res.Stdout, want) {
+			t.Errorf("stdout lacks %q", want)
+		}
+	}
+	if res.TimedOut || res.ExitCode != 1 || t.Failed() {
+		t.Fatalf("want go test's own timeout failure, got exit %d timedOut %v\nstdout:\n%s\nstderr:\n%s", res.ExitCode, res.TimedOut, res.Stdout, res.Stderr)
+	}
 }
 
 // Byte-capped output must not end in half a character: run a program that

@@ -53,7 +53,7 @@ Docker Compose stays as an optional mode; ADR-0003 still describes it.
 ## Update (2026-11-14)
 
 The Windows tree kill now uses a Job Object per run after all. The objection above
-was the `golang.org/x/sys` dependency; `proc_windows.go` loads the three kernel32
+was the `golang.org/x/sys` dependency; `proc_windows.go` loads the four kernel32
 calls with the standard library's `syscall.NewLazyDLL` instead, so nothing joins
 go.mod. The reason to switch: `taskkill /T` walks parent links, so it can't find the
 children of a program that has already exited, and leftovers outlived their run.
@@ -61,5 +61,8 @@ Every child of the lesson process joins its job, and `TerminateJobObject` ends t
 all, whether the run timed out, was cancelled or exited normally; `taskkill /T` stays
 as the fallback when no job can be created. On Unix the process group is now killed
 in the same three cases, not only on timeout. A child can still escape through WMI
-(`Win32_Process.Create`); the job has no kill-on-close flag, so a backend crash leaves
-lesson processes running, as before.
+(`Win32_Process.Create`). Later the same day the build steps (`go build`, `go vet`) moved
+under the same tree kill, and the job got JOB_OBJECT_LIMIT_KILL_ON_JOB_CLOSE, so a
+backend crash ends the lesson's processes on Windows. On Linux, `Pdeathsig` kills only
+the direct child when the backend dies; macOS has no equivalent; windows/386 skips the
+flag because the structure's layout differs there.

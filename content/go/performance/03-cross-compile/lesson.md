@@ -237,8 +237,10 @@ The pieces:
 StackLab's `server/Dockerfile` builds with `CGO_ENABLED=0 go build -trimpath` and
 copies the result into a distroless static image; the migrations travel inside the
 binary via `go:embed`, so the image needs no volume for them. On the owner's Windows
-machine the same code builds natively, and `proc_unix.go`/`proc_windows.go` keep the
-one OS-specific piece behind build constraints.
+machine the same code builds natively, and gorun's `proc_*.go` files keep the
+OS-specific pieces behind build constraints: `proc_windows.go` and `proc_linux.go` (the
+Linux-only parent-death signal) by their suffix, `proc_unix.go` and
+`proc_otherunix.go` by `//go:build` lines.
 
 For release versions, prefer the Go 1.24 VCS stamp when you build from a tagged
 checkout: it can't drift from the tag, and `+dirty` exposes local builds. Keep

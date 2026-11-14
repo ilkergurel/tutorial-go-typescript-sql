@@ -191,8 +191,8 @@ The `testing` package has three more kinds of function besides `TestXxx`:
 Coverage is a flag, not a function: `go test -cover` reports the percentage of statements
 executed, and `-coverprofile=cover.out` writes the details for `go tool cover`.
 
-The runner here uses plain `go test -v`, so the examples show what plain `go test`
-checks. The `-bench`, `-fuzz` and `-cover` runs below are real output from a scratch
+The runner here uses plain `go test -v` (plus a `-timeout` from the lesson's time
+limit), so the examples show what plain `go test` checks. The `-bench`, `-fuzz` and `-cover` runs below are real output from a scratch
 module on Go 1.27.0 (Windows, i9-14900HX).
 
 ## Coming from C/C++/Java/Python/JS
