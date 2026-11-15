@@ -152,6 +152,14 @@ lazy-loaded (`runner/CodeEditor.tsx`), so the app needs no network; it shows an
 example's `setup` SQL, collapsed, and picks a runner per runtime
 (`runner/CodeRunner.ts`).
 
+The theme is dark by default, with Dark, Light and System buttons under the sidebar.
+Tailwind's `dark:` variants follow a `dark` class on `<html>` (`darkMode: 'class'`);
+`shared/theme.ts` holds the rules (preference in localStorage key `stacklab-theme`,
+System follows `prefers-color-scheme` live) as a store tested with a fake browser,
+`shared/useTheme.ts` wires it to the real one, and Monaco switches between `vs-dark` and
+`vs`. An inline script in `index.html` repeats the rules to set the class before the
+first paint, so a dark page doesn't flash white; change the two together.
+
 ## Backend
 
 | Package | Role |

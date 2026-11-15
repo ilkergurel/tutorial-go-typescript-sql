@@ -50,7 +50,7 @@ export function LessonNotes({ lessonId, lessonTitle }: { lessonId: string; lesso
         <NotebookPen className="h-3.5 w-3.5" aria-hidden />
         Private notes, saved automatically
         {saved === 'saving' && <span>saving…</span>}
-        {saved === 'yes' && <span className="text-emerald-600">saved</span>}
+        {saved === 'yes' && <span className="text-emerald-600 dark:text-emerald-400">saved</span>}
       </div>
       <textarea
         value={body}
@@ -59,7 +59,7 @@ export function LessonNotes({ lessonId, lessonTitle }: { lessonId: string; lesso
         rows={6}
         placeholder="What clicked? What didn't?"
         aria-label={`Notes for ${lessonTitle}`}
-        className="mt-2 block w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm leading-relaxed focus:border-teal-600 focus:outline-none"
+        className="mt-2 block w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm leading-relaxed focus:border-teal-600 focus:outline-none dark:border-slate-500 dark:bg-slate-900 dark:focus:border-teal-400"
       />
     </div>
   );

@@ -14,7 +14,7 @@ summary: >
   This repo's tests are shaped less like a pyramid than a top-heavy vase: a thin base of
   unit tests, a thick layer of integration tests against the real toolchains and
   PostgreSQL, and a lesson verifier that runs every example. Handlers, learningstore
-  and the UI have no tests; the frontend has three small Vitest files.
+  and the UI have no tests; the frontend has five small Vitest files.
 examples:
   - id: unit
     file: examples/01_unit_test.go
@@ -102,7 +102,7 @@ strengths:
 weaknesses:
   - "One handler test, for the run route's write deadline: the 400/502/503 mapping, the history header and every learning endpoint are tested only by hand"
   - "One store test: run history's trim to the newest rows. learningstore's 'progress only moves forward' upsert has none"
-  - "Three small Vitest files cover the lesson-markdown parser, the lesson data and the backend probe; components, judge.ts, the runners and the rest of the learning API have none, and no end-to-end test drives the app. Testing Library, MSW and Playwright are used by ts-test lessons only"
+  - "Five small Vitest files cover the lesson-markdown parser, the lesson data, the backend probe, the ts-browser iframe and the theme preference; components, judge.ts, the rest of the runners and the rest of the learning API have none, and no end-to-end test drives the app. Testing Library, MSW and Playwright are used by ts-test lessons only"
   - "No CI: every suite runs only when someone runs it, and the integration suite needs a fully set-up machine"
 pitfalls:
   - title: "Pure tests trapped behind the integration tag"
@@ -211,17 +211,21 @@ of every lesson, run twice, through the running backend's `POST /api/run`, and f
 ts-browser through the real `BrowserTsRunner` in headless Edge. Verdicts come from the
 UI's own `judge.ts`; annotation line ranges are checked too.
 
-**Frontend unit tests**, `npm test` (`vitest run --dir src`): three files.
+**Frontend unit tests**, `npm test` (`vitest run --dir src`): five files.
 `shared/ui/markdownBlocks.test.ts` covers the lesson-markdown parser (pipe tables, HTML
 comments); `features/lessons/unverified.test.ts` checks that every lesson's unconfirmed-claim
 markers become warning boxes in the right tab, and that the generated lesson index matches
 the lesson files; `features/learning/api.test.ts` checks the `/healthz` probe that picks
-the backend or the localStorage fallback.
+the backend or the localStorage fallback; `features/runner/browserTs.test.ts` checks, in
+jsdom, the document a ts-browser run gets and the shim that reports errors in timers and
+listeners and decides when the run is over; `shared/theme.test.ts` checks the theme
+preference (dark, light or system) against a fake browser: the dark default, a bad stored
+value, storage that throws, and following the system setting while it changes.
 
 **Missing**: tests for HTTP handlers beyond `run_test.go`'s write deadline (`handleRun`'s
 status mapping, the twelve learning routes),
 for `learningstore` (`runstore` has one, for the trim), for `config`, for the frontend's components,
-runners, `judge.ts` and the rest of the learning API, and an end-to-end test that drives the app's UI.
+the rest of the runners, `judge.ts` and the rest of the learning API, and an end-to-end test that drives the app's UI.
 There is no CI.
 
 ## Coming from C/C++/Java/Python/JS
@@ -288,7 +292,7 @@ What I'd add, cheapest first:
 3. **Move the remaining pure tests out of `gorun_test.go`** into the untagged
    `unit_test.go`, so the default run covers the cap's write-and-discard behavior and the
    path-escape check too.
-4. **More Vitest for the pure frontend functions**, next to the three that exist:
+4. **More Vitest for the pure frontend functions**, next to the five that exist:
    `judge.ts` (example 3), `bareImports` in `browserTs.ts`, the learning API's
    localStorage adapter. Then `RunPanel` with MSW standing in for `/api/run`, as ADR-0005 already
    promises ("component tests mock the API layer with MSW").

@@ -29,7 +29,7 @@ export function ExampleView({ lesson, example, walkthrough = false }: {
   }, [current]);
 
   return (
-    <figure className="mt-3 overflow-hidden rounded-lg border border-slate-200 bg-slate-950">
+    <figure className="mt-3 overflow-hidden rounded-lg border border-slate-200 bg-slate-950 dark:border-slate-700 dark:bg-slate-900">
       <pre className="overflow-x-auto p-4 text-[13px] leading-6 text-slate-100">
         <code>
           {lines.map((line, i) => {
@@ -48,7 +48,7 @@ export function ExampleView({ lesson, example, walkthrough = false }: {
         </code>
       </pre>
       {walkthrough && annotations.length > 0 && (
-        <figcaption className="border-t border-slate-800 bg-slate-900 p-4 text-sm text-slate-200">
+        <figcaption className="border-t border-slate-800 bg-slate-900 p-4 text-sm text-slate-200 dark:border-slate-700 dark:bg-slate-800/60">
           <p className="text-xs font-medium uppercase tracking-wide text-slate-400">
             Annotation {step + 1} of {annotations.length} (lines {current?.lines})
           </p>
@@ -60,7 +60,7 @@ export function ExampleView({ lesson, example, walkthrough = false }: {
               type="button"
               disabled={step === 0}
               onClick={() => setStep((s) => Math.max(0, s - 1))}
-              className="rounded-md bg-slate-800 px-3 py-1.5 text-slate-100 disabled:opacity-40"
+              className="rounded-md bg-slate-800 px-3 py-1.5 text-slate-100 disabled:opacity-40 dark:bg-slate-700"
             >
               Previous
             </button>

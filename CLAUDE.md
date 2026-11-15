@@ -90,6 +90,9 @@ update this file in the same change.
     `core.autocrlf` says (the owner's machine has it `true`) and lesson fixtures
     byte-exact. Work happens on a branch, one Conventional Commit per step, merged into
     `main` after the full check; pushing to GitHub only when the owner asks.
+- Dark theme (2026-11-15, owner's request): dark by default, Dark/Light/System buttons
+  under the sidebar; every colour class in `src/` has a `dark:` variant, and new UI
+  needs one too (docs/ARCHITECTURE.md, Frontend).
 - Next: backlog items the owner picks. No PostgreSQL 19 bump (owner's decision,
   2026-11-14). No pending phases, no unwritten lessons.
 

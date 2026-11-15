@@ -55,14 +55,16 @@ export function RunPanel({ example, onRan }: { example: RunnableExample; onRan: 
   );
 
   return (
-    <div className="mt-3 overflow-hidden rounded-lg border border-slate-200 bg-white">
-      <div className="flex items-center justify-between gap-2 border-b border-slate-200 bg-slate-50 px-3 py-2">
-        <span className="text-xs font-medium uppercase tracking-wide text-slate-500">{example.runtime}</span>
+    <div className="mt-3 overflow-hidden rounded-lg border border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-900">
+      <div className="flex items-center justify-between gap-2 border-b border-slate-200 bg-slate-50 px-3 py-2 dark:border-slate-800 dark:bg-slate-800/50">
+        <span className="text-xs font-medium uppercase tracking-wide text-slate-500 dark:text-slate-400">{example.runtime}</span>
         <div className="flex items-center gap-2">
           {verdict && (
             <span
               className={`flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-medium ${
-                verdict.pass ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'
+                verdict.pass
+                  ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/50 dark:text-emerald-200'
+                  : 'bg-rose-100 text-rose-800 dark:bg-rose-900/50 dark:text-rose-200'
               }`}
             >
               {verdict.pass ? <Check className="h-3.5 w-3.5" aria-hidden /> : <X className="h-3.5 w-3.5" aria-hidden />}
@@ -89,8 +91,9 @@ export function RunPanel({ example, onRan }: { example: RunnableExample; onRan: 
       {example.setup && <SetupSql setup={example.setup} runtime={example.runtime} />}
 
       <Suspense
+        // The background of the Monaco theme that replaces it (vs, vs-dark).
         fallback={
-          <p className="flex h-[320px] items-center justify-center gap-2 bg-[#1e1e1e] text-sm text-slate-400">
+          <p className="flex h-[320px] items-center justify-center gap-2 bg-white text-sm text-slate-500 dark:bg-[#1e1e1e] dark:text-slate-400">
             <Loader2 className="h-4 w-4 animate-spin" aria-hidden /> Loading editor…
           </p>
         }
@@ -110,7 +113,7 @@ export function RunPanel({ example, onRan }: { example: RunnableExample; onRan: 
           onChange={(e) => setStdin(e.target.value)}
           placeholder="stdin (optional)"
           rows={2}
-          className="block w-full border-t border-slate-200 px-3 py-2 font-mono text-xs"
+          className="block w-full border-t border-slate-200 px-3 py-2 font-mono text-xs dark:border-slate-700 dark:bg-slate-900"
           aria-label="Standard input"
         />
       )}
@@ -135,11 +138,11 @@ function SetupSql({ setup, runtime }: { setup: string; runtime: Runtime }) {
           ? 'and commits, so both sessions see it'
           : 'before the code below';
   return (
-    <details data-testid="example-setup" className="border-b border-slate-200 bg-slate-50 px-3 py-2 text-xs">
-      <summary className="cursor-pointer text-slate-600">
-        <span className="font-medium text-slate-700">Setup SQL</span> runs first, {when} (read-only)
+    <details data-testid="example-setup" className="border-b border-slate-200 bg-slate-50 px-3 py-2 text-xs dark:border-slate-800 dark:bg-slate-800/50">
+      <summary className="cursor-pointer text-slate-600 dark:text-slate-400">
+        <span className="font-medium text-slate-700 dark:text-slate-200">Setup SQL</span> runs first, {when} (read-only)
       </summary>
-      <pre className="mt-2 max-h-56 overflow-auto rounded bg-slate-900 p-2 text-[12px] leading-5 text-slate-100">
+      <pre className="mt-2 max-h-56 overflow-auto rounded bg-slate-900 p-2 text-[12px] leading-5 text-slate-100 dark:bg-slate-950">
         {setup.trimEnd()}
       </pre>
     </details>
@@ -152,27 +155,27 @@ function OutputPanel({ state, expected, sqlMode }: {
   sqlMode: boolean;
 }) {
   if (state.kind === 'idle') {
-    return <p className="border-t border-slate-200 px-3 py-3 text-sm text-slate-500">Press Run to execute.</p>;
+    return <p className="border-t border-slate-200 px-3 py-3 text-sm text-slate-500 dark:border-slate-800 dark:text-slate-400">Press Run to execute.</p>;
   }
   if (state.kind === 'failed') {
     return (
-      <p className="border-t border-slate-200 bg-rose-50 px-3 py-3 text-sm text-rose-800" role="alert">
+      <p className="border-t border-slate-200 bg-rose-50 px-3 py-3 text-sm text-rose-800 dark:border-slate-800 dark:bg-rose-950/40 dark:text-rose-200" role="alert">
         {state.message}
       </p>
     );
   }
   if (state.kind === 'running') {
     return (
-      <p className="flex items-center gap-2 border-t border-slate-200 px-3 py-3 text-sm text-slate-500">
+      <p className="flex items-center gap-2 border-t border-slate-200 px-3 py-3 text-sm text-slate-500 dark:border-slate-800 dark:text-slate-400">
         <Loader2 className="h-4 w-4 animate-spin" aria-hidden /> Running…
       </p>
     );
   }
   const r = state.result;
   return (
-    <div className="border-t border-slate-200">
-      {r.timedOut && <p className="bg-amber-50 px-3 py-2 text-sm text-amber-800">Run timed out and was killed.</p>}
-      {r.truncated && <p className="bg-amber-50 px-3 py-2 text-sm text-amber-800">Output truncated at 64 KB.</p>}
+    <div className="border-t border-slate-200 dark:border-slate-800">
+      {r.timedOut && <p className="bg-amber-50 px-3 py-2 text-sm text-amber-800 dark:bg-amber-950/40 dark:text-amber-200">Run timed out and was killed.</p>}
+      {r.truncated && <p className="bg-amber-50 px-3 py-2 text-sm text-amber-800 dark:bg-amber-950/40 dark:text-amber-200">Output truncated at 64 KB.</p>}
       {r.steps ? (
         <MultiSessionOutput steps={r.steps} setup={r.sql?.statements ?? []} />
       ) : sqlMode && r.sql ? (
@@ -191,14 +194,14 @@ function TextOutput({ r, expected }: { r: RunResult; expected: string | null }) 
   return (
     <div className="grid gap-0 md:grid-cols-2">
       {expected !== null && (
-        <div className="border-b border-slate-200 p-3 md:border-b-0 md:border-r">
+        <div className="border-b border-slate-200 p-3 md:border-b-0 md:border-r dark:border-slate-800">
           <p className="text-xs font-medium uppercase tracking-wide text-slate-400">Expected</p>
-          <pre className="mt-1 max-h-56 overflow-auto whitespace-pre-wrap text-[13px] leading-6 text-slate-700">{expected}</pre>
+          <pre className="mt-1 max-h-56 overflow-auto whitespace-pre-wrap text-[13px] leading-6 text-slate-700 dark:text-slate-300">{expected}</pre>
         </div>
       )}
       <div className="p-3">
         <p className="text-xs font-medium uppercase tracking-wide text-slate-400">Output (exit {r.exitCode})</p>
-        <pre className="mt-1 max-h-56 overflow-auto whitespace-pre-wrap text-[13px] leading-6 text-slate-800">{actual || '(no output)'}</pre>
+        <pre className="mt-1 max-h-56 overflow-auto whitespace-pre-wrap text-[13px] leading-6 text-slate-800 dark:text-slate-200">{actual || '(no output)'}</pre>
       </div>
     </div>
   );
@@ -211,8 +214,8 @@ function TextOutput({ r, expected }: { r: RunResult; expected: string | null }) 
 function SqlTextCompare({ actual, expected }: { actual: string; expected: string | null }) {
   if (expected === null) return null;
   return (
-    <details className="border-t border-slate-100 px-3 py-2">
-      <summary className="cursor-pointer text-xs text-slate-500">Compare as text with the expected output</summary>
+    <details className="border-t border-slate-100 px-3 py-2 dark:border-slate-800">
+      <summary className="cursor-pointer text-xs text-slate-500 dark:text-slate-400">Compare as text with the expected output</summary>
       <div className="mt-2 grid gap-3 md:grid-cols-2">
         {([
           ['Expected', expected],
@@ -220,7 +223,7 @@ function SqlTextCompare({ actual, expected }: { actual: string; expected: string
         ] as const).map(([label, text]) => (
           <div key={label}>
             <p className="text-xs font-medium uppercase tracking-wide text-slate-400">{label}</p>
-            <pre className="mt-1 max-h-72 overflow-auto whitespace-pre text-xs leading-5 text-slate-700">{text.trimEnd()}</pre>
+            <pre className="mt-1 max-h-72 overflow-auto whitespace-pre text-xs leading-5 text-slate-700 dark:text-slate-300">{text.trimEnd()}</pre>
           </div>
         ))}
       </div>
@@ -233,7 +236,7 @@ function SqlOutput({ statements }: { statements: StatementResult[] }) {
     <div className="space-y-3 p-3">
       {statements.map((s, i) => (
         <div key={i}>
-          <p className="font-mono text-xs text-slate-500">
+          <p className="font-mono text-xs text-slate-500 dark:text-slate-400">
             {i + 1}. {s.error ? 'error' : s.command} · {s.durationMs} ms
           </p>
           <StatementBody s={s} />
@@ -248,14 +251,14 @@ function StatementBody({ s }: { s: StatementResult }) {
   return (
     <>
       {s.notices.map((n, i) => (
-        <p key={i} className="mt-1 font-mono text-xs text-sky-800">{n}</p>
+        <p key={i} className="mt-1 font-mono text-xs text-sky-800 dark:text-sky-300">{n}</p>
       ))}
       {s.error ? (
-        <div className="mt-1 rounded bg-rose-50 px-2 py-1 text-sm text-rose-800">
+        <div className="mt-1 rounded bg-rose-50 px-2 py-1 text-sm text-rose-800 dark:bg-rose-950/40 dark:text-rose-200">
           <p>
             {s.error.message}
             {/* Refusals and connection errors come from the runner, not the server: no SQLSTATE. */}
-            {s.error.code && <span className="text-rose-500"> (SQLSTATE {s.error.code})</span>}
+            {s.error.code && <span className="text-rose-500 dark:text-rose-400"> (SQLSTATE {s.error.code})</span>}
           </p>
           {s.error.detail && <p className="text-xs">DETAIL: {s.error.detail}</p>}
           {s.error.hint && <p className="text-xs">HINT: {s.error.hint}</p>}
@@ -263,7 +266,7 @@ function StatementBody({ s }: { s: StatementResult }) {
       ) : s.columns.length > 0 ? (
         <ResultTable s={s} />
       ) : (
-        <p className="mt-1 text-xs text-slate-500">{s.command}</p>
+        <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">{s.command}</p>
       )}
     </>
   );
@@ -276,7 +279,7 @@ function ResultTable({ s }: { s: StatementResult }) {
         <thead>
           <tr>
             {s.columns.map((c, ci) => (
-              <th key={ci} className="border-b border-slate-200 px-2 py-1 font-medium text-slate-600">
+              <th key={ci} className="border-b border-slate-200 px-2 py-1 font-medium text-slate-600 dark:border-slate-700 dark:text-slate-300">
                 {c.name} <span className="font-normal text-slate-400">{c.type}</span>
               </th>
             ))}
@@ -286,11 +289,11 @@ function ResultTable({ s }: { s: StatementResult }) {
           {s.rows.map((row, ri) => (
             <tr key={ri}>
               {row.map((cell, ci) => (
-                <td key={ci} className="border-b border-slate-100 px-2 py-1 font-mono text-slate-800">
+                <td key={ci} className="border-b border-slate-100 px-2 py-1 font-mono text-slate-800 dark:border-slate-800 dark:text-slate-200">
                   {cell === null ? (
-                    <span className="rounded bg-slate-100 px-1 text-xs text-slate-500">NULL</span>
+                    <span className="rounded bg-slate-100 px-1 text-xs text-slate-500 dark:bg-slate-800 dark:text-slate-400">NULL</span>
                   ) : cell === '' ? (
-                    <span className="text-xs text-slate-300">(empty string)</span>
+                    <span className="text-xs text-slate-300 dark:text-slate-400">(empty string)</span>
                   ) : (
                     cell
                   )}
@@ -315,7 +318,7 @@ function MultiSessionOutput({ steps, setup }: { steps: StepResult[]; setup: Stat
     <div className="p-3">
       {failedSetup && (
         <div className="mb-3">
-          <p className="text-xs font-medium uppercase tracking-wide text-rose-700">Setup failed; no step ran</p>
+          <p className="text-xs font-medium uppercase tracking-wide text-rose-700 dark:text-rose-400">Setup failed; no step ran</p>
           <StatementBody s={failedSetup} />
         </div>
       )}
@@ -325,17 +328,17 @@ function MultiSessionOutput({ steps, setup }: { steps: StepResult[]; setup: Stat
         {steps.map((st) => (
           <div
             key={st.step}
-            className={`rounded border border-slate-100 bg-slate-50 px-2 py-1.5 ${st.session === 'B' ? 'col-start-2' : 'col-start-1'}`}
+            className={`rounded border border-slate-100 bg-slate-50 px-2 py-1.5 dark:border-slate-800 dark:bg-slate-800/40 ${st.session === 'B' ? 'col-start-2' : 'col-start-1'}`}
           >
             <p className="flex items-center gap-2 text-[11px] text-slate-400">
               step {st.step}
               {st.waited && (
-                <span className="rounded bg-amber-100 px-1 text-amber-800">
+                <span className="rounded bg-amber-100 px-1 text-amber-800 dark:bg-amber-900/50 dark:text-amber-200">
                   waited · result #{st.finishedOrder}
                 </span>
               )}
             </p>
-            <pre className="overflow-x-auto whitespace-pre-wrap font-mono text-xs text-slate-700">{st.sql}</pre>
+            <pre className="overflow-x-auto whitespace-pre-wrap font-mono text-xs text-slate-700 dark:text-slate-300">{st.sql}</pre>
             {failedSetup ? null : <StatementBody s={st} />}
           </div>
         ))}

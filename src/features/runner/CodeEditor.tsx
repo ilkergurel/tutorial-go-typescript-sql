@@ -14,6 +14,7 @@ import Editor, { loader, type OnMount } from '@monaco-editor/react';
 import * as monaco from 'monaco-editor';
 import EditorWorker from 'monaco-editor/editor/editor.worker?worker';
 import TsWorker from 'monaco-editor/language/typescript/ts.worker?worker';
+import { useTheme } from '../../shared/useTheme';
 
 self.MonacoEnvironment = {
   // Labels are Monaco's language ids; Go and SQL need only the base worker.
@@ -58,6 +59,10 @@ export default function CodeEditor({ value, onChange, language, path, onRunShort
     runShortcut.current = onRunShortcut;
   }, [onRunShortcut]);
 
+  // Monaco draws its own colours, so it can't follow the page's `dark` class;
+  // a new theme prop makes @monaco-editor/react call setTheme, live.
+  const { resolved } = useTheme();
+
   const onMount = useCallback<OnMount>((editor, m) => {
     editor.addCommand(m.KeyMod.CtrlCmd | m.KeyCode.Enter, () => runShortcut.current());
   }, []);
@@ -68,7 +73,7 @@ export default function CodeEditor({ value, onChange, language, path, onRunShort
       language={language}
       path={path}
       value={value}
-      theme="vs-dark"
+      theme={resolved === 'dark' ? 'vs-dark' : 'vs'}
       onChange={(v) => onChange(v ?? '')}
       onMount={onMount}
       options={{

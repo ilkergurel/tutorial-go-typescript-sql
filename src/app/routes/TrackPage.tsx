@@ -14,14 +14,14 @@ export function TrackPage() {
   return (
     <div className="mx-auto max-w-3xl px-8 py-10">
       <h1 className="text-2xl font-semibold tracking-tight">{track.title}</h1>
-      <p className="mt-2 leading-relaxed text-slate-600">{track.description}</p>
+      <p className="mt-2 leading-relaxed text-slate-600 dark:text-slate-400">{track.description}</p>
       <TrackCounts track={track} />
 
       <div className="mt-8 space-y-8">
         {track.modules.map((module) => (
           <section key={module.id} aria-label={module.title}>
             <ModuleHeading module={module} />
-            <ul className="mt-3 divide-y divide-slate-100 rounded-xl border border-slate-200 bg-white">
+            <ul className="mt-3 divide-y divide-slate-100 overflow-hidden rounded-xl border border-slate-200 bg-white dark:divide-slate-800 dark:border-slate-800 dark:bg-slate-900">
               {module.lessons.map((lesson) => (
                 <li key={lesson.id}>
                   <LessonLink lessonId={lesson.id} title={lesson.title} goal={lesson.goal} level={lesson.level} />
@@ -45,7 +45,7 @@ function TrackCounts({ track }: { track: { modules: { lessons: { id: string }[] 
   return (
     <p className="mt-1 text-xs font-medium uppercase tracking-wide text-slate-400">
       {track.modules.length} modules · {total} lessons
-      {done > 0 && <span className="ml-2 text-emerald-700">{done} completed</span>}
+      {done > 0 && <span className="ml-2 text-emerald-700 dark:text-emerald-400">{done} completed</span>}
     </p>
   );
 }
@@ -54,7 +54,7 @@ function ModuleHeading({ module }: { module: { id: string; title: string; lesson
   const progress = useAllProgress();
   const done = module.lessons.filter((l) => progress.get(l.id) === 'completed').length;
   return (
-    <h2 className="flex items-baseline justify-between text-sm font-semibold uppercase tracking-wide text-slate-500">
+    <h2 className="flex items-baseline justify-between text-sm font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">
       {module.title}
       <span className="font-normal normal-case text-slate-400">{done}/{module.lessons.length}</span>
     </h2>
@@ -70,11 +70,15 @@ function LessonLink({ lessonId, title, goal, level }: {
   const status = useAllProgress().get(lessonId) ?? null;
   const Icon = status === 'completed' ? CheckCircle2 : status === 'ran' ? PlayCircle : Circle;
   const color =
-    status === 'completed' ? 'text-emerald-600' : status === 'ran' ? 'text-teal-700' : 'text-slate-300';
+    status === 'completed'
+      ? 'text-emerald-600 dark:text-emerald-400'
+      : status === 'ran'
+        ? 'text-teal-700 dark:text-teal-400'
+        : 'text-slate-300 dark:text-slate-600';
   return (
     <Link
       to={`/lessons/${lessonId}`}
-      className="block px-5 py-3.5 transition-colors hover:bg-slate-50"
+      className="block px-5 py-3.5 transition-colors hover:bg-slate-50 dark:hover:bg-slate-800/60"
     >
       <span className="flex items-center justify-between gap-3">
         <span className="flex min-w-0 items-center gap-2">
@@ -83,7 +87,7 @@ function LessonLink({ lessonId, title, goal, level }: {
         </span>
         <LevelBadge level={level} />
       </span>
-      <span className="mt-0.5 block pl-6 text-sm text-slate-600">{goal}</span>
+      <span className="mt-0.5 block pl-6 text-sm text-slate-600 dark:text-slate-400">{goal}</span>
     </Link>
   );
 }

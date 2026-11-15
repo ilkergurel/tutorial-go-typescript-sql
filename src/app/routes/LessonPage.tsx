@@ -40,12 +40,12 @@ export function LessonPage() {
           <h1 className="text-2xl font-semibold tracking-tight">{lesson.title}</h1>
           <LevelBadge level={lesson.level} />
           {content && (
-            <span className="text-sm text-slate-500">
+            <span className="text-sm text-slate-500 dark:text-slate-400">
               {content.minutes} min · since {content.since}
             </span>
           )}
         </div>
-        {content && <p className="mt-2 max-w-3xl leading-relaxed text-slate-700">{content.summary}</p>}
+        {content && <p className="mt-2 max-w-3xl leading-relaxed text-slate-700 dark:text-slate-300">{content.summary}</p>}
         {content && <UnverifiedWarning claims={content.claims} />}
         <LessonActions lessonId={lesson.id} />
       </header>
@@ -55,7 +55,7 @@ export function LessonPage() {
           <LessonBody key={lesson.id} lessonId={lesson.id} />
         </div>
       ) : (
-        <div className="mt-8 rounded-xl border border-amber-200 bg-amber-50 px-5 py-4 text-sm leading-relaxed text-amber-900">
+        <div className="mt-8 rounded-xl border border-amber-200 bg-amber-50 px-5 py-4 text-sm leading-relaxed text-amber-900 dark:border-amber-800 dark:bg-amber-950/40 dark:text-amber-200">
           This lesson is in the curriculum but isn't in the generated lesson data yet. Run
           <code className="mx-1">node scripts/build-lessons.mjs</code> to rebuild it.
         </div>
@@ -72,13 +72,13 @@ function LessonBody({ lessonId }: { lessonId: string }) {
   switch (load.kind) {
     case 'loading':
       return (
-        <p className="flex items-center gap-2 text-sm text-slate-500">
+        <p className="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400">
           <Loader2 className="h-4 w-4 animate-spin" aria-hidden /> Loading lesson…
         </p>
       );
     case 'failed':
       return (
-        <div role="alert" className="rounded-xl border border-rose-200 bg-rose-50 px-5 py-4 text-sm leading-relaxed text-rose-900">
+        <div role="alert" className="rounded-xl border border-rose-200 bg-rose-50 px-5 py-4 text-sm leading-relaxed text-rose-900 dark:border-rose-800 dark:bg-rose-950/40 dark:text-rose-200">
           The lesson's content didn't load: {load.message}. Reload the page; if it persists, run
           <code className="mx-1">node scripts/build-lessons.mjs</code>.
         </div>
@@ -133,8 +133,8 @@ function UnverifiedWarning({ claims }: { claims: UnverifiedClaim[] }) {
   if (claims.length === 0) return null;
   const tabs = [...new Set(claims.map((c) => c.tab))];
   return (
-    <p className="mt-3 flex max-w-3xl items-start gap-2 rounded-lg border border-amber-300 bg-amber-50 px-3 py-2 text-sm text-amber-950">
-      <TriangleAlert className="mt-0.5 h-4 w-4 shrink-0 text-amber-600" aria-hidden />
+    <p className="mt-3 flex max-w-3xl items-start gap-2 rounded-lg border border-amber-300 bg-amber-50 px-3 py-2 text-sm text-amber-950 dark:border-amber-700 dark:bg-amber-950/40 dark:text-amber-100">
+      <TriangleAlert className="mt-0.5 h-4 w-4 shrink-0 text-amber-600 dark:text-amber-400" aria-hidden />
       <span>
         {claims.length === 1 ? "1 claim in this lesson isn't" : `${claims.length} claims in this lesson aren't`} confirmed
         in official docs ({tabs.length === 1 ? 'tab' : 'tabs'}: {tabs.join(', ')}). They're marked in the
@@ -153,14 +153,14 @@ function NextUp({ lessonId }: { lessonId: string }) {
   const next = nextLessonAfter(curriculum, lessonId);
   if (!next) return null;
   return (
-    <footer className="mt-10 border-t border-slate-200 pt-5">
+    <footer className="mt-10 border-t border-slate-200 pt-5 dark:border-slate-800">
       <p className="text-xs font-medium uppercase tracking-wide text-slate-400">Next up</p>
       <Link
         to={`/lessons/${next.id}`}
-        className="group mt-2 inline-flex items-center gap-2 rounded-lg px-3 py-2 -ml-3 text-sm font-medium text-teal-800 transition-colors hover:bg-teal-50"
+        className="group mt-2 inline-flex items-center gap-2 rounded-lg px-3 py-2 -ml-3 text-sm font-medium text-teal-800 transition-colors hover:bg-teal-50 dark:text-teal-300 dark:hover:bg-teal-900/30"
       >
         {next.title}
-        <ArrowRight className="h-4 w-4 text-slate-300 transition-colors group-hover:text-teal-700" aria-hidden />
+        <ArrowRight className="h-4 w-4 text-slate-300 transition-colors group-hover:text-teal-700 dark:text-slate-600 dark:group-hover:text-teal-400" aria-hidden />
       </Link>
     </footer>
   );
@@ -203,10 +203,10 @@ function LessonActions({ lessonId }: { lessonId: string }) {
         <span
           className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${
             status === 'completed'
-              ? 'bg-emerald-100 text-emerald-800'
+              ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/50 dark:text-emerald-200'
               : status === 'ran'
-                ? 'bg-sky-100 text-sky-800'
-                : 'bg-slate-200 text-slate-700'
+                ? 'bg-sky-100 text-sky-800 dark:bg-sky-900/50 dark:text-sky-200'
+                : 'bg-slate-200 text-slate-700 dark:bg-slate-700 dark:text-slate-200'
           }`}
         >
           {status}
@@ -216,10 +216,10 @@ function LessonActions({ lessonId }: { lessonId: string }) {
         type="button"
         onClick={toggle}
         aria-pressed={bookmarked}
-        className="flex items-center gap-1.5 rounded-md border border-slate-200 bg-white px-2.5 py-1 text-xs font-medium text-slate-600 transition-colors hover:bg-slate-50"
+        className="flex items-center gap-1.5 rounded-md border border-slate-200 bg-white px-2.5 py-1 text-xs font-medium text-slate-600 transition-colors hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 dark:hover:bg-slate-800"
       >
         {bookmarked ? (
-          <BookmarkCheck className="h-3.5 w-3.5 text-teal-700" aria-hidden />
+          <BookmarkCheck className="h-3.5 w-3.5 text-teal-700 dark:text-teal-400" aria-hidden />
         ) : (
           <Bookmark className="h-3.5 w-3.5" aria-hidden />
         )}
@@ -229,9 +229,9 @@ function LessonActions({ lessonId }: { lessonId: string }) {
         type="button"
         onClick={() => void markLesson(lessonId, 'completed')}
         disabled={status === 'completed'}
-        className="flex items-center gap-1.5 rounded-md border border-slate-200 bg-white px-2.5 py-1 text-xs font-medium text-slate-600 transition-colors hover:bg-slate-50 disabled:opacity-50"
+        className="flex items-center gap-1.5 rounded-md border border-slate-200 bg-white px-2.5 py-1 text-xs font-medium text-slate-600 transition-colors hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 disabled:opacity-50"
       >
-        <CircleCheck className="h-3.5 w-3.5 text-emerald-700" aria-hidden />
+        <CircleCheck className="h-3.5 w-3.5 text-emerald-700 dark:text-emerald-400" aria-hidden />
         Mark completed
       </button>
     </div>

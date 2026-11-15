@@ -32,7 +32,7 @@ export function Sidebar() {
 
   return (
     <nav className="flex w-72 flex-1 flex-col overflow-y-auto" aria-label="Curriculum">
-      <div className="flex flex-wrap gap-1 border-b border-slate-200 px-3 py-3" role="tablist" aria-label="Tracks">
+      <div className="flex flex-wrap gap-1 border-b border-slate-200 px-3 py-3 dark:border-slate-800" role="tablist" aria-label="Tracks">
         {Object.values(curriculum.tracks).map((track) => (
           <NavLink
             key={track.id}
@@ -43,7 +43,7 @@ export function Sidebar() {
               `rounded-md px-2.5 py-1.5 text-sm font-medium transition-colors ${
                 isActive
                   ? 'bg-teal-700 text-white'
-                  : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
+                  : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-100'
               }`
             }
           >
@@ -65,16 +65,16 @@ export function Sidebar() {
                 type="button"
                 onClick={() => toggle(module.id)}
                 aria-expanded={open}
-                className="flex w-full items-center gap-1 rounded-md px-2 py-1.5 text-left text-sm font-medium text-slate-700 hover:bg-slate-100"
+                className="flex w-full items-center gap-1 rounded-md px-2 py-1.5 text-left text-sm font-medium text-slate-700 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-slate-800"
               >
                 <ChevronRight
-                  className={`h-4 w-4 shrink-0 text-slate-400 transition-transform ${open ? 'rotate-90' : ''}`}
+                  className={`h-4 w-4 shrink-0 text-slate-400 transition-transform dark:text-slate-500 ${open ? 'rotate-90' : ''}`}
                   aria-hidden
                 />
                 {module.title}
               </button>
               {open && (
-                <ul className="ml-4 border-l border-slate-200 pl-2">
+                <ul className="ml-4 border-l border-slate-200 pl-2 dark:border-slate-700">
                   {module.lessons.map((lesson) => (
                     <li key={lesson.id}>
                       <NavLink
@@ -82,8 +82,8 @@ export function Sidebar() {
                         className={({ isActive }) =>
                           `block rounded-md px-2 py-1.5 text-sm transition-colors ${
                             isActive
-                              ? 'bg-teal-50 font-medium text-teal-900'
-                              : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
+                              ? 'bg-teal-50 font-medium text-teal-900 dark:bg-teal-900/40 dark:text-teal-200'
+                              : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-100'
                           }`
                         }
                       >
@@ -108,7 +108,7 @@ export function Sidebar() {
 }
 
 function StatusDot({ status }: { status: string | undefined }) {
-  if (!status) return <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-slate-200" aria-hidden />;
-  const color = status === 'completed' ? 'bg-emerald-500' : status === 'ran' ? 'bg-sky-500' : 'bg-slate-300';
+  if (!status) return <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-slate-200 dark:bg-slate-700" aria-hidden />;
+  const color = status === 'completed' ? 'bg-emerald-500' : status === 'ran' ? 'bg-sky-500' : 'bg-slate-300 dark:bg-slate-500';
   return <span className={`h-1.5 w-1.5 shrink-0 rounded-full ${color}`} aria-hidden />;
 }

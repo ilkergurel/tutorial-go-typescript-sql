@@ -1,3 +1,16 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  /* The page behind the app shell: what shows past its edges. Not
+     `@apply dark:bg-slate-950`: Tailwind's class-based dark variant
+     compiles to `html:is(.dark *)`, which needs a .dark ancestor, and the
+     class is on <html> itself. */
+  html {
+    @apply bg-slate-50;
+  }
+  html.dark {
+    @apply bg-slate-950;
+  }
+}
